@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8" />
+  
+
+  <meta name="author" content="logic shell studios">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+  <link rel="stylesheet" href="scripts/animate.css/animate.min.css" >
+  <link rel="stylesheet" href="scripts/swiper/swiper.css" >
+  <link rel="stylesheet" href="styles/moonRiseStyles/moonRise.css" >
+  <link rel="stylesheet" href="style.css" >
+ 
+
+  <link rel="icon" type="image/ico" mnr-href="./assets/favicon.png">
+  
+</head>
+
+
+<body class="Mnr" >
+
+
+
+<noscript>
+   It appears that JavaScript is deactivated, this web needs JavaScript to work
+</noscript>
+
+
+<div id="pageLoader" class="fixedFull posC zMax heightFull widthFull layoutCol orderCenter"  >
+
+    <div class="moon animated layoutCol orderCenter anim8">
+      <div class="glare round anim8 expand"></div>
+      <div class="circle round absolute posC marAuto " ></div>
+
+    </div>
+  
+</div>
+
+
+<main>
+
+<section class="moonHolder anim5 overflowShow">
+  <div class="moon wow layoutCol orderCenter">
+    <!-- <div class="noise"></div> -->
+    <div class="glare round wow anim8 slideInDown" data-wow-delay="-0.8s"></div>
+    <div class="circle round absolute posC marAuto wow slideInDown" ></div>
+    
+    <div class="absolute posL posR posB margAutomarB20 wow slideInUp textHolder anim5">
+      <h1 class="wow slideInUp textC padB15 anim5" >Moon Rise</h1>
+      <p class="wow slideInUp textC fontTitle anim5" data-wow-delay="0.1s">A Tiny Framework</p>
+    </div>
+  </div>
+</section>
+
+<section class="padT60 wow slideInLeft">
+
+  <div class="contentGrd padT20">
+    <div class="glass grdC3 grdC6Sm"></div>
+    <div class="glass grdC6 grdCFullSm grdRS1Sm layoutCol orderCenter">
+       <h2 class="textC">Responsive Css Grid Layout</h2>
+    </div>
+    <div class="glass grdC3 grdC6Sm"></div>
+
+    <div class="glass grdC4 grdC3Md"></div>
+    <div class="glass grdC2 grdC3Md"></div>
+    <div class="glass grdC2 grdC3Md"></div>
+    <div class="glass grdC4 grdC3Md"></div>
+
+    <div class="glass grdC5 "></div>
+    <div class="glass grdC2 "></div>
+    <div class="glass grdC5 "></div>
+
+  </div>
+
+</section>
+
+
+<section class="padT60 wow slideInLeft">
+  <div class="contentGrd">
+     <div class="glass grdCFull layoutCol orderCenter">
+       <h2 class="textC">Two-Way data binding</h2>
+     </div>
+
+     <div class="glass grdC6 layoutCol orderCenter pad20">
+         <input placeholder="type something..." mnr-bind="inputTest" mnr-max-text="10">
+     </div>
+     <div class="glass grdC6 layoutCol orderCenter pad20" 
+          mnr-class='{"backColorOk": "Mnr.binds.inputTest.length > 0 && Mnr.binds.inputTest.length < 6", "backColorWarn":"Mnr.binds.inputTest.length >= 6"}'>
+         <p mnr-bind="inputTest" 
+            mnr-max-text="10"
+            class="colorWhite"></p>
+         <p class="fontS5 fontBold colorWhite" 
+            mnr-class='{"hide": "Mnr.binds.inputTest.length <= 0"}'>
+            Css binding too</p>
+     </div>
+
+     <div class="glass grdC6 grdR2 pad20">
+       <h3 class="textC">Element iteration</h3>
+       <select  multiple mnr-bind="selectTest" mnr-bind-set="true">
+           <option value="A" selected>A</option>
+           <option value="B" selected>B</option>
+           <option value="C" selected>C</option>
+           <option value="D">D</option>
+           <option value="E">E</option>
+           <option value="F">F</option>
+       </select>
+     </div>
+     <div class="glass grdC2 layoutCol orderCenter" mnr-for="selectTest" mnr-print="mnr-for-value"></div>
+  </div>
+</section>
+
+<section class="padT60 wow slideInLeft">
+  <div class="contentGrd ">
+    <div class="glass grdCFull pad20 layoutCol orderCenter">
+       <h2 class="textC">Deferred loading images</h2>
+    </div>
+  </div>
+  <div class="contentGrd">
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
+  </div>
+</section>
+
+<section class="padT60 wow slideInLeft">
+  <div class="contentGrd ">
+    <div class="glass grdC6 grdCFullSm grdR4 grdR2Sm pad20 layoutCol orderCenter">
+       <h2 class="textC">Mobile friendly sliders powered by Swiper.js</h2>
+    </div>
+    <div class="glass grdC6 grdCFullSm grdR4 backColorTWhite" 
+         mnr-slider='{
+           "slidesPerView":1,
+           "loop": true,
+           "centeredSlides": true,
+           "spaceBetween": 0,
+           "autoplay": true}'>
+
+      <div class=""><img class="widthFull heightFull imgCover" mnr-src="./assets/producto2.jpg"></div>
+      <div class=""><img class="widthFull heightFull imgCover" mnr-src="./assets/producto2.jpg"></div>
+      <div class=""><img class="widthFull heightFull imgCover" mnr-src="./assets/producto2.jpg"></div>
+      <div class=""><img class="widthFull heightFull imgCover" mnr-src="./assets/producto2.jpg"></div>
+      <div class=""><img class="widthFull heightFull imgCover" mnr-src="./assets/producto2.jpg"></div>
+
+      <div mnr-slider-prev class="size50 round backColorTWhite layoutCol orderCenter">
+         <img src="./assets/flecha-izquierda.svg" class="svgColor2 svg size20">
+      </div>
+      <div mnr-slider-next  class="size50 round backColorTWhite layoutCol orderCenter">
+         <img src="./assets/flecha-derecha.svg" class="svgColor2 svg size20">
+      </div>
+    </div>
+  </div>
+</section>
+
+</main> 
+
+
+<section class="backColor1 z5 " id="footer">
+    <div class="content fullContent backColorBlack layoutCol orderCenter privacyBar minHeight50">
+      <p class="fontS5 colorTWhite textC padT20 padB20">Copyright @ 2021 All rights reserved - Moon Rise | Developed by <a class="colorWhite" rel="no-follow" target="_blank" href="https://logicshellstudios.com">Logic Shell Studios</a></p>
+   </div>
+</section>
+
+
+
+<script src="scripts/swiper/swiper.js" rel="preload" as="script"></script>
+<script src="scripts/wow/dist/wow.min.js" rel="preload" as="script"></script>
+<script src="scripts/svg-inject/svg-inject.min.js" rel="preload" as="script"></script>
+<script src="scripts/moonRise/moonRise.js"  rel="preload" as="script"></script>
+<script src="functions.js"  rel="preload" as="script"></script>
+
+<script>
+  Mnr.setBinds({
+    selectTest: ['A','C'],
+    inputTest: "",
+  });
+</script>
+
+
+
+</body>
+</html>
+
