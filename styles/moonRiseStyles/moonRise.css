@@ -250,6 +250,12 @@ section{
 .overflowShow{
   overflow: visible;
 }
+.overflowXShow{
+  overflow-x: visible;
+}
+.overflowYShow{
+  overflow-y: visible;
+}
 .setOverflow{
   overflow: initial;
 }

@@ -24,6 +24,7 @@ var Mnr = (function(){
     loadLoop: null,
     scrollOld: 0,
     timeAddStatus: null,
+    scrollImg:{dones:0,elems:[]},
     classBinds: [],
     forBinds: [],
     maxTextBinds: [],
@@ -283,6 +284,16 @@ var Mnr = (function(){
           if(attr != 'set' && this.findPosByProp('el',elem,this.classBinds) == false){
             let allConds = [];
             allConds = Object.entries(JSON.parse(attr));
+            let conds = [];
+            for(cond of allConds){
+              let temp = cond[1];
+              for(bind of Object.keys(this.binds)){
+                if(temp.indexOf(bind) !== -1){
+                   temp = temp.replaceAll(bind,'Mnr.binds.'+bind);
+                }
+              }
+              cond[1] = temp;
+            }
             elem.setAttribute('mnr-class','set');
             this.classBinds.push({el:elem,conds:allConds});
           }
@@ -314,11 +325,10 @@ var Mnr = (function(){
           this.maxTextBinds.push({el:elem,max:max});
         }
       }
+      
 
-      this.runBindClasses(true);
-      this.runBindfors(true);
-      this.runBindPrints(true);
-      this.runBindMaxText(true);
+      
+      this.runAllBinds();
       // console.log(this.binds);
     },
     Bind: function(prop){
@@ -359,6 +369,12 @@ var Mnr = (function(){
         });
         this.binds[prop] = value;
     },
+    runAllBinds(){
+      this.runBindClasses(true);
+      this.runBindfors(true);
+      this.runBindPrints(true);
+      this.runBindMaxText(true);
+    },
     runBindClasses: function(force = false){
       
       if(this.parseBool(this.pageLoading) == false || force == true){
@@ -379,7 +395,7 @@ var Mnr = (function(){
                }
              }
              catch{
-               console.warn('La evalución '+temp[1]+' del elemento '+elem.el+' no pudo realizarse');
+               console.warn('The evaluation '+temp[1]+' of '+elem.el.outerHTML+' failed');
              }
           }
         }
@@ -518,6 +534,7 @@ var Mnr = (function(){
       }
       if(change == true){
         this.scrollOld = window.pageYOffset;
+        this.imgLoadScroll();
       }
     },
     handleResize: function(){
@@ -561,6 +578,16 @@ var Mnr = (function(){
       else{
         this.imgDone = true;
       }
+
+      ////set images scroll load
+      let temp = document.querySelectorAll('[mnr-scroll-src]');
+      for(elem of temp){
+        let attr = elem.getAttribute("mnr-scroll-src")
+        if(attr != 'set'){
+           this.scrollImg.elems.push({el:elem,src:attr,set:false});
+           elem.setAttribute("mnr-scroll-src","set");
+        }
+      }
     },
     imgIterator:  function(){
 
@@ -588,6 +615,18 @@ var Mnr = (function(){
       else{
         this.imgNum +=1;
         this.imgIterator();
+      }
+    },
+    imgLoadScroll: function(){
+      if(this.scrollImg.elems.length < this.scrollImg.dones){
+        return;  
+      }
+      for(elem of this.scrollImg.elems){
+         if(this.isInViewport(elem.el) && elem.set == false){
+            elem.el.src = elem.src;
+            elem.set = true;
+            this.scrollImg.dones ++;
+         }
       }
     },
     loadImgsBack: function(){
@@ -1030,6 +1069,15 @@ var Mnr = (function(){
         this.elemsEvents[i].events.push(event);
       }
       element.addEventListener(event,funct);
+    },
+    isInViewport: function(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
     },
     
   };

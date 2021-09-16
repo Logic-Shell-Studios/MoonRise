@@ -32,26 +32,23 @@
 
 
 <div id="pageLoader" class="fixedFull posC zMax heightFull widthFull layoutCol orderCenter"  >
-
     <div class="moon animated layoutCol orderCenter anim8">
       <div class="glare round anim8 expand"></div>
       <div class="circle round absolute posC marAuto " ></div>
-
     </div>
-  
 </div>
 
 
 <main>
 
-<section class="moonHolder anim5 overflowShow">
+<section class="moonHolder anim5 overflowYShow">
   <div class="moon wow layoutCol orderCenter">
     <!-- <div class="noise"></div> -->
     <div class="glare round wow anim8 slideInDown" data-wow-delay="-0.8s"></div>
     <div class="circle round absolute posC marAuto wow slideInDown" ></div>
     
     <div class="absolute posL posR posB margAutomarB20 wow slideInUp textHolder anim5">
-      <h1 class="wow slideInUp textC padB15 anim5" >Moon Rise</h1>
+      <h1 class="wow slideInUp textC padB15 anim5 fontS2Xs" >Moon Rise</h1>
       <p class="wow slideInUp textC fontTitle anim5" data-wow-delay="0.1s">A Tiny Framework</p>
     </div>
   </div>
@@ -86,20 +83,20 @@
        <h2 class="textC">Two-Way data binding</h2>
      </div>
 
-     <div class="glass grdC6 layoutCol orderCenter pad20">
+     <div class="glass grdC6 grdCFullXs layoutCol orderCenter pad20">
          <input placeholder="type something..." mnr-bind="inputTest" mnr-max-text="10">
      </div>
-     <div class="glass grdC6 layoutCol orderCenter pad20" 
-          mnr-class='{"backColorOk": "Mnr.binds.inputTest.length > 0 && Mnr.binds.inputTest.length < 6", "backColorWarn":"Mnr.binds.inputTest.length >= 6"}'>
+     <div class="glass grdC6 grdCFullXs layoutCol orderCenter pad20" 
+          mnr-class='{"backColorOk": "inputTest.length > 0 && inputTest.length < 6", "backColorWarn":"inputTest.length >= 6"}'>
          <p mnr-bind="inputTest" 
             mnr-max-text="10"
             class="colorWhite"></p>
          <p class="fontS5 fontBold colorWhite" 
-            mnr-class='{"hide": "Mnr.binds.inputTest.length <= 0"}'>
+            mnr-class='{"hide": "inputTest.length <= 0"}'>
             Css binding too</p>
      </div>
 
-     <div class="glass grdC6 grdR2 pad20">
+     <div class="glass grdC6 grdCFullXs grdR1Xs  grdR2 pad20">
        <h3 class="textC">Element iteration</h3>
        <select  multiple mnr-bind="selectTest" mnr-bind-set="true">
            <option value="A" selected>A</option>
@@ -110,7 +107,7 @@
            <option value="F">F</option>
        </select>
      </div>
-     <div class="glass grdC2 layoutCol orderCenter" mnr-for="selectTest" mnr-print="mnr-for-value"></div>
+     <div class="glass grdC2 grdC3Xs layoutCol orderCenter" mnr-for="selectTest" mnr-print="mnr-for-value"></div>
   </div>
 </section>
 
@@ -121,10 +118,10 @@
     </div>
   </div>
   <div class="contentGrd">
-    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
-    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
-    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
-    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-scroll-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-scroll-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-scroll-src="./assets/product1.jpg"></div>
+    <div class="grdC3 grdC6Sm"><img class="widthFull heightAuto imgCover" mnr-scroll-src="./assets/product1.jpg"></div>
   </div>
 </section>
 
