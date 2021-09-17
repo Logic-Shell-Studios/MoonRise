@@ -1,2 +1,2 @@
-# MoonRise.github.io
+# MoonRise
 A Tiny Frontend Framework
