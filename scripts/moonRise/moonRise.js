@@ -27,7 +27,7 @@ var Mnr = (function(){
     scrollImg:{dones:0,elems:[]},
     classBinds: [],
     forBinds: [],
-    maxTextBinds: [],
+    imgBinds: [],
     binds: {},
     pageLoading: true,
     initialBinds: {
@@ -129,9 +129,8 @@ var Mnr = (function(){
       //check if images finish loading or the time surpas the limit
       this.loadLoop = setInterval(()=>{
         if(this.imgDone == true || this.mediaTimePass > 20){
-          
-          this.finishLoad();
           clearInterval(this.loadLoop);
+          this.finishLoad();
         }
       },100);
     },
@@ -151,7 +150,7 @@ var Mnr = (function(){
             value.call();
           }
         });
-
+       
         this.bindAll();
         
         
@@ -163,14 +162,15 @@ var Mnr = (function(){
           if(this.bodyElem !== false){
             this.bodyElem.setAttribute('mnr-page-loading',false);
           }
+          
           if(typeof WOW === "function"){
             new WOW().init();
           }
+
+          console.log('MOON RISE ENGINE running');
         },this.loadEndTime);
 
         
-         
-        console.log('MOON RISE ENGINE running');
       }
     },
     reload: function(){
@@ -190,14 +190,15 @@ var Mnr = (function(){
     ///////////////////////////////////////////////binders
     bindAll: function(){
       //var binds
+      // console.log("runBinds");
       for (let bind of Object.keys(this.binds) ) {
-          
         for(let el of document.querySelectorAll('[mnr-bind="'+bind+'"]') ){
-            
+          if(el.getAttribute('mnr-bind') != 'set'){  
             //binds property to events
             let attr = 'innerText';
             let event = null;
             let value = this.binds[bind];
+            let type = 'text';
             switch(el.nodeName){
                case "INPUT":
                  attr = 'value';
@@ -227,15 +228,22 @@ var Mnr = (function(){
               }
             }
 
-            if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
-               attr = 'multiple';
-            }
-
-            if(el.getAttribute('mnr-bind-attr')){
+            
+            if(el.hasAttribute('mnr-bind-attr')){
               attr = el.getAttribute('mnr-bind-attr');
             }
-            if(el.getAttribute('mnr-bind-event')){
+            if(el.hasAttribute('mnr-bind-event')){
               event = el.getAttribute('mnr-bind-event');
+            }
+
+            if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
+               type = 'multiple';
+            }
+            else if(el.nodeName == 'INPUT'){
+              if(el.type == 'date'){
+               type = 'date';
+               event = 'change';
+              }
             }
 
 
@@ -262,44 +270,156 @@ var Mnr = (function(){
             }
 
             
-            if(this.findPosByProp('el',el,this.binders) == false){
+              
+            // generate binder
+            let elData = {
+              el: el,
+              attr: attr,
+              event: event,
+              type: type,
+            };
+            if(this.hasKey(this.binders, bind)){
               el.setAttribute('mnr-bind','set');
-              this.binders.push({
-                el: el,
-                attr: attr,
-                event: event,
-                bind: bind,
-              });
-            }
 
-            
+              if(this.findPosByProp('el',el,this.binders[bind].elems) === false){
+                this.binders[bind].elems.push(elData);
+              }
+            }
+            else{
+              this.binders[bind] = {elems:[elData],bind:bind};
+            }
+          }    
         }
         this.Bind(bind);
         
       }
       
-      // classes binds
-      for (let elem of document.querySelectorAll('[mnr-class]')) {
-          let attr = elem.getAttribute('mnr-class');
-          if(attr != 'set' && this.findPosByProp('el',elem,this.classBinds) == false){
-            let allConds = [];
-            allConds = Object.entries(JSON.parse(attr));
-            let conds = [];
-            for(cond of allConds){
-              let temp = cond[1];
-              for(bind of Object.keys(this.binds)){
-                if(temp.indexOf(bind) !== -1){
-                   temp = temp.replaceAll(bind,'Mnr.binds.'+bind);
+      this.setBindClasses();
+      this.setBindFors();
+      this.setBindImgs();
+      
+      
+
+      
+      this.runAllBinds();
+      // console.log(this.binds);
+      // console.log(this.binders);
+
+    },
+    Bind: function(prop){
+        let value = this.binds[prop];
+        Object.defineProperty(this.binds, prop, {
+            set: (newValue) => {
+                value = newValue;
+                // console.log("set: "+prop+ " "+ newValue);
+                // Set elements to new value
+                if(this.hasKey(this.binders, prop)){
+                  for (let elem of this.binders[prop].elems) {
+                    if(elem.type == 'multiple'){
+                      for(let opt of elem.el.querySelectorAll("option")){
+                        opt.removeAttribute('selected');
+                      }
+                      for(let val of newValue){
+                        let opt = elem.el.querySelector("option[value='"+val+"']");
+                        if(opt){
+                         opt.setAttribute('selected',true);
+                         opt.checked = true;
+                        }
+                      }
+                    }
+                    else{
+                      elem.el[elem.attr] = newValue;
+                    }
+                  }
                 }
-              }
-              cond[1] = temp;
+                
+                if(this.parseBool(this.pageLoading) == false){
+                  this.runAllBindsSingle(prop);
+                }
+            },
+            get: () => {
+                return value;
+            },
+        });
+        this.binds[prop] = value;
+    },
+
+    runAllBinds(){
+      this.runBindMaxText(true);
+      this.runBindfors(true);
+      this.runBindImgs(true);
+      this.runBindPrints(true);
+      this.runBindClasses(true);
+    },
+    runAllBindsSingle(bind){
+      this.runBindMaxText();
+      this.runSingleBindfors(bind);
+      this.runSingleBindImgs(bind);
+      this.runBindPrints();
+      this.runBindClasses();
+    },
+
+    setBindClasses: function(){
+     // classes binds
+      for (let elem of document.querySelectorAll('[mnr-class]')) {
+        if(!elem.hasAttribute('mnr-class-set')){
+          let attr = elem.getAttribute('mnr-class');
+          // let allConds = Object.entries(JSON.parse(attr));
+          
+          let binds = Object.keys(this.binds);
+          binds = binds.sort((a,b) => b.length - a.length);
+          for(bind of binds){
+            if(attr.indexOf(bind) !== -1){
+               attr = attr.replaceAll(bind,'Mnr.binds.'+bind);
             }
-            elem.setAttribute('mnr-class','set');
-            this.classBinds.push({el:elem,conds:allConds});
           }
+
+
+          elem.setAttribute('mnr-class', attr);
+          elem.setAttribute('mnr-class-set', true);
+        }
       }
+    },
+    runBindClasses: function(force = false){
+      if(this.parseBool(this.pageLoading) == false || force == true){
+        
+        for (let elem of document.querySelectorAll('[mnr-class]')){
+          let allConds = Object.entries(JSON.parse(elem.getAttribute('mnr-class')));
+          for (var j = allConds.length - 1; j >= 0; j--) {
+          
+             let temp = allConds[j];
+             if(temp[1].indexOf('mnr-') !== -1){
+                 let attrs = elem.getAttributeNames();
+                 attrs = attrs.sort((a,b) => b.length - a.length);
+                 for(attr of attrs){
+                   if(temp[1].indexOf(attr) !== -1){
+                      // console.log(attr+' '+elem.getAttribute(attr));
+                      temp[1] = temp[1].replaceAll(attr,elem.getAttribute(attr));
+                   }
+                 }
+             }
 
+             // console.log(temp);
+             // console.log(eval(temp[1]));
+             try{
+               if(eval(temp[1]) == true){
+                 elem.classList.add(temp[0]);
+               }
+               else{
+                 elem.classList.remove(temp[0]);
+               }
+             }
+             catch{
+               console.warn('The evaluation '+temp[1]+' of '+elem.outerHTML+' failed');
+             }
+          }
+        }
 
+        // console.log(document.querySelectorAll('[mnr-class][mnr-for-clone]'));
+      }
+    },
+
+    setBindFors: function(){
       //for binds
       for (let elem of document.querySelectorAll('[mnr-for]')) {
         let bind = elem.getAttribute('mnr-for');
@@ -312,91 +432,6 @@ var Mnr = (function(){
           }
           else{
               this.forBinds[bind] = {elems:[elem]};
-          }
-        }
-      }
-
-      //max text binds
-      for (let elem of document.querySelectorAll('[mnr-max-text]')) {
-        let max = elem.getAttribute('mnr-max-text');
-        if(max != 'set' && this.findPosByProp('el',elem,this.maxTextBinds) == false){
-          elem.setAttribute('mnr-max-text','set');
-
-          this.maxTextBinds.push({el:elem,max:max});
-        }
-      }
-      
-
-      
-      this.runAllBinds();
-      // console.log(this.binds);
-    },
-    Bind: function(prop){
-        let value = this.binds[prop];
-        Object.defineProperty(this.binds, prop, {
-            set: (newValue) => {
-                value = newValue;
-                // console.log("set: "+prop+ " "+ value);
-                // Set elements to new value
-                for (let binder of this.binders) {
-                    if(binder.bind === prop) {
-                        if(binder.attr == 'multiple'){
-                          for(let opt of binder.el.querySelectorAll("option")){
-                            opt.removeAttribute('selected');
-                          }
-                          for(let val of newValue){
-                            let opt = binder.el.querySelector("option[value='"+val+"']");
-                            opt.setAttribute('selected',true);
-                            opt.checked = true;
-                          }
-                        }
-                        else{
-                          binder.el[binder.attr] = newValue;
-                        }
-                    }
-                }
-                
-                if(this.parseBool(this.pageLoading) == false){
-                  this.runBindClasses();
-                  this.runSingleBindfors(prop);
-                  this.runBindPrints();
-                  this.runBindMaxText();
-                }
-            },
-            get: () => {
-                return value;
-            },
-        });
-        this.binds[prop] = value;
-    },
-    runAllBinds(){
-      this.runBindClasses(true);
-      this.runBindfors(true);
-      this.runBindPrints(true);
-      this.runBindMaxText(true);
-    },
-    runBindClasses: function(force = false){
-      
-      if(this.parseBool(this.pageLoading) == false || force == true){
-        
-        for (let elem of this.classBinds) {
-          
-          for (var j = elem.conds.length - 1; j >= 0; j--) {
-          
-             let temp = elem.conds[j];
-             // console.log(temp);
-             // console.log(eval(temp[1]));
-             try{
-               if(eval(temp[1]) == true){
-                 elem.el.classList.add(temp[0]);
-               }
-               else{
-                 elem.el.classList.remove(temp[0]);
-               }
-             }
-             catch{
-               console.warn('The evaluation '+temp[1]+' of '+elem.el.outerHTML+' failed');
-             }
           }
         }
       }
@@ -425,6 +460,7 @@ var Mnr = (function(){
       }   
     },
     iterateForBinds:function(bind){
+      if(this.forBinds[bind] != null){
        for (let i = this.forBinds[bind].elems.length - 1; i >= 0; i--) {
         let elem = this.forBinds[bind].elems[i];
 
@@ -432,7 +468,12 @@ var Mnr = (function(){
         elem.setAttribute('mnr-for-key', 0);
         elem.classList.add("mnrHide");
         if(this.binds[bind] != null){
-         if(this.binds[bind].length > 0){
+         // console.log(Array.isArray(this.binds[bind]));
+         let value = this.binds[bind];
+         // if(typeof(value) == 'string'){
+         //    value = Array.from(value);                   
+         // }
+         if(Array.isArray(value) ){
             elem.setAttribute('mnr-for-value', this.binds[bind][0]);
             elem.setAttribute('mnr-for-key', 0);
             elem.classList.remove("mnrHide");
@@ -452,7 +493,9 @@ var Mnr = (function(){
          }
         }
        }
+      }
     },
+    
     runBindPrints: function(force = true){
       //print binds
       if(this.parseBool(this.pageLoading) == false || force == true){
@@ -469,23 +512,64 @@ var Mnr = (function(){
       }
     },
     runBindMaxText: function(force = true){
-      //print binds
       if(this.parseBool(this.pageLoading) == false || force == true){
-        for (let elem of this.maxTextBinds) {
-          if(elem.el.nodeName == 'INPUT' ||  
-            elem.el.nodeName == 'TEXTAREA'){
-            let val = elem.el.value;
+        for (let elem of document.querySelectorAll('[mnr-max-text]')) {
+          let max = elem.getAttribute('mnr-max-text');
+          if(elem.nodeName == 'INPUT' ||  
+            elem.nodeName == 'TEXTAREA'){
+            let val = elem.value;
             let size = (val != null) ? val.length : 0;
-            elem.el.value = this.cutText(val,elem.max);
+            elem.value = this.cutText(val,max);
           }
           else{
-            let val = elem.el.innerText;
+            let val = elem.innerText;
             let size = (val != null) ? val.length : 0;
-            elem.el.innerText = this.cutText(val,elem.max);
+            elem.innerText = this.cutText(val,max);
           }
         }
       }
     },
+    
+    setBindImgs: function(){
+      //image binds
+      for (let elem of document.querySelectorAll('[mnr-bind-src]')) {
+        let bind = elem.getAttribute('mnr-bind-src');
+        if(bind != 'set'){
+          elem.setAttribute('mnr-bind-src','set');
+          if(this.hasKey(this.imgBinds, bind)){
+            if(this.imgBinds[bind].elems.includes(elem) == false){
+              this.imgBinds[bind].elems.push(elem);
+            }
+          }
+          else{
+              this.imgBinds[bind] = {elems:[elem]};
+          }
+        }
+      }
+    },
+    runBindImgs: function(force = false){
+      if(this.parseBool(this.pageLoading) == false || force == true){
+        for (let bind of Object.keys(this.imgBinds) ) {
+          this.iterateImgBinds(bind);
+        }
+      }   
+    },
+    runSingleBindImgs: function(bind){
+      if(this.parseBool(this.pageLoading) == false && this.hasKey(this.imgBinds,bind)){
+        this.iterateImgBinds(bind);
+      }   
+    },
+    iterateImgBinds:function(bind){
+       for (let i = this.imgBinds[bind].elems.length - 1; i >= 0; i--) {
+        let elem = this.imgBinds[bind].elems[i];
+
+        elem.src = null;
+        if(this.binds[bind] != null){
+            elem.src = this.binds[bind];
+        }
+       }
+    },
+
     bindPush: function(prop,val){
       if(this.hasKey(this.binds,prop)){
         let temp = this.binds[prop];
@@ -879,8 +963,12 @@ var Mnr = (function(){
     
     //////////////////////////////////////////////////helpers
     hasKey: function(stash,key){
-
-      return key in stash;
+      try{
+        return key in stash;
+      }
+      catch{
+        return false;
+      }
     },
     getProperties: function(obj){
       if(obj){

@@ -89,15 +89,14 @@
      <div class="glass grdC6 grdCFullXs layoutCol orderCenter pad20" 
           mnr-class='{"backColorOk": "inputTest.length > 0 && inputTest.length < 6", "backColorWarn":"inputTest.length >= 6"}'>
          <p mnr-bind="inputTest" 
-            mnr-max-text="10"
-            class="colorWhite"></p>
+            mnr-max-text="10"></p>
          <p class="fontS5 fontBold colorWhite" 
             mnr-class='{"hide": "inputTest.length <= 0"}'>
             Css binding too</p>
      </div>
 
      <div class="glass grdC6 grdCFullXs grdR1Xs  grdR2 pad20">
-       <h3 class="textC">Element iteration</h3>
+       <h3 class="textC padB10">Element iteration</h3>
        <select  multiple mnr-bind="selectTest" mnr-bind-set="true">
            <option value="A" selected>A</option>
            <option value="B" selected>B</option>
@@ -106,8 +105,38 @@
            <option value="E">E</option>
            <option value="F">F</option>
        </select>
+       <p class="padT10" mnr-bind="selectTest"></p>
      </div>
-     <div class="glass grdC2 grdC3Xs layoutCol orderCenter" mnr-for="selectTest" mnr-print="mnr-for-value"></div>
+     <div class="glass grdC2 grdC3Xs layoutCol orderCenter" 
+          mnr-for="selectTest" 
+          mnr-print="mnr-for-value" 
+          mnr-class='{"backColorOk" : "(mnr-for-key + 1) % 2 == 0", "backColorWarn" : "(mnr-for-key + 1) % 2 != 0"  }'>
+     </div>
+
+
+     <div class="glass grdC6 grdCFullXs height300 grdCS1 pad20 grdR2">
+       <h3 class="textC padB10">Image Binding</h3>
+       <select  mnr-bind="selectImg" mnr-bind-set="true">
+           <option value="./assets/product1.jpg" selected>A</option>
+           <option value="./assets/producto2.jpg">B</option>
+       </select>
+     </div>
+     <div class="grdC3 grdC6Xs grdR2">
+       <img class="widthFull height300 imgCover" mnr-bind-src="selectImg">
+     </div>
+     <div class="grdC3 grdC6Xs grdR2">
+       <img class="widthFull height300 imgCover" mnr-bind-src="selectImg">
+     </div>
+
+
+     <div class="glass grdC6 grdCFullXs grdCS1 pad20 ">
+       <h3 class="textC padB10">Date-Picker Binding</h3>
+       <input type="date"  mnr-bind="dateTest">
+       <input class="marT10" type="text"  mnr-bind="dateTest">
+     </div>
+     <div class="glass grdC6 grdCFullXs layoutCol orderCenter pad20" >
+         <p mnr-bind="dateTest"></p>
+     </div>
   </div>
 </section>
 
@@ -128,7 +157,7 @@
 <section class="padT60 wow slideInLeft">
   <div class="contentGrd ">
     <div class="glass grdC6 grdCFullSm grdR4 grdR2Sm pad20 layoutCol orderCenter">
-       <h2 class="textC">Mobile friendly sliders powered by Swiper.js</h2>
+       <h2 class="textC">Mobile friendly sliders</h2>
     </div>
     <div class="glass grdC6 grdCFullSm grdR4 backColorTWhite" 
          mnr-slider='{
@@ -175,6 +204,8 @@
   Mnr.setBinds({
     selectTest: ['A','C'],
     inputTest: "",
+    selectImg:[],
+    dateTest: "",
   });
 </script>
 
