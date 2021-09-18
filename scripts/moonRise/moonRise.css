@@ -4023,8 +4023,6 @@ section{
 .flxCol,
 .flxGrd,
 section{
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4064,15 +4062,13 @@ section{
   align-items: center;
 }
 
-.container > *,
+/*.container > *,
 section > *,
 .flxCol > *,
 .flxRow > *,
 .flxGrd > *{
   max-width: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+}*/
 
 .flxNoWrap{
   -ms-flex-wrap: nowrap;
