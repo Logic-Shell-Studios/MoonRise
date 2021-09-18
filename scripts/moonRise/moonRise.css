@@ -273,48 +273,48 @@ section{
 
 
 /*/////////////////////////////////////////////////////Alineaciones & Orden - Posición*/
-.relative{
+.Mnr .relative{
   position: relative;
 }
-.absolute{
+.Mnr .absolute{
   position: absolute;
 }
-.fixed,
-.fixedFull{
+.Mnr .fixed,
+.Mnr .fixedFull{
   position: fixed;
 }
-.posUnset{
+.Mnr .posUnset{
   top:unset;
   right:unset;
   left: unset;
   bottom: unset;
 }
-.posT{
+.Mnr .posT{
   top: 0;
 }
-.posR{
+.Mnr .posR{
   right: 0;
 }
-.posL{
+.Mnr .posL{
   left: 0;
 }
-.posRP{
+.Mnr .posRP{
   right: var(--mnr-padSides);
 }
-.posLP{
+.Mnr .posLP{
   left: var(--mnr-padSides);
 }
-.posB{
+.Mnr .posB{
   bottom: 0;
 }
-.posC{
+.Mnr .posC{
   right: 0;
   top: 0;
   left: 0;
   bottom: 0;
 }
 
-.absoluteSize{
+.Mnr .absoluteSize{
   position: absolute;
   top:0;
   left: 0;
@@ -322,40 +322,40 @@ section{
   height: 100%;
 }
 
-.z-1{
+.Mnr .z-1{
   z-index: -1;
 }
-.z1{
+.Mnr .z1{
   z-index: 1;
 }
-.z2{
+.Mnr .z2{
   z-index: 2;
 }
-.z3{
+.Mnr .z3{
   z-index: 3;
 }
-.z4{
+.Mnr .z4{
   z-index: 4;
 }
-.z5{
+.Mnr .z5{
   z-index: 5;
 }
-.z10{
+.Mnr .z10{
   z-index: 10;
 }
-.z15{
+.Mnr .z15{
   z-index: 15;
 }
-.z20{
+.Mnr .z20{
   z-index: 20;
 }
-.zMax{
+.Mnr .zMax{
   z-index: 9999;
 }
 
 
 @media only screen and (min-width: 3000px){
-  .fixed{
+  .Mnr .fixed{
     max-width: var(--mnr-maxBodyWidth);
     left: 0;
     right: 0;
@@ -5114,122 +5114,122 @@ section > *,
 
 /*////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////Display*/
-.opacity0{
+.Mnr .opacity0{
   opacity: 0.0;
 }
-.opacity3{
+.Mnr .opacity3{
   opacity: 0.3;
 }
-.opacity4{
+.Mnr .opacity4{
   opacity: 0.4;
 }
-.opacity5{
+.Mnr .opacity5{
   opacity: 0.5;
 }
-.opacity6{
+.Mnr .opacity6{
   opacity: 0.6;
 }
-.opacity7{
+.Mnr .opacity7{
   opacity: 0.7;
 }
-.opacity8{
+.Mnr .opacity8{
   opacity: 0.8;
 }
-.opacity9{
+.Mnr .opacity9{
   opacity: 0.9;
 }
-.opacityFull{
+.Mnr .opacityFull{
   opacity: 1;
 }
 
-.displayBlock{
+.Mnr .displayBlock{
   display: block;
 }
-.displayInBlock{
+.Mnr .displayInBlock{
   display: inline-block;
 }
 
-.mnrHide{
+.Mnr .mnrHide{
   display: none!important;
 }
-.hide,
-.showSm,
-.showFlexSm,
-.showBlockSm,
-.showXs,
-.showFlexXs,
-.showBlockXs,
-.showMd,
-.showFlexMd,
-.showBlockMd,
-.showLg,
-.showFlexLg,
-.showBlockLg{
+.Mnr .hide,
+.Mnr .showSm,
+.Mnr .showFlexSm,
+.Mnr .showBlockSm,
+.Mnr .showXs,
+.Mnr .showFlexXs,
+.Mnr .showBlockXs,
+.Mnr .showMd,
+.Mnr .showFlexMd,
+.Mnr .showBlockMd,
+.Mnr .showLg,
+.Mnr .showFlexLg,
+.Mnr .showBlockLg{
   display: none;
 }
-.show{
+.Mnr .show{
   display: initial;
 }
-.showFlex{
+.Mnr .showFlex{
   display: flex;
 }
-.showBlock{
+.Mnr .showBlock{
   display: block;
 }
 
 @media only screen and (max-width: 1140px){
-  .hideLg{
+  .Mnr .hideLg{
     display: none;
   }
-  .showLg{
+  .Mnr .showLg{
     display: initial;
   }
-  .showFlexLg{
+  .Mnr .showFlexLg{
     display: flex;
   }
-  .showBlockLg{
+  .Mnr .showBlockLg{
     display: block;
   }
 }
 @media only screen and (max-width: 960px){
-  .hideMd{
+  .Mnr .hideMd{
     display: none;
   }
-  .showMd{
+  .Mnr .showMd{
     display: initial;
   }
-  .showFlexMd{
+  .Mnr .showFlexMd{
     display: flex;
   }
-  .showBlockMd{
+  .Mnr .showBlockMd{
     display: block;
   }
 }
 @media only screen and (max-width: 720px){
-  .hideSm{
+  .Mnr .hideSm{
     display: none;
   }
-  .showSm{
+  .Mnr .showSm{
     display: initial;
   }
-  .showFlexSm{
+  .Mnr .showFlexSm{
     display: flex;
   }
-  .showBlockSm{
+  .Mnr .showBlockSm{
     display: block;
   }
 }
 @media only screen and (max-width: 500px){
-  .hideXs{
+  .Mnr .hideXs{
     display: none;
   }
-  .showXs{
+  .Mnr .showXs{
     display: initial;
   }
-  .showFlexXs{
+  .Mnr .showFlexXs{
     display: flex;
   }
-  .showBlockXs{
+  .Mnr .showBlockXs{
     display: block;
   }
 }
@@ -5241,701 +5241,701 @@ section > *,
 
 
 /*////////////////////////////////////////////////////////////////Tamaños - Horizontal*/
-.width10{
+.Mnr .width10{
   width: 10%;
 }
-.width20{
+.Mnr .width20{
   width: 20%;
 }
-.width25{
+.Mnr .width25{
   width: 25%;
 }
-.width30{
+.Mnr .width30{
   width: 30%;
 }
-.width35{
+.Mnr .width35{
   width: 35%;
 }
-.width1-3{
+.Mnr .width1-3{
   width: 33.33%;
 }
-.width40{
+.Mnr .width40{
   width: 40%;
 }
-.width45{
+.Mnr .width45{
   width: 45%;
 }
-.width50{
+.Mnr .width50{
   width: 50%;
 }
-.width55{
+.Mnr .width55{
   width: 55%;
 }
-.width60{
+.Mnr .width60{
   width: 60%;
 }
-.width70{
+.Mnr .width70{
   width: 70%;
 }
-.width80{
+.Mnr .width80{
   width: 80%;
 }
-.width90{
+.Mnr .width90{
   width: 90%;
 }
-.width95{
+.Mnr .width95{
   width: 95%;
 }
-.widthFull{
+.Mnr .widthFull{
   width: 100%;
 }
-.widthFullvw{
+.Mnr .widthFullvw{
   width: 100vw;
 }
-.widthFullPads{
+.Mnr .widthFullPads{
   width: calc(100% - (var(--mnr-padSides) * 2) );
 }
-.maxWidthFullPads{
+.Mnr .maxWidthFullPads{
   max-width: calc(var(--mnr-contentWidth) - (var(--mnr-padSides) * 2) )!important;
 }
-.maxWidthInner{
+.Mnr .maxWidthInner{
   max-width: var(--mnr-innerContentWidth);
 }
-.widthAuto{
+.Mnr .widthAuto{
   width: auto;
 }
 
-.width2px{
+.Mnr .width2px{
   width: 2px;
 }
-.width50px{
+.Mnr .width50px{
   width: 50px;
 }
-.width100px{
+.Mnr .width100px{
   width: 100px;
 }
-.width200px{
+.Mnr .width200px{
   width: 200px;
 }
-.width250px{
+.Mnr .width250px{
   width: 250px;
 }
-.width300px{
+.Mnr .width300px{
   width: 300px;
 }
-.width400px{
+.Mnr .width400px{
   width: 400px;
 }
-.width450px{
+.Mnr .width450px{
   width: 450px;
 }
-.width500px{
+.Mnr .width500px{
   width: 500px;
 }
-.width800px{
+.Mnr .width800px{
   width: 800px;
 }
-.minWidth50px{
+.Mnr .minWidth50px{
   min-width: 50px;
 }
-.minWidth100px{
+.Mnr .minWidth100px{
   min-width: 100px;
 }
-.minWidth200px{
+.Mnr .minWidth200px{
   min-width: 200px;
 }
-.minWidth250px{
+.Mnr .minWidth250px{
   min-width: 250px;
 }
-.minWidth300px{
+.Mnr .minWidth300px{
   min-width: 300px;
 }
-.minWidth400px{
+.Mnr .minWidth400px{
   min-width: 400px;
 }
-.minWidth450px{
+.Mnr .minWidth450px{
   min-width: 450px;
 }
-.minWidth500px{
+.Mnr .minWidth500px{
   min-width: 500px;
 }
-.minWidth800px{
+.Mnr .minWidth800px{
   min-width: 800px;
 }
-.maxWidthFull{
+.Mnr .maxWidthFull{
   max-width: 100%;
 }
-.maxWidth50px{
+.Mnr .maxWidth50px{
   max-width: 50px;
 }
-.maxWidth100px{
+.Mnr .maxWidth100px{
   max-width: 100px;
 }
-.maxWidth200px{
+.Mnr .maxWidth200px{
   max-width: 200px;
 }
-.maxWidth250px{
+.Mnr .maxWidth250px{
   max-width: 250px;
 }
-.maxWidth300px{
+.Mnr .maxWidth300px{
   max-width: 300px;
 }
-.maxWidth400px{
+.Mnr .maxWidth400px{
   max-width: 400px;
 }
-.maxWidth450px{
+.Mnr .maxWidth450px{
   max-width: 450px;
 }
-.maxWidth500px{
+.Mnr .maxWidth500px{
   max-width: 500px;
 }
-.maxWidth800px{
+.Mnr .maxWidth800px{
   max-width: 800px;
 }
 
 @media only screen and (max-width: 1140px){
-  .width10Lg{
+  .Mnr .width10Lg{
     width: 10%;
   }
-  .width20Lg{
+  .Mnr .width20Lg{
     width: 20%;
   }
-  .width25Lg{
+  .Mnr .width25Lg{
     width: 25%;
   }
-  .width30Lg{
+  .Mnr .width30Lg{
     width: 30%;
   }
-  .width35Lg{
+  .Mnr .width35Lg{
     width: 35%;
   }
-  .width1-3Lg{
+  .Mnr .width1-3Lg{
     width: 33.33%;
   }
-  .width40Lg{
+  .Mnr .width40Lg{
     width: 40%;
   }
-  .width50Lg{
+  .Mnr .width50Lg{
     width: 50%;
   }
-  .width90Lg{
+  .Mnr .width90Lg{
     width: 90%;
   }
-  .widthFullLg{
+  .Mnr .widthFullLg{
     width: 100%;
   }
-  .widthFullvwLg{
+  .Mnr .widthFullvwLg{
     width: 100vw;
   }
-  .widthAutoLg{
+  .Mnr .widthAutoLg{
     width: auto;
   }
 }
 @media only screen and (max-width: 960px){
-  .width10Md{
+  .Mnr .width10Md{
     width: 10%;
   }
-  .width20Md{
+  .Mnr .width20Md{
     width: 20%;
   }
-  .width25Md{
+  .Mnr .width25Md{
     width: 25%;
   }
-  .width30Md{
+  .Mnr .width30Md{
     width: 30%;
   }
-  .width35Md{
+  .Mnr .width35Md{
     width: 35%;
   }
-  .width1-3Md{
+  .Mnr .width1-3Md{
     width: 33.33%;
   }
-  .width40Md{
+  .Mnr .width40Md{
     width: 40%;
   }
-  .width50Md{
+  .Mnr .width50Md{
     width: 50%;
   }
-  .width90Md{
+  .Mnr .width90Md{
     width: 90%;
   }
-  .widthFullMd{
+  .Mnr .widthFullMd{
     width: 100%;
   }
-  .widthFullvwMd{
+  .Mnr .widthFullvwMd{
     width: 100vw;
   }
-  .widthAutoMd{
+  .Mnr .widthAutoMd{
     width: auto;
   }
 }
 @media only screen and (max-width: 720px){
-  .width10Sm{
+  .Mnr .width10Sm{
     width: 10%;
   }
-  .width20Sm{
+  .Mnr .width20Sm{
     width: 20%;
   }
-  .width25Sm{
+  .Mnr .width25Sm{
     width: 25%;
   }
-  .width30Sm{
+  .Mnr .width30Sm{
     width: 30%;
   }
-  .width35Sm{
+  .Mnr .width35Sm{
     width: 35%;
   }
-  .width1-3Sm{
+  .Mnr .width1-3Sm{
     width: 33.33%;
   }
-  .width40Sm{
+  .Mnr .width40Sm{
     width: 40%;
   }
-  .width50Sm{
+  .Mnr .width50Sm{
     width: 50%;
   }
-  .width90Sm{
+  .Mnr .width90Sm{
     width: 90%;
   }
-  .widthFullSm{
+  .Mnr .widthFullSm{
     width: 100%;
   }
-  .widthFullvwSm{
+  .Mnr .widthFullvwSm{
     width: 100vw;
   }
-  .widthAutoSm{
+  .Mnr .widthAutoSm{
     width: auto;
   }
 }
 @media only screen and (max-width: 500px){
-  .width10Xs{
+  .Mnr .width10Xs{
     width: 10%;
   }
-  .width20Xs{
+  .Mnr .width20Xs{
     width: 20%;
   }
-  .width25Xs{
+  .Mnr .width25Xs{
     width: 25%;
   }
-  .width30Xs{
+  .Mnr .width30Xs{
     width: 30%;
   }
-  .width35Xs{
+  .Mnr .width35Xs{
     width: 35%;
   }
-  .width1-3Xs{
+  .Mnr .width1-3Xs{
     width: 33.33%;
   }
-  .width40Xs{
+  .Mnr .width40Xs{
     width: 40%;
   }
-  .width50Xs{
+  .Mnr .width50Xs{
     width: 50%;
   }
-  .width90Xs{
+  .Mnr .width90Xs{
     width: 90%;
   }
-  .widthFullXs{
+  .Mnr .widthFullXs{
     width: 100%;
   }
-  .widthFullvwXs{
+  .Mnr .widthFullvwXs{
     width: 100vw;
   }
-  .widthAutoXs{
+  .Mnr .widthAutoXs{
     width: auto;
   }
 }
 
 
 /*//////////////////////////////////////////////////////////////////Tamaños - Vertical*/
-.heightFull{
+.Mnr .heightFull{
   height: 100%;
 }
-.heightFullvh{
+.Mnr .heightFullvh{
   height: 100vh;
 }
-.heightAuto{
+.Mnr .heightAuto{
   height: auto;
 }
-.height2{
+.Mnr .height2{
   height: 2px;
 }
-.height50{
+.Mnr .height50{
   height: 50px;
 }
-.height80{
+.Mnr .height80{
   height: 80px;
 }
-.height100{
+.Mnr .height100{
   height: 100px;
 }
-.height150{
+.Mnr .height150{
   height: 150px;
 }
-.height200{
+.Mnr .height200{
   height: 200px;
 }
-.height300{
+.Mnr .height300{
   height: 300px;
 }
-.height400{
+.Mnr .height400{
   height: 400px;
 }
-.height500{
+.Mnr .height500{
   height: 500px;
 }
-.height600{
+.Mnr .height600{
   height: 600px;
 }
-.height700{
+.Mnr .height700{
   height: 700px;
 }
-.height800{
+.Mnr .height800{
   height: 800px;
 }
-.height900{
+.Mnr .height900{
   height: 900px;
 }
-.height1000{
+.Mnr .height1000{
   height: 1000px;
 }
-.maxHeight50{
+.Mnr .maxHeight50{
   max-height: 50px;
 }
-.maxHeight80{
+.Mnr .maxHeight80{
   max-height:80px;
 }
-.maxHeight100{
+.Mnr .maxHeight100{
   max-height:100px;
 }
-.maxHeight150{
+.Mnr .maxHeight150{
   max-height:100px;
 }
-.maxHeight200{
+.Mnr .maxHeight200{
   max-height: 200px;
 }
-.maxHeight300{
+.Mnr .maxHeight300{
   max-height: 300px;
 }
-.maxHeight400{
+.Mnr .maxHeight400{
   max-height: 400px;
 }
-.maxHeight500{
+.Mnr .maxHeight500{
   max-height: 500px;
 }
-.maxHeight600{
+.Mnr .maxHeight600{
   max-height: 600px;
 }
-.maxHeight700{
+.Mnr .maxHeight700{
   max-height: 700px;
 }
-.maxHeight800{
+.Mnr .maxHeight800{
   max-height: 800px;
 }
-.maxHeight900{
+.Mnr .maxHeight900{
   max-height: 900px;
 }
-.maxHeight1000{
+.Mnr .maxHeight1000{
   max-height: 1000px;
 }
-.minHeightFullvh{
+.Mnr .minHeightFullvh{
   min-height: 100vh;
 }
-.minHeightFull{
+.Mnr .minHeightFull{
   min-height: 100%;
 }
-.minHeight50{
+.Mnr .minHeight50{
   min-height: 50px;
 }
-.minHeight80{
+.Mnr .minHeight80{
   min-height: 80px;
 }
-.minHeight100{
+.Mnr .minHeight100{
   min-height: 100px;
 }
-.minHeight150{
+.Mnr .minHeight150{
   min-height: 150px;
 }
-.minHeight200{
+.Mnr .minHeight200{
   min-height: 200px;
 }
-.minHeight300{
+.Mnr .minHeight300{
   min-height: 300px;
 }
-.minHeight400{
+.Mnr .minHeight400{
   min-height: 400px;
 }
-.minHeight500{
+.Mnr .minHeight500{
   min-height: 500px;
 }
-.minHeight600{
+.Mnr .minHeight600{
   min-height: 600px;
 }
-.minHeight700{
+.Mnr .minHeight700{
   min-height: 700px;
 }
-.minHeight800{
+.Mnr .minHeight800{
   min-height: 800px;
 }
-.minHeight900{
+.Mnr .minHeight900{
   min-height: 900px;
 }
-.minHeight1000{
+.Mnr .minHeight1000{
   min-height: 1000px;
 }
 
 /*///////////////////////////////////////////////////////////////////////////Tamaños - Cuadrados*/
-.size10{
+.Mnr .size10{
   width: 10px;
   height: 10px;
 }
-.size15{
+.Mnr .size15{
   width: 15px;
   height: 15px;
 }
-.size20{
+.Mnr .size20{
   width: 20px;
   height: 20px;
 }
-.size25{
+.Mnr .size25{
   width: 25px;
   height: 25px;
 }
-.size30{
+.Mnr .size30{
   width: 30px;
   height: 30px;
 }
-.size35{
+.Mnr .size35{
   width: 35px;
   height: 35px;
 }
-.size40{
+.Mnr .size40{
   width: 40px;
   height: 40px;
 }
-.size50{
+.Mnr .size50{
   width: 50px;
   height: 50px;
 }
-.size60{
+.Mnr .size60{
   width: 60px;
   height: 60px;
 }
-.size80{
+.Mnr .size80{
   width: 80px;
   height: 80px;
 }
-.size90{
+.Mnr .size90{
   width: 90px;
   height: 90px;
 }
-.size100{
+.Mnr .size100{
   width: 100px;
   height: 100px;
 }
 
 @media only screen and (max-width: 1140px){
-  .size10Lg{
+  .Mnr .size10Lg{
     width: 10px;
     height: 10px;
   }
-  .size15Lg{
+  .Mnr .size15Lg{
     width: 15px;
     height: 15px;
   }
-  .size20Lg{
+  .Mnr .size20Lg{
     width: 20px;
     height: 20px;
   }
-  .size25Lg{
+  .Mnr .size25Lg{
     width: 25px;
     height: 25px;
   }
-  .size30Lg{
+  .Mnr .size30Lg{
     width: 30px;
     height: 30px;
   }
-  .size35Lg{
+  .Mnr .size35Lg{
     width: 35px;
     height: 35px;
   }
-  .size40Lg{
+  .Mnr .size40Lg{
     width: 40px;
     height: 40px;
   }
-  .size50Lg{
+  .Mnr .size50Lg{
     width: 50px;
     height: 50px;
   }
-  .size60Lg{
+  .Mnr .size60Lg{
     width: 60px;
     height: 60px;
   }
-  .size80Lg{
+  .Mnr .size80Lg{
     width: 80px;
     height: 80px;
   }
-  .size100Lg{
+  .Mnr .size100Lg{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 960px){
-  .size10Md{
+  .Mnr .size10Md{
     width: 10px;
     height: 10px;
   }
-  .size15Md{
+  .Mnr .size15Md{
     width: 15px;
     height: 15px;
   }
-  .size20Md{
+  .Mnr .size20Md{
     width: 20px;
     height: 20px;
   }
-  .size25Md{
+  .Mnr .size25Md{
     width: 25px;
     height: 25px;
   }
-  .size30Md{
+  .Mnr .size30Md{
     width: 30px;
     height: 30px;
   }
-  .size35Md{
+  .Mnr .size35Md{
     width: 35px;
     height: 35px;
   }
-  .size40Md{
+  .Mnr .size40Md{
     width: 40px;
     height: 40px;
   }
-  .size50Md{
+  .Mnr .size50Md{
     width: 50px;
     height: 50px;
   }
-  .size60Md{
+  .Mnr .size60Md{
     width: 60px;
     height: 60px;
   }
-  .size80Md{
+  .Mnr .size80Md{
     width: 80px;
     height: 80px;
   }
-  .size100Md{
+  .Mnr .size100Md{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 720px){
-  .size10Sm{
+  .Mnr .size10Sm{
     width: 10px;
     height: 10px;
   }
-  .size15Sm{
+  .Mnr .size15Sm{
     width: 15px;
     height: 15px;
   }
-  .size20Sm{
+  .Mnr .size20Sm{
     width: 20px;
     height: 20px;
   }
-  .size25Sm{
+  .Mnr .size25Sm{
     width: 25px;
     height: 25px;
   }
-  .size30Sm{
+  .Mnr .size30Sm{
     width: 30px;
     height: 30px;
   }
-  .size35Sm{
+  .Mnr .size35Sm{
     width: 35px;
     height: 35px;
   }
-  .size40Sm{
+  .Mnr .size40Sm{
     width: 40px;
     height: 40px;
   }
-  .size50Sm{
+  .Mnr .size50Sm{
     width: 50px;
     height: 50px;
   }
-  .size60Sm{
+  .Mnr .size60Sm{
     width: 60px;
     height: 60px;
   }
-  .size80Sm{
+  .Mnr .size80Sm{
     width: 80px;
     height: 80px;
   }
-  .size100Sm{
+  .Mnr .size100Sm{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 500px){
-  .size10Xs{
+  .Mnr .size10Xs{
     width: 10px;
     height: 10px;
   }
-  .size15Xs{
+  .Mnr .size15Xs{
     width: 15px;
     height: 15px;
   }
-  .size20Xs{
+  .Mnr .size20Xs{
     width: 20px;
     height: 20px;
   }
-  .size25Xs{
+  .Mnr .size25Xs{
     width: 25px;
     height: 25px;
   }
-  .size30Xs{
+  .Mnr .size30Xs{
     width: 30px;
     height: 30px;
   }
-  .size35Xs{
+  .Mnr .size35Xs{
     width: 35px;
     height: 35px;
   }
-  .size40Xs{
+  .Mnr .size40Xs{
     width: 40px;
     height: 40px;
   }
-  .size50Xs{
+  .Mnr .size50Xs{
     width: 50px;
     height: 50px;
   }
-  .size60Xs{
+  .Mnr .size60Xs{
     width: 60px;
     height: 60px;
   }
-  .size80Xs{
+  .Mnr .size80Xs{
     width: 80px;
     height: 80px;
   }
-  .size100Xs{
+  .Mnr .size100Xs{
     width: 100px;
     height: 100px;
   }
 }
 
 /*///////////////////////////////////////////////////////////////////////////Tamaños - Circulares*/
-.round{
+.Mnr .round{
   border-radius: 50%;
 }
-.round3{
+.Mnr .round3{
   border-radius: 3px;
 }
-.round6{
+.Mnr .round6{
   border-radius: 6px;
 }
-.round12{
+.Mnr .round12{
   border-radius: 12px;
 }
-.round22{
+.Mnr .round22{
   border-radius: 22px;
 }
-.round36{
+.Mnr .round36{
   border-radius: 36px;
 }
 
@@ -5994,27 +5994,27 @@ section{
 
 
 /*///////////////////////////////////////////////////////////Textos - Tamaños*/
-.fontS1,
+.Mnr .fontS1,
 h1{
   font-size:var(--mnr-fontS1);
 }
-.fontS2,
+.Mnr .fontS2,
 h2{
   font-size:var(--mnr-fontS2);
 }
-.fontS3,
+.Mnr .fontS3,
 h3{
   font-size:var(--mnr-fontS3);
 }
-.fontS4,
+.Mnr .fontS4,
 h4{
   font-size:var(--mnr-fontS4);
 }
-.fontS5,
+.Mnr .fontS5,
 h5{
   font-size:var(--mnr-fontS5);
 }
-.fontS6,
+.Mnr .fontS6,
 h6{
   font-size:var(--mnr-fontS6);
 }
@@ -6022,85 +6022,85 @@ h6{
 
 /*Lg*/
 @media only screen and (max-width: 1140px){ 
-  .fontS1Lg{
+  .Mnr .fontS1Lg{
     font-size:var(--mnr-fontS1);
   }
-  .fontS2Lg{
+  .Mnr .fontS2Lg{
     font-size:var(--mnr-fontS2);
   }
-  .fontS3Lg{
+  .Mnr .fontS3Lg{
     font-size:var(--mnr-fontS3);
   }
-  .fontS4Lg{
+  .Mnr .fontS4Lg{
     font-size:var(--mnr-fontS4);
   }
-  .fontS5Lg{
+  .Mnr .fontS5Lg{
     font-size:var(--mnr-fontS5);
   }
-  .fontS6Lg{
+  .Mnr .fontS6Lg{
     font-size:var(--mnr-fontS6);
   }
 }
 /*md*/
 @media only screen and (max-width: 960px){
-  .fontS1Md{
+  .Mnr .fontS1Md{
     font-size:var(--mnr-fontS1);
   }
-  .fontS2Md{
+  .Mnr .fontS2Md{
     font-size:var(--mnr-fontS2);
   }
-  .fontS3Md{
+  .Mnr .fontS3Md{
     font-size:var(--mnr-fontS3);
   }
-  .fontS4Md{
+  .Mnr .fontS4Md{
     font-size:var(--mnr-fontS4);
   }
-  .fontS5Md{
+  .Mnr .fontS5Md{
     font-size:var(--mnr-fontS5);
   }
-  .fontS6Md{
+  .Mnr .fontS6Md{
     font-size:var(--mnr-fontS6);
   }
 }
 /*sm*/
 @media only screen and (max-width: 720px){
-  .fontS1Sm{
+  .Mnr .fontS1Sm{
     font-size:var(--mnr-fontS1);
   }
-  .fontS2Sm{
+  .Mnr .fontS2Sm{
     font-size:var(--mnr-fontS2);
   }
-  .fontS3Sm{
+  .Mnr .fontS3Sm{
     font-size:var(--mnr-fontS3);
   }
-  .fontS4Sm{
+  .Mnr .fontS4Sm{
     font-size:var(--mnr-fontS4);
   }
-  .fontS5Sm{
+  .Mnr .fontS5Sm{
     font-size:var(--mnr-fontS5);
   }
-  .fontS6Sm{
+  .Mnr .fontS6Sm{
     font-size:var(--mnr-fontS6);
   }
 }
 /*xs*/
 @media only screen and (max-width: 500px){
-  .fontS1Xs{
+  .Mnr .fontS1Xs{
     font-size:var(--mnr-fontS1);
   }
-  .fontS2Xs{
+  .Mnr .fontS2Xs{
     font-size:var(--mnr-fontS2);
   }
-  .fontS3Xs{
+  .Mnr .fontS3Xs{
     font-size:var(--mnr-fontS3);
   }
-  .fontS4Xs{
+  .Mnr .fontS4Xs{
     font-size:var(--mnr-fontS4);
   }
-  .fontS5Xs{
+  .Mnr .fontS5Xs{
     font-size:var(--mnr-fontS5);
   }
-  .fontS6Xs{
+  .Mnr .fontS6Xs{
     font-size:var(--mnr-fontS6);
   }
 }
@@ -6121,38 +6121,38 @@ h6{
   margin:unset;
 }
 
-.fontRegular{
+.Mnr .fontRegular{
   font-family: "regular";
   line-height:  var(--mnr-lineHeight);
 }
-.fontRegular2{
+.Mnr .fontRegular2{
   font-family: "regular2";
   line-height:  var(--mnr-lineHeight);
 }
-.fontRegular3{
+.Mnr .fontRegular3{
   font-family: "regular3";
   line-height:  var(--mnr-lineHeight);
 }
-.fontTitle{
+.Mnr .fontTitle{
   font-family: "title";
   letter-spacing: var(--mnr-titleSpacing);
   line-height:  var(--mnr-titleLineHeight);
 }
-.fontTitle2{
+.Mnr .fontTitle2{
   font-family: "title2";
   letter-spacing: var(--mnr-titleSpacing);
   line-height:  var(--mnr-titleLineHeight);
 }
-.fontTitle3{
+.Mnr .fontTitle3{
   font-family: "title3";
   letter-spacing: var(--mnr-titleSpacing);
   line-height:  var(--mnr-titleLineHeight);
 }
 
-.fontBold{
+.Mnr .fontBold{
   font-weight: bold;
 }
-.fontLight{
+.Mnr .fontLight{
   font-weight: lighter;
 }
 strong{
@@ -6425,147 +6425,147 @@ button.disabled{
 
 /*/////////////////////////////////////////////////////////////////////////////*/
 /*//////////////////////////////////////////////////////////////////////Colores*/
-.color1{
+.Mnr .color1{
    color:var(--mnr-color1); 
 }
-.color2{
+.Mnr .color2{
    color:var(--mnr-color2);
 }
-.color3{
+.Mnr .color3{
    color:var(--mnr-color3);
 }
-.color4{
+.Mnr .color4{
   color:var(--mnr-color4);
 }
-.colorWarn{
+.Mnr .colorWarn{
   color:var(--mnr-colorWarn);
 }
-.colorOk{
+.Mnr .colorOk{
   color:var(--mnr-colorOk);
 }
-.colorWhite{
+.Mnr .colorWhite{
   color: var(--mnr-colorWhite);
 }
-.colorTWhite{
+.Mnr .colorTWhite{
   color: white;
 }
-.colorGray{
+.Mnr .colorGray{
   color: var(--mnr-colorGray);
 }
-.colorBlack{
+.Mnr .colorBlack{
   color:var(--mnr-colorBlack);
 }
-.colorRate{
+.Mnr .colorRate{
   color:var(--mnr-colorRate);
 }
 
-.backColor1{
+.Mnr .backColor1{
    background-color:var(--mnr-color1);
 }
-.backColor2{
+.Mnr .backColor2{
    background-color:var(--mnr-color2);
 }
-.backColor3{
+.Mnr .backColor3{
    background-color:var(--mnr-color3);
 }
-.backColor4{
+.Mnr .backColor4{
    background-color:var(--mnr-color4);
 }
-.backColorWhite{
+.Mnr .backColorWhite{
   background-color: var(--mnr-colorWhite);
 }
-.backColorTWhite{
+.Mnr .backColorTWhite{
   background-color: white;
 }
-.backColorBlack{
+.Mnr .backColorBlack{
   background-color:var(--mnr-colorBlack);
 }
-.backColorGray{
+.Mnr .backColorGray{
   background-color: var(--mnr-colorGray);
 }
-.backColorWarn{
+.Mnr .backColorWarn{
   background-color:var(--mnr-colorWarn);
 }
-.backColorOk{
+.Mnr .backColorOk{
  background-color:var(--mnr-colorOk);
 }
-.backColorRate{
+.Mnr .backColorRate{
   background-color:var(--mnr-colorRate);
 }
 
-.noBackColor{
+.Mnr .noBackColor{
   background-color: unset;
 }
-.backColorTrans{
+.Mnr .backColorTrans{
   background-color: rgba(0,0,0,0);
 }
 
-.svgColor1,.svgColor1 path{
+.Mnr .svgColor1,.Mnr .svgColor1 path{
   fill: var(--mnr-color1);
 }
-.svgColor2,.svgColor2 path{
+.Mnr .svgColor2,.Mnr .svgColor2 path{
   fill: var(--mnr-color2);
 }
-.svgColor3,.svgColor3 path{
+.Mnr .svgColor3,.Mnr .svgColor3 path{
   fill: var(--mnr-color3);
 }
-.svgColor4,.svgColor4 path{
+.Mnr .svgColor4,.Mnr .svgColor4 path{
   fill: var(--mnr-color4);
 }
-.svgColorWhite,.svgColorWhite path{
+.Mnr .svgColorWhite,.Mnr .svgColorWhite path{
   fill: var(--mnr-colorWhite);
 }
-.svgColorTWhite,.svgColorTWhite path{
+.Mnr .svgColorTWhite,.Mnr .svgColorTWhite path{
   fill: white;
 }
-.svgColorGray,.svgColorGray path{
+.Mnr .svgColorGray,.Mnr .svgColorGray path{
   fill: var(--mnr-colorGray);
 }
-.svgColorBlack,.svgColorBlack path{
+.Mnr .svgColorBlack,.Mnr .svgColorBlack path{
   fill:var(--mnr-colorBlack);
 }
-.svgColorOk,.svgColorOk path{
+.Mnr .svgColorOk,.Mnr .svgColorOk path{
   fill:var(--mnr-colorOk);
 }
-.svgColorWarn,.svgColorWarn path{
+.Mnr .svgColorWarn,.Mnr .svgColorWarn path{
   fill:var(--mnr-colorWarn);
 }
-.svgColorRate,.svgColorRate path{
+.Mnr .svgColorRate,.Mnr .svgColorRate path{
   fill:var(--mnr-colorRate);
 }
 
 
-.borderColor1{
+.Mnr .borderColor1{
     border:solid 2px var(--mnr-color1);
 }
-.borderColor2{
+.Mnr .borderColor2{
     border:solid 2px var(--mnr-color2);
 }
-.borderColor3{
+.Mnr .borderColor3{
     border:solid 2px var(--mnr-color3);
 }
-.borderColor4{
+.Mnr .borderColor4{
     border:solid 2px var(--mnr-color4);
 }
-.borderColorWhite{
+.Mnr .borderColorWhite{
    border:solid 2px  var(--mnr-colorWhite);
 }
-.borderColorTWhite{
+.Mnr .borderColorTWhite{
    border:solid 2px  white;
 }
-.borderColorBlack{
+.Mnr .borderColorBlack{
    border:solid 2px var(--mnr-colorBlack);
 }
-.borderColorGray{
+.Mnr .borderColorGray{
    border:solid 2px  var(--mnr-colorGray);
 }
-.borderColorWarn{
+.Mnr .borderColorWarn{
    border:solid 2px var(--mnr-colorWarn);
 }
-.borderColorOk{
+.Mnr .borderColorOk{
   border:solid 2px var(--mnr-colorOk);
 }
-.borderColorRate{
+.Mnr .borderColorRate{
    border:solid 2px var(--mnr-colorRate);
 }
 
@@ -6637,116 +6637,116 @@ button.toColorRate:hover *{
   color:var(--mnr-colorRate);
 }
 
-.toBackTrans:hover{
+.Mnr .toBackTrans:hover{
   background-color:rgba(0,0,0,0);
 }
-.toBackColor1:hover{
+.Mnr .toBackColor1:hover{
   background-color:var(--mnr-color1);
 }
-.toBackColor2:hover{
+.Mnr .toBackColor2:hover{
   background-color:var(--mnr-color2);
 }
-.toBackColor3:hover{
+.Mnr .toBackColor3:hover{
   background-color:var(--mnr-color3);
 }
-.toBackColor4:hover{
+.Mnr .toBackColor4:hover{
   background-color:var(--mnr-color4);
 }
-.toBackColorWhite:hover{
+.Mnr .toBackColorWhite:hover{
   background-color:var(--mnr-colorWhite);
 }
-.toBackColorTWhite:hover{
+.Mnr .toBackColorTWhite:hover{
   background-color:white;
 }
-.toBackColorBlack:hover{
+.Mnr .toBackColorBlack:hover{
   background-color:var(--mnr-colorBlack);
 }
-.toBackColorGray:hover{
+.Mnr .toBackColorGray:hover{
   background-color:var(--mnr-colorGray);
 }
-.toBackColorWarn:hover{
+.Mnr .toBackColorWarn:hover{
   background-color:var(--mnr-colorWarn);
 }
-.toBackColorOk:hover{
+.Mnr .toBackColorOk:hover{
   background-color:var(--mnr-colorOk);
 }
-.toBackColorRate:hover{
+.Mnr .toBackColorRate:hover{
   background-color:var(--mnr-colorRate);
 }
 
-.toSvgColor1:hover path,
-.toSvgColor1:hover .svg path,
-.toSvgColor1:hover .svg,
-.toSvgColor1:hover{
+.Mnr .toSvgColor1:hover path,
+.Mnr .toSvgColor1:hover .svg path,
+.Mnr .toSvgColor1:hover .svg,
+.Mnr .toSvgColor1:hover{
   fill:var(--mnr-color1);
 }
-.toSvgColor2:hover path,
-.toSvgColor2:hover .svg path,
-.toSvgColor2:hover .svg,
-.toSvgColor2:hover{
+.Mnr .toSvgColor2:hover path,
+.Mnr .toSvgColor2:hover .svg path,
+.Mnr .toSvgColor2:hover .svg,
+.Mnr .toSvgColor2:hover{
   fill:var(--mnr-color2);
 }
-.toSvgColor3:hover path,
-.toSvgColor3:hover .svg path,
-.toSvgColor3:hover .svg,
-.toSvgColor3:hover{
+.Mnr .toSvgColor3:hover path,
+.Mnr .toSvgColor3:hover .svg path,
+.Mnr .toSvgColor3:hover .svg,
+.Mnr .toSvgColor3:hover{
   fill:var(--mnr-color3);
 }
-.toSvgColor4:hover path,
-.toSvgColor4:hover .svg path,
-.toSvgColor4:hover .svg,
-.toSvgColor4:hover{
+.Mnr .toSvgColor4:hover path,
+.Mnr .toSvgColor4:hover .svg path,
+.Mnr .toSvgColor4:hover .svg,
+.Mnr .toSvgColor4:hover{
   fill:var(--mnr-color4);
 }
-.toSvgColorWhite:hover path,
-.toSvgColorWhite:hover .svg path,
-.toSvgColorWhite:hover .svg,
-.toSvgColorWhite:hover{
+.Mnr .toSvgColorWhite:hover path,
+.Mnr .toSvgColorWhite:hover .svg path,
+.Mnr .toSvgColorWhite:hover .svg,
+.Mnr .toSvgColorWhite:hover{
   fill:var(--mnr-colorWhite);
 }
-.toSvgColorTWhite:hover path,
-.toSvgColorTWhite:hover .svg path,
-.toSvgColorTWhite:hover .svg,
-.toSvgColorTWhite:hover{
+.Mnr .toSvgColorTWhite:hover path,
+.Mnr .toSvgColorTWhite:hover .svg path,
+.Mnr .toSvgColorTWhite:hover .svg,
+.Mnr .toSvgColorTWhite:hover{
   fill:white;
 }
-.toSvgColorBlack:hover path,
-.toSvgColorBlack:hover .svg path,
-.toSvgColorBlack:hover .svg,
-.toSvgColorBlack:hover{
+.Mnr .toSvgColorBlack:hover path,
+.Mnr .toSvgColorBlack:hover .svg path,
+.Mnr .toSvgColorBlack:hover .svg,
+.Mnr .toSvgColorBlack:hover{
   fill:var(--mnr-colorBlack);
 }
-.toSvgColorGray:hover path,
-.toSvgColorGray:hover .svg path,
-.toSvgColorGray:hover .svg,
-.toSvgColorGray:hover{
+.Mnr .toSvgColorGray:hover path,
+.Mnr .toSvgColorGray:hover .svg path,
+.Mnr .toSvgColorGray:hover .svg,
+.Mnr .toSvgColorGray:hover{
   fill:var(--mnr-colorGray);
 }
-.toSvgColorWarn:hover path,
-.toSvgColorWarn:hover .svg path,
-.toSvgColorWarn:hover .svg,
-.toSvgColorWarn:hover{
+.Mnr .toSvgColorWarn:hover path,
+.Mnr .toSvgColorWarn:hover .svg path,
+.Mnr .toSvgColorWarn:hover .svg,
+.Mnr .toSvgColorWarn:hover{
   fill:var(--mnr-colorWarn);
 }
-.toSvgColorOk:hover path,
-.toSvgColorOk:hover .svg path,
-.toSvgColorOk:hover .svg,
-.toSvgColorOk:hover{
+.Mnr .toSvgColorOk:hover path,
+.Mnr .toSvgColorOk:hover .svg path,
+.Mnr .toSvgColorOk:hover .svg,
+.Mnr .toSvgColorOk:hover{
   fill:var(--mnr-colorOk);
 }
-.toSvgColorRate:hover path,
-.toSvgColorRate:hover .svg path,
-.toSvgColorRate:hover .svg,
-.toSvgColorRate:hover{
+.Mnr .toSvgColorRate:hover path,
+.Mnr .toSvgColorRate:hover .svg path,
+.Mnr .toSvgColorRate:hover .svg,
+.Mnr .toSvgColorRate:hover{
   fill:var(--mnr-colorRate);
 }
 
 
-.shadow{
+.Mnr .shadow{
   box-shadow: 0px 4px 4px 4px rgb(0 0 0 / 10%);
   -webkit-box-shadow: 0px 4px 4px 4px rgb(0 0 0 / 10%);
 }
-.shadowScreen{
+.Mnr .shadowScreen{
   background-color: rgba(47,47,47,0.4);
 }
 
