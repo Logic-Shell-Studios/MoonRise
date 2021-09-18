@@ -6952,13 +6952,13 @@ button.toColorRate:hover *{
 .swiper-button-next,
 .swiper-button-prev {
   width: 40px;
-  height: 60px;
+  height: 40px;
   background-image: none;
 }
 .swiper-button-next *,
 .swiper-button-prev *{
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 .swiper-pagination{
   position: relative;
