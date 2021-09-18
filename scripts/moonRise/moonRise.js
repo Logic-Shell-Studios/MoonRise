@@ -25,6 +25,8 @@ var Mnr = (function(){
     scrollOld: 0,
     timeAddStatus: null,
     scrollImg:{dones:0,elems:[]},
+    componentsHTML:[],
+    componentsCount:0,
     classBinds: [],
     forBinds: [],
     imgBinds: [],
@@ -120,7 +122,9 @@ var Mnr = (function(){
     
       this.addEvent('scroll',window,()=>{ this.handleScroll() });
       this.addEvent('resize',window,()=>{ this.handleResize() });
-      //excetues once at finishLoad
+      
+
+      this.insertComponents();
 
 
       // manage media loading
@@ -304,7 +308,6 @@ var Mnr = (function(){
       this.runAllBinds();
       // console.log(this.binds);
       // console.log(this.binders);
-
     },
     Bind: function(prop){
         let value = this.binds[prop];
@@ -343,7 +346,6 @@ var Mnr = (function(){
         });
         this.binds[prop] = value;
     },
-
     runAllBinds(){
       this.runBindMaxText(true);
       this.runBindfors(true);
@@ -631,6 +633,37 @@ var Mnr = (function(){
       // }
       this.binds.windowWidth = width;
       this.binds.windowHeight = height;
+    },
+
+
+    insertComponents: function(){
+      this.componentsHTML = document.querySelectorAll('mnr-include');
+      this.processComponents(this.componentsCount);
+    },
+    processComponents(){
+      if(this.componentsHTML.length <= this.componentsCount){
+         this.componentsCount = 0;
+         this.componentsHTML = [];
+         return;
+      }
+      if(this.componentsHTML[Mnr.componentsCount].hasAttribute('component')){
+        let data = this.componentsHTML[Mnr.componentsCount].getAttribute('component');
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4){
+              if (this.status == 200) {
+                 Mnr.componentsHTML[Mnr.componentsCount].insertAdjacentHTML('afterend', this.responseText );
+              }
+              Mnr.componentsHTML[Mnr.componentsCount].remove();
+              Mnr.componentsCount++;
+              Mnr.processComponents();
+            }
+        };
+        xhttp.open("GET", data, true);
+        xhttp.send();
+        return;
+      }
     },
     
 

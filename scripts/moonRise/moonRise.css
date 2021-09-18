@@ -4904,7 +4904,7 @@ section > *,
   padding-right: 40px;
 }
 .padTGttr{
-  padding-bottom: var(--mnr-gutter);
+  padding-top: var(--mnr-gutter);
 }
 .padT100{
   padding-top: 100px;
@@ -5142,94 +5142,94 @@ section > *,
   opacity: 1;
 }
 
-.Mnr .displayBlock{
+.displayBlock{
   display: block;
 }
-.Mnr .displayInBlock{
+.displayInBlock{
   display: inline-block;
 }
 
 .mnrHide{
   display: none!important;
 }
-.Mnr .hide,
-.Mnr .showSm,
-.Mnr .showFlexSm,
-.Mnr .showBlockSm,
-.Mnr .showXs,
-.Mnr .showFlexXs,
-.Mnr .showBlockXs,
-.Mnr .showMd,
-.Mnr .showFlexMd,
-.Mnr .showBlockMd,
-.Mnr .showLg,
-.Mnr .showFlexLg,
-.Mnr .showBlockLg{
+.hide,
+.showSm,
+.showFlexSm,
+.showBlockSm,
+.showXs,
+.showFlexXs,
+.showBlockXs,
+.showMd,
+.showFlexMd,
+.showBlockMd,
+.showLg,
+.showFlexLg,
+.showBlockLg{
   display: none;
 }
-.Mnr .show{
+.show{
   display: initial;
 }
-.Mnr .showFlex{
+.showFlex{
   display: flex;
 }
-.Mnr .showBlock{
+.showBlock{
   display: block;
 }
 
 @media only screen and (max-width: 1140px){
-  .Mnr .hideLg{
+  .hideLg{
     display: none;
   }
-  .Mnr .showLg{
+  .showLg{
     display: initial;
   }
-  .Mnr .showFlexLg{
+  .showFlexLg{
     display: flex;
   }
-  .Mnr .showBlockLg{
+  .showBlockLg{
     display: block;
   }
 }
 @media only screen and (max-width: 960px){
-  .Mnr .hideMd{
+  .hideMd{
     display: none;
   }
-  .Mnr .showMd{
+  .showMd{
     display: initial;
   }
-  .Mnr .showFlexMd{
+  .showFlexMd{
     display: flex;
   }
-  .Mnr .showBlockMd{
+  .showBlockMd{
     display: block;
   }
 }
 @media only screen and (max-width: 720px){
-  .Mnr .hideSm{
+  .hideSm{
     display: none;
   }
-  .Mnr .showSm{
+  .showSm{
     display: initial;
   }
-  .Mnr .showFlexSm{
+  .showFlexSm{
     display: flex;
   }
-  .Mnr .showBlockSm{
+  .showBlockSm{
     display: block;
   }
 }
 @media only screen and (max-width: 500px){
-  .Mnr .hideXs{
+  .hideXs{
     display: none;
   }
-  .Mnr .showXs{
+  .showXs{
     display: initial;
   }
-  .Mnr .showFlexXs{
+  .showFlexXs{
     display: flex;
   }
-  .Mnr .showBlockXs{
+  .showBlockXs{
     display: block;
   }
 }
@@ -5241,698 +5241,698 @@ section > *,
 
 
 /*////////////////////////////////////////////////////////////////Tamaños - Horizontal*/
-.Mnr .width10{
+.width10{
   width: 10%;
 }
-.Mnr .width20{
+.width20{
   width: 20%;
 }
-.Mnr .width25{
+.width25{
   width: 25%;
 }
-.Mnr .width30{
+.width30{
   width: 30%;
 }
-.Mnr .width35{
+.width35{
   width: 35%;
 }
-.Mnr .width1-3{
+.width1-3{
   width: 33.33%;
 }
-.Mnr .width40{
+.width40{
   width: 40%;
 }
-.Mnr .width45{
+.width45{
   width: 45%;
 }
-.Mnr .width50{
+.width50{
   width: 50%;
 }
-.Mnr .width55{
+.width55{
   width: 55%;
 }
-.Mnr .width60{
+.width60{
   width: 60%;
 }
-.Mnr .width70{
+.width70{
   width: 70%;
 }
-.Mnr .width80{
+.width80{
   width: 80%;
 }
-.Mnr .width90{
+.width90{
   width: 90%;
 }
-.Mnr .width95{
+.width95{
   width: 95%;
 }
-.Mnr .widthFull{
+.widthFull{
   width: 100%;
 }
-.Mnr .widthFullvw{
+.widthFullvw{
   width: 100vw;
 }
-.Mnr .widthFullPads{
+.widthFullPads{
   width: calc(100% - (var(--mnr-padSides) * 2) );
 }
-.Mnr .maxWidthFullPads{
+.maxWidthFullPads{
   max-width: calc(var(--mnr-contentWidth) - (var(--mnr-padSides) * 2) )!important;
 }
-.Mnr .widthAuto{
+.widthAuto{
   width: auto;
 }
 
-.Mnr .width2px{
+.width2px{
   width: 2px;
 }
-.Mnr .width50px{
+.width50px{
   width: 50px;
 }
-.Mnr .width100px{
+.width100px{
   width: 100px;
 }
-.Mnr .width200px{
+.width200px{
   width: 200px;
 }
-.Mnr .width250px{
+.width250px{
   width: 250px;
 }
-.Mnr .width300px{
+.width300px{
   width: 300px;
 }
-.Mnr .width400px{
+.width400px{
   width: 400px;
 }
-.Mnr .width450px{
+.width450px{
   width: 450px;
 }
-.Mnr .width500px{
+.width500px{
   width: 500px;
 }
-.Mnr .width800px{
+.width800px{
   width: 800px;
 }
-.Mnr .minWidth50px{
+.minWidth50px{
   min-width: 50px;
 }
-.Mnr .minWidth100px{
+.minWidth100px{
   min-width: 100px;
 }
-.Mnr .minWidth200px{
+.minWidth200px{
   min-width: 200px;
 }
-.Mnr .minWidth250px{
+.minWidth250px{
   min-width: 250px;
 }
-.Mnr .minWidth300px{
+.minWidth300px{
   min-width: 300px;
 }
-.Mnr .minWidth400px{
+.minWidth400px{
   min-width: 400px;
 }
-.Mnr .minWidth450px{
+.minWidth450px{
   min-width: 450px;
 }
-.Mnr .minWidth500px{
+.minWidth500px{
   min-width: 500px;
 }
-.Mnr .minWidth800px{
+.minWidth800px{
   min-width: 800px;
 }
-.Mnr .maxWidthFull{
+.maxWidthFull{
   max-width: 100%;
 }
-.Mnr .maxWidth50px{
+.maxWidth50px{
   max-width: 50px;
 }
-.Mnr .maxWidth100px{
+.maxWidth100px{
   max-width: 100px;
 }
-.Mnr .maxWidth200px{
+.maxWidth200px{
   max-width: 200px;
 }
-.Mnr .maxWidth250px{
+.maxWidth250px{
   max-width: 250px;
 }
-.Mnr .maxWidth300px{
+.maxWidth300px{
   max-width: 300px;
 }
-.Mnr .maxWidth400px{
+.maxWidth400px{
   max-width: 400px;
 }
-.Mnr .maxWidth450px{
+.maxWidth450px{
   max-width: 450px;
 }
-.Mnr .maxWidth500px{
+.maxWidth500px{
   max-width: 500px;
 }
-.Mnr .maxWidth800px{
+.maxWidth800px{
   max-width: 800px;
 }
 
 @media only screen and (max-width: 1140px){
-  .Mnr .width10Lg{
+  .width10Lg{
     width: 10%;
   }
-  .Mnr .width20Lg{
+  .width20Lg{
     width: 20%;
   }
-  .Mnr .width25Lg{
+  .width25Lg{
     width: 25%;
   }
-  .Mnr .width30Lg{
+  .width30Lg{
     width: 30%;
   }
-  .Mnr .width35Lg{
+  .width35Lg{
     width: 35%;
   }
-  .Mnr .width1-3Lg{
+  .width1-3Lg{
     width: 33.33%;
   }
-  .Mnr .width40Lg{
+  .width40Lg{
     width: 40%;
   }
-  .Mnr .width50Lg{
+  .width50Lg{
     width: 50%;
   }
-  .Mnr .width90Lg{
+  .width90Lg{
     width: 90%;
   }
-  .Mnr .widthFullLg{
+  .widthFullLg{
     width: 100%;
   }
-  .Mnr .widthFullvwLg{
+  .widthFullvwLg{
     width: 100vw;
   }
-  .Mnr .widthAutoLg{
+  .widthAutoLg{
     width: auto;
   }
 }
 @media only screen and (max-width: 960px){
-  .Mnr .width10Md{
+  .width10Md{
     width: 10%;
   }
-  .Mnr .width20Md{
+  .width20Md{
     width: 20%;
   }
-  .Mnr .width25Md{
+  .width25Md{
     width: 25%;
   }
-  .Mnr .width30Md{
+  .width30Md{
     width: 30%;
   }
-  .Mnr .width35Md{
+  .width35Md{
     width: 35%;
   }
-  .Mnr .width1-3Md{
+  .width1-3Md{
     width: 33.33%;
   }
-  .Mnr .width40Md{
+  .width40Md{
     width: 40%;
   }
-  .Mnr .width50Md{
+  .width50Md{
     width: 50%;
   }
-  .Mnr .width90Md{
+  .width90Md{
     width: 90%;
   }
-  .Mnr .widthFullMd{
+  .widthFullMd{
     width: 100%;
   }
-  .Mnr .widthFullvwMd{
+  .widthFullvwMd{
     width: 100vw;
   }
-  .Mnr .widthAutoMd{
+  .widthAutoMd{
     width: auto;
   }
 }
 @media only screen and (max-width: 720px){
-  .Mnr .width10Sm{
+  .width10Sm{
     width: 10%;
   }
-  .Mnr .width20Sm{
+  .width20Sm{
     width: 20%;
   }
-  .Mnr .width25Sm{
+  .width25Sm{
     width: 25%;
   }
-  .Mnr .width30Sm{
+  .width30Sm{
     width: 30%;
   }
-  .Mnr .width35Sm{
+  .width35Sm{
     width: 35%;
   }
-  .Mnr .width1-3Sm{
+  .width1-3Sm{
     width: 33.33%;
   }
-  .Mnr .width40Sm{
+  .width40Sm{
     width: 40%;
   }
-  .Mnr .width50Sm{
+  .width50Sm{
     width: 50%;
   }
-  .Mnr .width90Sm{
+  .width90Sm{
     width: 90%;
   }
-  .Mnr .widthFullSm{
+  .widthFullSm{
     width: 100%;
   }
-  .Mnr .widthFullvwSm{
+  .widthFullvwSm{
     width: 100vw;
   }
-  .Mnr .widthAutoSm{
+  .widthAutoSm{
     width: auto;
   }
 }
 @media only screen and (max-width: 500px){
-  .Mnr .width10Xs{
+  .width10Xs{
     width: 10%;
   }
-  .Mnr .width20Xs{
+  .width20Xs{
     width: 20%;
   }
-  .Mnr .width25Xs{
+  .width25Xs{
     width: 25%;
   }
-  .Mnr .width30Xs{
+  .width30Xs{
     width: 30%;
   }
-  .Mnr .width35Xs{
+  .width35Xs{
     width: 35%;
   }
-  .Mnr .width1-3Xs{
+  .width1-3Xs{
     width: 33.33%;
   }
-  .Mnr .width40Xs{
+  .width40Xs{
     width: 40%;
   }
-  .Mnr .width50Xs{
+  .width50Xs{
     width: 50%;
   }
-  .Mnr .width90Xs{
+  .width90Xs{
     width: 90%;
   }
-  .Mnr .widthFullXs{
+  .widthFullXs{
     width: 100%;
   }
-  .Mnr .widthFullvwXs{
+  .widthFullvwXs{
     width: 100vw;
   }
-  .Mnr .widthAutoXs{
+  .widthAutoXs{
     width: auto;
   }
 }
 
 
 /*//////////////////////////////////////////////////////////////////Tamaños - Vertical*/
-.Mnr .heightFull{
+.heightFull{
   height: 100%;
 }
-.Mnr .heightFullvh{
+.heightFullvh{
   height: 100vh;
 }
-.Mnr .heightAuto{
+.heightAuto{
   height: auto;
 }
-.Mnr .height2{
+.height2{
   height: 2px;
 }
-.Mnr .height50{
+.height50{
   height: 50px;
 }
-.Mnr .height80{
+.height80{
   height: 80px;
 }
-.Mnr .height100{
+.height100{
   height: 100px;
 }
-.Mnr .height150{
+.height150{
   height: 150px;
 }
-.Mnr .height200{
+.height200{
   height: 200px;
 }
-.Mnr .height300{
+.height300{
   height: 300px;
 }
-.Mnr .height400{
+.height400{
   height: 400px;
 }
-.Mnr .height500{
+.height500{
   height: 500px;
 }
-.Mnr .height600{
+.height600{
   height: 600px;
 }
-.Mnr .height700{
+.height700{
   height: 700px;
 }
-.Mnr .height800{
+.height800{
   height: 800px;
 }
-.Mnr .height900{
+.height900{
   height: 900px;
 }
-.Mnr .height1000{
+.height1000{
   height: 1000px;
 }
-.Mnr .maxHeight50{
+.maxHeight50{
   max-height: 50px;
 }
-.Mnr .maxHeight80{
+.maxHeight80{
   max-height:80px;
 }
-.Mnr .maxHeight100{
+.maxHeight100{
   max-height:100px;
 }
-.Mnr .maxHeight150{
+.maxHeight150{
   max-height:100px;
 }
-.Mnr .maxHeight200{
+.maxHeight200{
   max-height: 200px;
 }
-.Mnr .maxHeight300{
+.maxHeight300{
   max-height: 300px;
 }
-.Mnr .maxHeight400{
+.maxHeight400{
   max-height: 400px;
 }
-.Mnr .maxHeight500{
+.maxHeight500{
   max-height: 500px;
 }
-.Mnr .maxHeight600{
+.maxHeight600{
   max-height: 600px;
 }
-.Mnr .maxHeight700{
+.maxHeight700{
   max-height: 700px;
 }
-.Mnr .maxHeight800{
+.maxHeight800{
   max-height: 800px;
 }
-.Mnr .maxHeight900{
+.maxHeight900{
   max-height: 900px;
 }
-.Mnr .maxHeight1000{
+.maxHeight1000{
   max-height: 1000px;
 }
-.Mnr .minHeightFullvh{
+.minHeightFullvh{
   min-height: 100vh;
 }
-.Mnr .minHeightFull{
+.minHeightFull{
   min-height: 100%;
 }
-.Mnr .minHeight50{
+.minHeight50{
   min-height: 50px;
 }
-.Mnr .minHeight80{
+.minHeight80{
   min-height: 80px;
 }
-.Mnr .minHeight100{
+.minHeight100{
   min-height: 100px;
 }
-.Mnr .minHeight150{
+.minHeight150{
   min-height: 150px;
 }
-.Mnr .minHeight200{
+.minHeight200{
   min-height: 200px;
 }
-.Mnr .minHeight300{
+.minHeight300{
   min-height: 300px;
 }
-.Mnr .minHeight400{
+.minHeight400{
   min-height: 400px;
 }
-.Mnr .minHeight500{
+.minHeight500{
   min-height: 500px;
 }
-.Mnr .minHeight600{
+.minHeight600{
   min-height: 600px;
 }
-.Mnr .minHeight700{
+.minHeight700{
   min-height: 700px;
 }
-.Mnr .minHeight800{
+.minHeight800{
   min-height: 800px;
 }
-.Mnr .minHeight900{
+.minHeight900{
   min-height: 900px;
 }
-.Mnr .minHeight1000{
+.minHeight1000{
   min-height: 1000px;
 }
 
 /*///////////////////////////////////////////////////////////////////////////Tamaños - Cuadrados*/
-.Mnr .size10{
+.size10{
   width: 10px;
   height: 10px;
 }
-.Mnr .size15{
+.size15{
   width: 15px;
   height: 15px;
 }
-.Mnr .size20{
+.size20{
   width: 20px;
   height: 20px;
 }
-.Mnr .size25{
+.size25{
   width: 25px;
   height: 25px;
 }
-.Mnr .size30{
+.size30{
   width: 30px;
   height: 30px;
 }
-.Mnr .size35{
+.size35{
   width: 35px;
   height: 35px;
 }
-.Mnr .size40{
+.size40{
   width: 40px;
   height: 40px;
 }
-.Mnr .size50{
+.size50{
   width: 50px;
   height: 50px;
 }
-.Mnr .size60{
+.size60{
   width: 60px;
   height: 60px;
 }
-.Mnr .size80{
+.size80{
   width: 80px;
   height: 80px;
 }
-.Mnr .size90{
+.size90{
   width: 90px;
   height: 90px;
 }
-.Mnr .size100{
+.size100{
   width: 100px;
   height: 100px;
 }
 
 @media only screen and (max-width: 1140px){
-  .Mnr .size10Lg{
+  .size10Lg{
     width: 10px;
     height: 10px;
   }
-  .Mnr .size15Lg{
+  .size15Lg{
     width: 15px;
     height: 15px;
   }
-  .Mnr .size20Lg{
+  .size20Lg{
     width: 20px;
     height: 20px;
   }
-  .Mnr .size25Lg{
+  .size25Lg{
     width: 25px;
     height: 25px;
   }
-  .Mnr .size30Lg{
+  .size30Lg{
     width: 30px;
     height: 30px;
   }
-  .Mnr .size35Lg{
+  .size35Lg{
     width: 35px;
     height: 35px;
   }
-  .Mnr .size40Lg{
+  .size40Lg{
     width: 40px;
     height: 40px;
   }
-  .Mnr .size50Lg{
+  .size50Lg{
     width: 50px;
     height: 50px;
   }
-  .Mnr .size60Lg{
+  .size60Lg{
     width: 60px;
     height: 60px;
   }
-  .Mnr .size80Lg{
+  .size80Lg{
     width: 80px;
     height: 80px;
   }
-  .Mnr .size100Lg{
+  .size100Lg{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 960px){
-  .Mnr .size10Md{
+  .size10Md{
     width: 10px;
     height: 10px;
   }
-  .Mnr .size15Md{
+  .size15Md{
     width: 15px;
     height: 15px;
   }
-  .Mnr .size20Md{
+  .size20Md{
     width: 20px;
     height: 20px;
   }
-  .Mnr .size25Md{
+  .size25Md{
     width: 25px;
     height: 25px;
   }
-  .Mnr .size30Md{
+  .size30Md{
     width: 30px;
     height: 30px;
   }
-  .Mnr .size35Md{
+  .size35Md{
     width: 35px;
     height: 35px;
   }
-  .Mnr .size40Md{
+  .size40Md{
     width: 40px;
     height: 40px;
   }
-  .Mnr .size50Md{
+  .size50Md{
     width: 50px;
     height: 50px;
   }
-  .Mnr .size60Md{
+  .size60Md{
     width: 60px;
     height: 60px;
   }
-  .Mnr .size80Md{
+  .size80Md{
     width: 80px;
     height: 80px;
   }
-  .Mnr .size100Md{
+  .size100Md{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 720px){
-  .Mnr .size10Sm{
+  .size10Sm{
     width: 10px;
     height: 10px;
   }
-  .Mnr .size15Sm{
+  .size15Sm{
     width: 15px;
     height: 15px;
   }
-  .Mnr .size20Sm{
+  .size20Sm{
     width: 20px;
     height: 20px;
   }
-  .Mnr .size25Sm{
+  .size25Sm{
     width: 25px;
     height: 25px;
   }
-  .Mnr .size30Sm{
+  .size30Sm{
     width: 30px;
     height: 30px;
   }
-  .Mnr .size35Sm{
+  .size35Sm{
     width: 35px;
     height: 35px;
   }
-  .Mnr .size40Sm{
+  .size40Sm{
     width: 40px;
     height: 40px;
   }
-  .Mnr .size50Sm{
+  .size50Sm{
     width: 50px;
     height: 50px;
   }
-  .Mnr .size60Sm{
+  .size60Sm{
     width: 60px;
     height: 60px;
   }
-  .Mnr .size80Sm{
+  .size80Sm{
     width: 80px;
     height: 80px;
   }
-  .Mnr .size100Sm{
+  .size100Sm{
     width: 100px;
     height: 100px;
   }
 }
 @media only screen and (max-width: 500px){
-  .Mnr .size10Xs{
+  .size10Xs{
     width: 10px;
     height: 10px;
   }
-  .Mnr .size15Xs{
+  .size15Xs{
     width: 15px;
     height: 15px;
   }
-  .Mnr .size20Xs{
+  .size20Xs{
     width: 20px;
     height: 20px;
   }
-  .Mnr .size25Xs{
+  .size25Xs{
     width: 25px;
     height: 25px;
   }
-  .Mnr .size30Xs{
+  .size30Xs{
     width: 30px;
     height: 30px;
   }
-  .Mnr .size35Xs{
+  .size35Xs{
     width: 35px;
     height: 35px;
   }
-  .Mnr .size40Xs{
+  .size40Xs{
     width: 40px;
     height: 40px;
   }
-  .Mnr .size50Xs{
+  .size50Xs{
     width: 50px;
     height: 50px;
   }
-  .Mnr .size60Xs{
+  .size60Xs{
     width: 60px;
     height: 60px;
   }
-  .Mnr .size80Xs{
+  .size80Xs{
     width: 80px;
     height: 80px;
   }
-  .Mnr .size100Xs{
+  .size100Xs{
     width: 100px;
     height: 100px;
   }
 }
 
 /*///////////////////////////////////////////////////////////////////////////Tamaños - Circulares*/
-.Mnr .round{
+.round{
   border-radius: 50%;
 }
-.Mnr .round3{
+.round3{
   border-radius: 3px;
 }
-.Mnr .round6{
+.round6{
   border-radius: 6px;
 }
-.Mnr .round12{
+.round12{
   border-radius: 12px;
 }
-.Mnr .round22{
+.round22{
   border-radius: 22px;
 }
-.Mnr .round36{
+.round36{
   border-radius: 36px;
 }
 
@@ -5943,24 +5943,24 @@ section > *,
 
 
 /*///////////////////////////////////////////////////////////Textos - Normalizacion*/
-.Mnr a{
+a{
   color: inherit; 
   text-decoration: none; 
   outline: none;
   font-size: inherit;
 }
-.Mnr a:focus{
+a:focus{
   outline: none; 
   color: none;
 }
-.Mnr a:hover{
+a:hover{
   text-decoration: none; 
   outline: none; 
 }
-.Mnr span{
+span{
   font-size: inherit;
 }
-.Mnr ul{
+ul{
   padding-left: 20px;
 }
 
@@ -5991,113 +5991,113 @@ section{
 
 
 /*///////////////////////////////////////////////////////////Textos - Tamaños*/
-.Mnr .fontS1,
-.Mnr h1{
+.fontS1,
+h1{
   font-size:var(--mnr-fontS1);
 }
-.Mnr .fontS2,
-.Mnr h2{
+.fontS2,
+h2{
   font-size:var(--mnr-fontS2);
 }
-.Mnr .fontS3,
-.Mnr h3{
+.fontS3,
+h3{
   font-size:var(--mnr-fontS3);
 }
-.Mnr .fontS4,
-.Mnr h4{
+.fontS4,
+h4{
   font-size:var(--mnr-fontS4);
 }
-.Mnr .fontS5,
-.Mnr h5{
+.fontS5,
+h5{
   font-size:var(--mnr-fontS5);
 }
-.Mnr .fontS6,
-.Mnr h6{
+.fontS6,
+h6{
   font-size:var(--mnr-fontS6);
 }
 
 
 /*Lg*/
 @media only screen and (max-width: 1140px){ 
-  .Mnr .fontS1Lg{
+  .fontS1Lg{
     font-size:var(--mnr-fontS1);
   }
-  .Mnr .fontS2Lg{
+  .fontS2Lg{
     font-size:var(--mnr-fontS2);
   }
-  .Mnr .fontS3Lg{
+  .fontS3Lg{
     font-size:var(--mnr-fontS3);
   }
-  .Mnr .fontS4Lg{
+  .fontS4Lg{
     font-size:var(--mnr-fontS4);
   }
-  .Mnr .fontS5Lg{
+  .fontS5Lg{
     font-size:var(--mnr-fontS5);
   }
-  .Mnr .fontS6Lg{
+  .fontS6Lg{
     font-size:var(--mnr-fontS6);
   }
 }
 /*md*/
 @media only screen and (max-width: 960px){
-  .Mnr .fontS1Md{
+  .fontS1Md{
     font-size:var(--mnr-fontS1);
   }
-  .Mnr .fontS2Md{
+  .fontS2Md{
     font-size:var(--mnr-fontS2);
   }
-  .Mnr .fontS3Md{
+  .fontS3Md{
     font-size:var(--mnr-fontS3);
   }
-  .Mnr .fontS4Md{
+  .fontS4Md{
     font-size:var(--mnr-fontS4);
   }
-  .Mnr .fontS5Md{
+  .fontS5Md{
     font-size:var(--mnr-fontS5);
   }
-  .Mnr .fontS6Md{
+  .fontS6Md{
     font-size:var(--mnr-fontS6);
   }
 }
 /*sm*/
 @media only screen and (max-width: 720px){
-  .Mnr .fontS1Sm{
+  .fontS1Sm{
     font-size:var(--mnr-fontS1);
   }
-  .Mnr .fontS2Sm{
+  .fontS2Sm{
     font-size:var(--mnr-fontS2);
   }
-  .Mnr .fontS3Sm{
+  .fontS3Sm{
     font-size:var(--mnr-fontS3);
   }
-  .Mnr .fontS4Sm{
+  .fontS4Sm{
     font-size:var(--mnr-fontS4);
   }
-  .Mnr .fontS5Sm{
+  .fontS5Sm{
     font-size:var(--mnr-fontS5);
   }
-  .Mnr .fontS6Sm{
+  .fontS6Sm{
     font-size:var(--mnr-fontS6);
   }
 }
 /*xs*/
 @media only screen and (max-width: 500px){
-  .Mnr .fontS1Xs{
+  .fontS1Xs{
     font-size:var(--mnr-fontS1);
   }
-  .Mnr .fontS2Xs{
+  .fontS2Xs{
     font-size:var(--mnr-fontS2);
   }
-  .Mnr .fontS3Xs{
+  .fontS3Xs{
     font-size:var(--mnr-fontS3);
   }
-  .Mnr .fontS4Xs{
+  .fontS4Xs{
     font-size:var(--mnr-fontS4);
   }
-  .Mnr .fontS5Xs{
+  .fontS5Xs{
     font-size:var(--mnr-fontS5);
   }
-  .Mnr .fontS6Xs{
+  .fontS6Xs{
     font-size:var(--mnr-fontS6);
   }
 }
@@ -6214,18 +6214,18 @@ strong{
 /*//////////////////////////////////////////////////////////////////////Inputs*/
 
 /*///////////////////////////////////////////////////////Inputs - Normalizacion*/
-.Mnr input{outline: none;}
-.Mnr input:focus::-webkit-input-placeholder{color: transparent;}
-.Mnr input:focus:-moz-placeholder{color: transparent;}
-.Mnr input:focus::-moz-placeholder{color: transparent;}
-.Mnr input:focus:-ms-input-placeholder {color: transparent;}
-.Mnr input:focus{outline: none}
-.Mnr textarea:focus::-webkit-input-placeholder{color: transparent;}
-.Mnr textarea:focus:-moz-placeholder{color: transparent;}
-.Mnr textarea:focus::-moz-placeholder{color: transparent;}
-.Mnr textarea:focus:-ms-input-placeholder {color: transparent;}
-.Mnr textarea:focus{outline: none}
-.Mnr input, .Mnr select, .Mnr textarea, .Mnr .button, .Mnr button{
+input{outline: none;}
+input:focus::-webkit-input-placeholder{color: transparent;}
+input:focus:-moz-placeholder{color: transparent;}
+input:focus::-moz-placeholder{color: transparent;}
+input:focus:-ms-input-placeholder {color: transparent;}
+input:focus{outline: none}
+textarea:focus::-webkit-input-placeholder{color: transparent;}
+textarea:focus:-moz-placeholder{color: transparent;}
+textarea:focus::-moz-placeholder{color: transparent;}
+textarea:focus:-ms-input-placeholder {color: transparent;}
+textarea:focus{outline: none}
+input, select, textarea, .button, button{
   -o-text-overflow: clip;
   text-overflow: clip;
   min-height: var(--mnr-btnHeight);
@@ -6237,7 +6237,7 @@ strong{
   width: 100%;
   color: var(--mnr-inputTextColor);
 }
-.Mnr input, .Mnr textarea{
+input, textarea{
   -webkit-user-select: text!important; /* Chrome, Opera, Safari */
   -moz-user-select: text!important; /* Firefox 2+ */
   -ms-user-select: text!important; /* IE 10+ */
@@ -6245,13 +6245,13 @@ strong{
   -webkit-touch-callout: text!important;
 }
 
-.Mnr textarea{
+textarea{
   min-height: 300px;
   resize: none;
 }
 
 
-.Mnr input[type="range"]{
+input[type="range"]{
   -webkit-appearance: none;
   width: calc(100% - 5px);
   height: 4px;
@@ -6264,10 +6264,10 @@ strong{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.Mnr input[type="range"]:hover{
+input[type="range"]:hover{
   opacity: 1;
 }
-.Mnr input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 20px;
@@ -6276,7 +6276,7 @@ strong{
   background-color: var(--mnr-color2);
   cursor: pointer;
 }
-.Mnr input[type="range"]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -6285,18 +6285,18 @@ strong{
 }
 
 /* Chrome, Safari, Edge, Opera */
-.Mnr input.noArrow::-webkit-outer-spin-button,
-.Mnr input.noArrow::-webkit-inner-spin-button {
+input.noArrow::-webkit-outer-spin-button,
+input.noArrow::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 /* Firefox */
-.Mnr input[type=number].noArrow {
+input[type=number].noArrow {
   -moz-appearance: textfield;
 }
 
-.Mnr input[type=checkbox], 
-.Mnr input[type=radio] {
+input[type=checkbox], 
+input[type=radio] {
   height: 15px!important;
   width: 15px!important;
   background: #fff;
@@ -6304,7 +6304,7 @@ strong{
   display:inline-block;
   padding: 0;
 }
-.Mnr input[type=checkbox]:checked{
+input[type=checkbox]:checked{
   background: var(--mnr-colorOk)!important;
 }
 
@@ -6342,10 +6342,10 @@ strong{
 
 /*///////////////////////////////////////////////////////Inputs - Botones*/
 
-.Mnr input[type="submit"], 
-.Mnr input#submit,
-.Mnr button,
-.Mnr .button{
+input[type="submit"], 
+input#submit,
+button,
+.button{
   border: var(--mnr-btnBorder);
   border-radius: var(--mnr-btnRadius);
 
@@ -6377,10 +6377,10 @@ strong{
 
   /*max-width: var(--mnr-btnWidth);*/
 }
-.Mnr input[type="submit"] > *, 
-.Mnr input#submit > *,
-.Mnr button > *,
-.Mnr .button > *{
+input[type="submit"] > *, 
+input#submit > *,
+button > *,
+.button > *{
   font-size: 23px;
   color: black;
   text-align: center;
@@ -6392,27 +6392,27 @@ strong{
   transition: all .2s;
 }
 
-.Mnr input[type="submit"]:hover, 
-.Mnr input#submit:hover,
-.Mnr button:hover,
-.Mnr .button:hover{
+input[type="submit"]:hover, 
+input#submit:hover,
+button:hover,
+.button:hover{
   opacity: 0.9;
 }
 
-.Mnr input#submit.disabled, 
-.Mnr input#submit:disabled, 
-.Mnr input#submit:disabled[disabled], 
-.Mnr button.disabled, 
-.Mnr button:disabled, 
-.Mnr button:disabled[disabled], 
-.Mnr button.button.disabled, 
-.Mnr button.button:disabled, 
-.Mnr button.button:disabled[disabled], 
-.Mnr .button.disabled, 
-.Mnr .button:disabled, 
-.Mnr .button:disabled[disabled],
-.Mnr input[type="submit"].disabled, 
-.Mnr button.disabled{
+input#submit.disabled, 
+input#submit:disabled, 
+input#submit:disabled[disabled], 
+button.disabled, 
+button:disabled, 
+button:disabled[disabled], 
+button.button.disabled, 
+button.button:disabled, 
+button.button:disabled[disabled], 
+.button.disabled, 
+.button:disabled, 
+.button:disabled[disabled],
+input[type="submit"].disabled, 
+button.disabled{
   color: black!important;
   opacity: 1!important;
   background-color: var(--mnr-colorDisabled)!important;
@@ -6422,319 +6422,319 @@ strong{
 
 /*/////////////////////////////////////////////////////////////////////////////*/
 /*//////////////////////////////////////////////////////////////////////Colores*/
-.Mnr .color1{
+.color1{
    color:var(--mnr-color1); 
 }
-.Mnr .color2{
+.color2{
    color:var(--mnr-color2);
 }
-.Mnr .color3{
+.color3{
    color:var(--mnr-color3);
 }
-.Mnr .color4{
+.color4{
   color:var(--mnr-color4);
 }
-.Mnr .colorWarn{
+.colorWarn{
   color:var(--mnr-colorWarn);
 }
-.Mnr .colorOk{
+.colorOk{
   color:var(--mnr-colorOk);
 }
-.Mnr .colorWhite{
+.colorWhite{
   color: var(--mnr-colorWhite);
 }
-.Mnr .colorTWhite{
+.colorTWhite{
   color: white;
 }
-.Mnr .colorGray{
+.colorGray{
   color: var(--mnr-colorGray);
 }
-.Mnr .colorBlack{
+.colorBlack{
   color:var(--mnr-colorBlack);
 }
-.Mnr .colorRate{
+.colorRate{
   color:var(--mnr-colorRate);
 }
 
-.Mnr .backColor1{
+.backColor1{
    background-color:var(--mnr-color1);
 }
-.Mnr .backColor2{
+.backColor2{
    background-color:var(--mnr-color2);
 }
-.Mnr .backColor3{
+.backColor3{
    background-color:var(--mnr-color3);
 }
-.Mnr .backColor4{
+.backColor4{
    background-color:var(--mnr-color4);
 }
-.Mnr .backColorWhite{
+.backColorWhite{
   background-color: var(--mnr-colorWhite);
 }
-.Mnr .backColorTWhite{
+.backColorTWhite{
   background-color: white;
 }
-.Mnr .backColorBlack{
+.backColorBlack{
   background-color:var(--mnr-colorBlack);
 }
-.Mnr .backColorGray{
+.backColorGray{
   background-color: var(--mnr-colorGray);
 }
-.Mnr .backColorWarn{
+.backColorWarn{
   background-color:var(--mnr-colorWarn);
 }
-.Mnr .backColorOk{
+.backColorOk{
  background-color:var(--mnr-colorOk);
 }
-.Mnr .backColorRate{
+.backColorRate{
   background-color:var(--mnr-colorRate);
 }
 
-.Mnr .noBackColor{
+.noBackColor{
   background-color: unset;
 }
-.Mnr .backColorTrans{
+.backColorTrans{
   background-color: rgba(0,0,0,0);
 }
 
-.Mnr .svgColor1,.Mnr .svgColor1 path{
+.svgColor1,.svgColor1 path{
   fill: var(--mnr-color1);
 }
-.Mnr .svgColor2,.Mnr .svgColor2 path{
+.svgColor2,.svgColor2 path{
   fill: var(--mnr-color2);
 }
-.Mnr .svgColor3,.Mnr .svgColor3 path{
+.svgColor3,.svgColor3 path{
   fill: var(--mnr-color3);
 }
-.Mnr .svgColor4,.Mnr .svgColor4 path{
+.svgColor4,.svgColor4 path{
   fill: var(--mnr-color4);
 }
-.Mnr .svgColorWhite,.Mnr .svgColorWhite path{
+.svgColorWhite,.svgColorWhite path{
   fill: var(--mnr-colorWhite);
 }
-.Mnr .svgColorTWhite,.Mnr .svgColorTWhite path{
+.svgColorTWhite,.svgColorTWhite path{
   fill: white;
 }
-.Mnr .svgColorGray,.Mnr .svgColorGray path{
+.svgColorGray,.svgColorGray path{
   fill: var(--mnr-colorGray);
 }
-.Mnr .svgColorBlack,.Mnr .svgColorBlack path{
+.svgColorBlack,.svgColorBlack path{
   fill:var(--mnr-colorBlack);
 }
-.Mnr .svgColorOk,.Mnr .svgColorOk path{
+.svgColorOk,.svgColorOk path{
   fill:var(--mnr-colorOk);
 }
-.Mnr .svgColorWarn,.Mnr .svgColorWarn path{
+.svgColorWarn,.svgColorWarn path{
   fill:var(--mnr-colorWarn);
 }
-.Mnr .svgColorRate,.Mnr .svgColorRate path{
+.svgColorRate,.svgColorRate path{
   fill:var(--mnr-colorRate);
 }
 
 
-.Mnr .borderColor1{
+.borderColor1{
     border:solid 2px var(--mnr-color1);
 }
-.Mnr .borderColor2{
+.borderColor2{
     border:solid 2px var(--mnr-color2);
 }
-.Mnr .borderColor3{
+.borderColor3{
     border:solid 2px var(--mnr-color3);
 }
-.Mnr .borderColor4{
+.borderColor4{
     border:solid 2px var(--mnr-color4);
 }
-.Mnr .borderColorWhite{
+.borderColorWhite{
    border:solid 2px  var(--mnr-colorWhite);
 }
-.Mnr .borderColorTWhite{
+.borderColorTWhite{
    border:solid 2px  white;
 }
-.Mnr .borderColorBlack{
+.borderColorBlack{
    border:solid 2px var(--mnr-colorBlack);
 }
-.Mnr .borderColorGray{
+.borderColorGray{
    border:solid 2px  var(--mnr-colorGray);
 }
-.Mnr .borderColorWarn{
+.borderColorWarn{
    border:solid 2px var(--mnr-colorWarn);
 }
-.Mnr .borderColorOk{
+.borderColorOk{
   border:solid 2px var(--mnr-colorOk);
 }
-.Mnr .borderColorRate{
+.borderColorRate{
    border:solid 2px var(--mnr-colorRate);
 }
 
 
-.Mnr .toColor1:hover,
-.Mnr .button.toColor1:hover *,
-.Mnr input[type="submit"].toColor1:hover *,
-.Mnr button.toColor1:hover *{
+.toColor1:hover,
+.button.toColor1:hover *,
+input[type="submit"].toColor1:hover *,
+button.toColor1:hover *{
   color:var(--mnr-color1);
 }
-.Mnr .toColor2:hover,
-.Mnr .button.toColor2:hover *,
-.Mnr input[type="submit"].toColor2:hover *,
-.Mnr button.toColor2:hover *{
+.toColor2:hover,
+.button.toColor2:hover *,
+input[type="submit"].toColor2:hover *,
+button.toColor2:hover *{
   color:var(--mnr-color2);
 }
-.Mnr .toColor3:hover,
-.Mnr .button.toColor3:hover *,
-.Mnr input[type="submit"].toColor3:hover *,
-.Mnr button.toColor4:hover *{
+.toColor3:hover,
+.button.toColor3:hover *,
+input[type="submit"].toColor3:hover *,
+button.toColor4:hover *{
   color:var(--mnr-color3);
 }
-.Mnr .toColor4:hover,
-.Mnr .button.toColor4:hover *,
-.Mnr input[type="submit"].toColor4:hover *,
-.Mnr button.toColor4:hover *{
+.toColor4:hover,
+.button.toColor4:hover *,
+input[type="submit"].toColor4:hover *,
+button.toColor4:hover *{
   color:var(--mnr-color4);
 }
-.Mnr .toColorWhite:hover,
-.Mnr .button.toColorWhite:hover *,
-.Mnr input[type="submit"].toColorWhite:hover *,
-.Mnr button.toColorWhite:hover *{
+.toColorWhite:hover,
+.button.toColorWhite:hover *,
+input[type="submit"].toColorWhite:hover *,
+button.toColorWhite:hover *{
   color:var(--mnr-colorWhite);
 }
-.Mnr .toColorTWhite:hover,
-.Mnr .button.toColorTWhite:hover *,
-.Mnr input[type="submit"].toColorTWhite:hover *,
-.Mnr button.toColorTWhite:hover *{
+.toColorTWhite:hover,
+.button.toColorTWhite:hover *,
+input[type="submit"].toColorTWhite:hover *,
+button.toColorTWhite:hover *{
   color:white;
 }
-.Mnr .toColorBlack:hover,
-.Mnr .button.toColorBlack:hover *,
-.Mnr input[type="submit"].toColorBlack:hover *,
-.Mnr button.toColorBlack:hover *{
+.toColorBlack:hover,
+.button.toColorBlack:hover *,
+input[type="submit"].toColorBlack:hover *,
+button.toColorBlack:hover *{
   color:var(--mnr-colorBlack);
 }
-.Mnr .toColorGray:hover,
-.Mnr .button.toColorGray:hover *,
-.Mnr input[type="submit"].toColorGray:hover *,
-.Mnr button.toColorGray:hover *{
+.toColorGray:hover,
+.button.toColorGray:hover *,
+input[type="submit"].toColorGray:hover *,
+button.toColorGray:hover *{
   color:var(--mnr-colorGray);
 }
-.Mnr .toColorWarn:hover,
-.Mnr .button.toColorWarn:hover *,
-.Mnr input[type="submit"].toColorWarn:hover *,
-.Mnr button.toColorWarn:hover *{
+.toColorWarn:hover,
+.button.toColorWarn:hover *,
+input[type="submit"].toColorWarn:hover *,
+button.toColorWarn:hover *{
   color:var(--mnr-colorWarn);
 }
-.Mnr .toColorOk:hover,
-.Mnr .button.toColorOk:hover *,
-.Mnr input[type="submit"].toColorOk:hover *,
-.Mnr button.toColorOk:hover *{
+.toColorOk:hover,
+.button.toColorOk:hover *,
+input[type="submit"].toColorOk:hover *,
+button.toColorOk:hover *{
   color:var(--mnr-colorOk);
 }
-.Mnr .toColorRate:hover,
-.Mnr .button.toColorRate:hover *,
-.Mnr input[type="submit"].toColorRate:hover *,
-.Mnr button.toColorRate:hover *{
+.toColorRate:hover,
+.button.toColorRate:hover *,
+input[type="submit"].toColorRate:hover *,
+button.toColorRate:hover *{
   color:var(--mnr-colorRate);
 }
 
-.Mnr .toBackTrans:hover{
+.toBackTrans:hover{
   background-color:rgba(0,0,0,0);
 }
-.Mnr .toBackColor1:hover{
+.toBackColor1:hover{
   background-color:var(--mnr-color1);
 }
-.Mnr .toBackColor2:hover{
+.toBackColor2:hover{
   background-color:var(--mnr-color2);
 }
-.Mnr .toBackColor3:hover{
+.toBackColor3:hover{
   background-color:var(--mnr-color3);
 }
-.Mnr .toBackColor4:hover{
+.toBackColor4:hover{
   background-color:var(--mnr-color4);
 }
-.Mnr .toBackColorWhite:hover{
+.toBackColorWhite:hover{
   background-color:var(--mnr-colorWhite);
 }
-.Mnr .toBackColorTWhite:hover{
+.toBackColorTWhite:hover{
   background-color:white;
 }
-.Mnr .toBackColorBlack:hover{
+.toBackColorBlack:hover{
   background-color:var(--mnr-colorBlack);
 }
-.Mnr .toBackColorGray:hover{
+.toBackColorGray:hover{
   background-color:var(--mnr-colorGray);
 }
-.Mnr .toBackColorWarn:hover{
+.toBackColorWarn:hover{
   background-color:var(--mnr-colorWarn);
 }
-.Mnr .toBackColorOk:hover{
+.toBackColorOk:hover{
   background-color:var(--mnr-colorOk);
 }
-.Mnr .toBackColorRate:hover{
+.toBackColorRate:hover{
   background-color:var(--mnr-colorRate);
 }
 
-.Mnr .toSvgColor1:hover path,
-.Mnr .toSvgColor1:hover .svg path,
-.Mnr .toSvgColor1:hover .svg,
-.Mnr .toSvgColor1:hover{
+.toSvgColor1:hover path,
+.toSvgColor1:hover .svg path,
+.toSvgColor1:hover .svg,
+.toSvgColor1:hover{
   fill:var(--mnr-color1);
 }
-.Mnr .toSvgColor2:hover path,
-.Mnr .toSvgColor2:hover .svg path,
-.Mnr .toSvgColor2:hover .svg,
-.Mnr .toSvgColor2:hover{
+.toSvgColor2:hover path,
+.toSvgColor2:hover .svg path,
+.toSvgColor2:hover .svg,
+.toSvgColor2:hover{
   fill:var(--mnr-color2);
 }
-.Mnr .toSvgColor3:hover path,
-.Mnr .toSvgColor3:hover .svg path,
-.Mnr .toSvgColor3:hover .svg,
-.Mnr .toSvgColor3:hover{
+.toSvgColor3:hover path,
+.toSvgColor3:hover .svg path,
+.toSvgColor3:hover .svg,
+.toSvgColor3:hover{
   fill:var(--mnr-color3);
 }
-.Mnr .toSvgColor4:hover path,
-.Mnr .toSvgColor4:hover .svg path,
-.Mnr .toSvgColor4:hover .svg,
-.Mnr .toSvgColor4:hover{
+.toSvgColor4:hover path,
+.toSvgColor4:hover .svg path,
+.toSvgColor4:hover .svg,
+.toSvgColor4:hover{
   fill:var(--mnr-color4);
 }
-.Mnr .toSvgColorWhite:hover path,
-.Mnr .toSvgColorWhite:hover .svg path,
-.Mnr .toSvgColorWhite:hover .svg,
-.Mnr .toSvgColorWhite:hover{
+.toSvgColorWhite:hover path,
+.toSvgColorWhite:hover .svg path,
+.toSvgColorWhite:hover .svg,
+.toSvgColorWhite:hover{
   fill:var(--mnr-colorWhite);
 }
-.Mnr .toSvgColorTWhite:hover path,
-.Mnr .toSvgColorTWhite:hover .svg path,
-.Mnr .toSvgColorTWhite:hover .svg,
-.Mnr .toSvgColorTWhite:hover{
+.toSvgColorTWhite:hover path,
+.toSvgColorTWhite:hover .svg path,
+.toSvgColorTWhite:hover .svg,
+.toSvgColorTWhite:hover{
   fill:white;
 }
-.Mnr .toSvgColorBlack:hover path,
-.Mnr .toSvgColorBlack:hover .svg path,
-.Mnr .toSvgColorBlack:hover .svg,
-.Mnr .toSvgColorBlack:hover{
+.toSvgColorBlack:hover path,
+.toSvgColorBlack:hover .svg path,
+.toSvgColorBlack:hover .svg,
+.toSvgColorBlack:hover{
   fill:var(--mnr-colorBlack);
 }
-.Mnr .toSvgColorGray:hover path,
-.Mnr .toSvgColorGray:hover .svg path,
-.Mnr .toSvgColorGray:hover .svg,
-.Mnr .toSvgColorGray:hover{
+.toSvgColorGray:hover path,
+.toSvgColorGray:hover .svg path,
+.toSvgColorGray:hover .svg,
+.toSvgColorGray:hover{
   fill:var(--mnr-colorGray);
 }
-.Mnr .toSvgColorWarn:hover path,
-.Mnr .toSvgColorWarn:hover .svg path,
-.Mnr .toSvgColorWarn:hover .svg,
-.Mnr .toSvgColorWarn:hover{
+.toSvgColorWarn:hover path,
+.toSvgColorWarn:hover .svg path,
+.toSvgColorWarn:hover .svg,
+.toSvgColorWarn:hover{
   fill:var(--mnr-colorWarn);
 }
-.Mnr .toSvgColorOk:hover path,
-.Mnr .toSvgColorOk:hover .svg path,
-.Mnr .toSvgColorOk:hover .svg,
-.Mnr .toSvgColorOk:hover{
+.toSvgColorOk:hover path,
+.toSvgColorOk:hover .svg path,
+.toSvgColorOk:hover .svg,
+.toSvgColorOk:hover{
   fill:var(--mnr-colorOk);
 }
-.Mnr .toSvgColorRate:hover path,
-.Mnr .toSvgColorRate:hover .svg path,
-.Mnr .toSvgColorRate:hover .svg,
-.Mnr .toSvgColorRate:hover{
+.toSvgColorRate:hover path,
+.toSvgColorRate:hover .svg path,
+.toSvgColorRate:hover .svg,
+.toSvgColorRate:hover{
   fill:var(--mnr-colorRate);
 }
 
@@ -6858,20 +6858,20 @@ strong{
   }
 }
 
-.Mnr .float{
+.float{
   transform: translatey(0px);
   animation: float 6s ease-in-out infinite;
 }
-.Mnr .spin{
+.spin{
   animation: spin 5s linear infinite;
 }
-.Mnr .spinInvert{
+.spinInvert{
   animation: spinInvert 5s linear infinite;
 }
-.Mnr .reveal{
+.reveal{
   animation: animShow 0.3s linear forwards;
 }
-.Mnr .disapear{
+.disapear{
   animation: animHide 0.3s linear forwards;
 }
 
