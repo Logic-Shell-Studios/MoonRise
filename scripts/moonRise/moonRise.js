@@ -1,6 +1,6 @@
 // MoonRise Engine Version 3.0
 
-var Mnr = (function(){
+const Mnr = (function(){
   
   return {
     ////////////////////variables
@@ -30,6 +30,7 @@ var Mnr = (function(){
     classBinds: [],
     forBinds: [],
     imgBinds: [],
+    tagBinds: [],
     binds: {},
     pageLoading: true,
     initialBinds: {
@@ -41,6 +42,8 @@ var Mnr = (function(){
       windowWidth: 0,
       windowHeight: 0,
     },
+
+    start:null,
 
 
     pageLoader: {
@@ -61,7 +64,7 @@ var Mnr = (function(){
     runLoad:{},
     
     init: function(options = {}) {
-
+      // this.start = performance.now();
       if(this.running){
         return;
       }
@@ -92,8 +95,8 @@ var Mnr = (function(){
         this.binds = options['binds'];
       }
       let temps = Object.entries(this.initialBinds);
-      for (var i = temps.length - 1; i >= 0; i--) {
-        this.binds[temps[i][0]] = temps[i][1];    
+      for (let temp of temps) {
+        this.binds[temp[0]] = temp[1];    
       }
     
       if(options['loadEnter'] != null && options['loadEnd'] != null){
@@ -131,33 +134,25 @@ var Mnr = (function(){
       this.loadMedia();
 
       //check if images finish loading or the time surpas the limit
-      this.loadLoop = setInterval(()=>{
-        if(this.imgDone == true || this.mediaTimePass > 20){
-          clearInterval(this.loadLoop);
-          this.finishLoad();
-        }
-      },100);
+      // this.loadLoop = setInterval(()=>{
+      //   if(this.imgDone == true || this.mediaTimePass > 20){
+      //     clearInterval(this.loadLoop);
+      //     this.finishLoad();
+      //   }
+      // },100);
+
+      this.finishLoad();
     },
     finishLoad: function(){
       if(this.pageLoading == true){
-        
 
         this.handleScroll();
         this.handleResize();
 
-        //run functions after finish load once
-        Object.values(this.runEnd).map(value => {
-          if(typeof value === 'string' && this.hasOwnProperty(value)){
-             this[value].init(this);
-          }
-          else if(typeof value === 'function') {
-            value.call();
-          }
-        });
        
         this.bindAll();
         
-        
+        // run page load functions animation
         this.pageLoader.end();
         // set page load false and run wow
         setTimeout(()=>{
@@ -172,9 +167,20 @@ var Mnr = (function(){
           }
 
           console.log('MOON RISE ENGINE running');
+          // console.log(performance.now() - this.start);
         },this.loadEndTime);
 
         
+
+        //run functions after finish load all once
+        Object.values(this.runEnd).map(value => {
+          if(typeof value === 'string' && this.hasOwnProperty(value)){
+             this[value].init(this);
+          }
+          else if(typeof value === 'function') {
+            value.call();
+          }
+        });
       }
     },
     reload: function(){
@@ -193,8 +199,7 @@ var Mnr = (function(){
     
     ///////////////////////////////////////////////binders
     bindAll: function(){
-      //var binds
-      // console.log("runBinds");
+
       for (let bind of Object.keys(this.binds) ) {
         for(let el of document.querySelectorAll('[mnr-bind="'+bind+'"]') ){
           if(el.getAttribute('mnr-bind') != 'set'){  
@@ -301,9 +306,9 @@ var Mnr = (function(){
       this.setBindClasses();
       this.setBindFors();
       this.setBindImgs();
+      this.setBindTags();
       
       
-
       
       this.runAllBinds();
       // console.log(this.binds);
@@ -352,6 +357,7 @@ var Mnr = (function(){
       this.runBindImgs(true);
       this.runBindPrints(true);
       this.runBindClasses(true);
+      this.runBindTags(true);
     },
     runAllBindsSingle(bind){
       this.runBindMaxText();
@@ -359,6 +365,7 @@ var Mnr = (function(){
       this.runSingleBindImgs(bind);
       this.runBindPrints();
       this.runBindClasses();
+      this.runBindTags();
     },
 
     setBindClasses: function(){
@@ -367,11 +374,10 @@ var Mnr = (function(){
         if(!elem.hasAttribute('mnr-class-set')){
           let attr = elem.getAttribute('mnr-class');
           // let allConds = Object.entries(JSON.parse(attr));
-          
           let binds = Object.keys(this.binds);
           binds = binds.sort((a,b) => b.length - a.length);
-          for(bind of binds){
-            if(attr.indexOf(bind) !== -1){
+          for(let bind of binds){
+            if(attr.indexOf(bind) !== -1 && attr.indexOf('Mnr.binds.'+bind) === -1){
                attr = attr.replaceAll(bind,'Mnr.binds.'+bind);
             }
           }
@@ -393,7 +399,7 @@ var Mnr = (function(){
              if(temp[1].indexOf('mnr-') !== -1){
                  let attrs = elem.getAttributeNames();
                  attrs = attrs.sort((a,b) => b.length - a.length);
-                 for(attr of attrs){
+                 for(let attr of attrs){
                    if(temp[1].indexOf(attr) !== -1){
                       // console.log(attr+' '+elem.getAttribute(attr));
                       temp[1] = temp[1].replaceAll(attr,elem.getAttribute(attr));
@@ -581,14 +587,71 @@ var Mnr = (function(){
     },
     setBinds: function(bind){
       if(typeof bind == 'object'){
-        let temp = Object.entries(bind);
-        for (var i = temp.length - 1; i >= 0; i--) {
-          this.binds[temp[i][0]] = temp[i][1];
+        let temps = Object.entries(bind);
+        for (let temp of temps) {
+          this.binds[temp[0]] = temp[1];
         }
       }
       if(this.pageLoading == false){
         this.bindAll();
       }
+    },
+    
+    setBindTags: function(){
+         for(let el of document.querySelectorAll("mnr")){
+           for(let elem of this.tagBinds){
+             if(elem.el === el){
+               continue;
+             }
+           }
+
+           let innerText = el.innerText;
+           let type = "";
+           if(el.hasAttribute("mnr-type")){
+             if(el.getAttribute("mnr-type") == "num"){
+                type = "+";
+             }
+             el.removeAttribute("mnr-type");
+           }
+           // console.log(innerText);
+           // console.log(el.parentElement);
+           innerText = innerText.replaceAll("prnt",type+"parentElement");
+
+           innerText = innerText.replaceAll("attr",type+"getAttribute");
+           
+           innerText = innerText.replaceAll("qry",type+"document.querySelector");
+
+
+           let binds = Object.keys(this.binds);
+           binds = binds.sort((a,b) => b.length - a.length);
+           for(let bind of binds){
+             if(innerText.indexOf(bind) !== -1 && innerText.indexOf('Mnr.binds.'+bind) === -1){
+                innerText = innerText.replaceAll(bind,type+'Mnr.binds.'+bind);
+             }
+           }
+
+           // console.log(innerText);
+           // console.log(eval(innerText));
+           this.tagBinds.push({ev:innerText,el:el});
+           el.innerText = "";
+        }
+        // console.log(this.tagBinds);
+    },
+    runBindTags: function(force = false){
+       if(this.parseBool(this.pageLoading) == false || force == true){
+          
+          for(let tag of this.tagBinds){
+            let el = tag.el;
+            try{
+              // console.log(eval(tag.ev));
+              tag.el.innerText = eval(tag.ev);
+            }
+            catch{
+              tag.el.innerText = "";
+              console.warn("failed to parse <mnr> command");
+            }
+          }
+       }
     },
     
     
@@ -635,38 +698,6 @@ var Mnr = (function(){
       this.binds.windowHeight = height;
     },
 
-
-    insertComponents: function(){
-      this.componentsHTML = document.querySelectorAll('mnr-include');
-      this.processComponents(this.componentsCount);
-    },
-    processComponents(){
-      if(this.componentsHTML.length <= this.componentsCount){
-         this.componentsCount = 0;
-         this.componentsHTML = [];
-         return;
-      }
-      if(this.componentsHTML[Mnr.componentsCount].hasAttribute('component')){
-        let data = this.componentsHTML[Mnr.componentsCount].getAttribute('component');
-
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4){
-              if (this.status == 200) {
-                 Mnr.componentsHTML[Mnr.componentsCount].insertAdjacentHTML('afterend', this.responseText );
-              }
-              Mnr.componentsHTML[Mnr.componentsCount].remove();
-              Mnr.componentsCount++;
-              Mnr.processComponents();
-            }
-        };
-        xhttp.open("GET", data, true);
-        xhttp.send();
-        return;
-      }
-    },
-    
-
     
     ////////////////////////////////////////////media handlers
     loadMedia: function(){
@@ -677,23 +708,10 @@ var Mnr = (function(){
 
       if(this.imgList.length > 0){
         this.imgIterator();
-        
-        clearInterval(this.imgLoop);
-        this.imgLoop = setInterval(()=>{
-          this.mediaTimePass++;
-          if(this.imgDone == true){
-            if(typeof SVGInject === "function"){
-              SVGInject(document.querySelectorAll("img.svg"));
-            }
-            this.loadImgsBack();
-            this.setSliders();
-            this.mediaLoopCount = 0;
-            clearInterval(this.imgLoop);
-          }
-        },100);
       }
       else{
         this.imgDone = true;
+        this.mediaFinishLoad();
       }
 
       ////set images scroll load
@@ -710,16 +728,19 @@ var Mnr = (function(){
 
       this.mediaLoopCount ++;
 
-      if(this.imgNum  >= this.imgList.length){
+      if(this.imgNum >= this.imgList.length){
         this.imgDone = true;
+        this.mediaFinishLoad();
         return;
       }
     
       let tempSrc = this.imgList[this.imgNum ].getAttribute('mnr-src');
       if(tempSrc != null && tempSrc != 'null'){
           this.imgList[this.imgNum ].addEventListener('error',() => {
-            this.imgList[this.imgNum ].src = this.root+"/assets/placeholder.png";
+            this.imgList[this.imgNum ].classList.add('mnrHide');
             console.warn('image skipped: '+tempSrc);
+            this.imgNum +=1;
+            this.imgIterator();
           });
           this.imgList[this.imgNum ].addEventListener('load',() => {
             this.imgNum +=1;
@@ -748,17 +769,17 @@ var Mnr = (function(){
     },
     loadImgsBack: function(){
       this.imgBackList = document.querySelectorAll('[mnr-back-src]');
-      for (var i = 0; i < this.imgBackList.length; i++) {
+      for (let backImg of this.imgBackList) {
         try{
          
-         let tempSrc = this.imgBackList[i].getAttribute('mnr-back-src');
+         let tempSrc = backImg.getAttribute('mnr-back-src');
          if(tempSrc != null && tempSrc != 'null'){
-           this.imgBackList[i].style.backgroundImage = 'url('+tempSrc+')';
-           this.imgBackList[i].setAttribute('mnr-back-src',null);
+           backImg.style.backgroundImage = 'url('+tempSrc+')';
+           backImg.setAttribute('mnr-back-src',null);
          }
         }
         catch{
-          console.warn(this.imgBackList[i]+' skipped');
+          console.warn(backImg+' skipped');
           continue;
         }
       }
@@ -770,8 +791,8 @@ var Mnr = (function(){
         return;
       }
       if(this.swipers.length > 0){
-        for (var i = this.swipers.length - 1; i >= 0; i--) {
-          this.swipers[i].destroy();
+        for (let swiper of this.swipers.length) {
+          swiper.destroy();
         }
         this.swipers = [];
       }
@@ -779,7 +800,7 @@ var Mnr = (function(){
       let temp = document.querySelectorAll('[mnr-slider]');
     
       if(temp.length > 0){
-        for (let slider of document.querySelectorAll('[mnr-slider]')) {
+        for (let slider of temp) {
     
           slider.classList.add('swiper-slider');
           
@@ -825,8 +846,8 @@ var Mnr = (function(){
           
           let sliders = slider.querySelectorAll(".swiper-wrapper > *");
           if( sliders.length > 0){
-             for (var j = sliders.length - 1; j >= 0; j--) {
-               sliders[j].classList.add('swiper-slide');
+             for (let sliderj of sliders) {
+               sliderj.classList.add('swiper-slide');
              }
           }
     
@@ -846,8 +867,8 @@ var Mnr = (function(){
             }
           };
     
-          for (var j = optionsTemp.length - 1; j >= 0; j--) {
-            options[optionsTemp[j][0]] = optionsTemp[j][1];
+          for (let option of optionsTemp) {
+            options[option[0]] = option[1];
           }
           
           if(options['autoplay'] == true){
@@ -874,12 +895,12 @@ var Mnr = (function(){
     setSliderThumbs: function(id){
       let temp = document.querySelectorAll('[mnr-slider-thumbs]');
     
-      for (var i = temp.length - 1; i >= 0; i--) {
-        let optionsTemp = JSON.parse(temp[i].getAttribute('mnr-slider-thumbs'));
+      for (let option of temp) {
+        let optionsTemp = JSON.parse(option.getAttribute('mnr-slider-thumbs'));
         
         if(optionsTemp['id']){
           if(optionsTemp['id'] == id){
-             temp = temp[i];
+             temp = option;
              break;
           }
         }
@@ -912,9 +933,9 @@ var Mnr = (function(){
           
           let sliders = slider.querySelectorAll(".swiper-wrapper > *");
           if( sliders.length > 0){
-             for (var j = sliders.length - 1; j >= 0; j--) {
-               sliders[j].classList.add('swiper-slide');
-               sliders[j].classList.add('cursor');
+             for (let sliderj of sliders) {
+               sliderj.classList.add('swiper-slide');
+               sliderj.classList.add('cursor');
              }
           }
     
@@ -933,8 +954,8 @@ var Mnr = (function(){
             }
           };
     
-          for (var j = optionsTemp.length - 1; j >= 0; j--) {
-            options[optionsTemp[j][0]] = optionsTemp[j][1];
+          for (let option of optionsTemp) {
+            options[option[0]] = option[1];
           }
           
           if(options['autoplay'] == true){
@@ -949,25 +970,41 @@ var Mnr = (function(){
       return null;
     },
     slideElemTo: function(elemName, pos){
-      for (var i = this.swipers.length - 1; i >= 0; i--) {
+      for (let swiper of this.swipers) {
         let temp = document.createElement("DIV");
-        temp.innerHTML = this.swipers[i].el.outerHTML;
+        temp.innerHTML = swiper.el.outerHTML;
         
         if(temp.querySelectorAll(elemName).length > 0){
-          this.swipers[i].slideTo(pos,false,false);
+          swiper.slideTo(pos,false,false);
         }
       }
     },
     loadHrefs: function(){
-      var hrefs = document.querySelectorAll('[mnr-href]');
-      for (var i = hrefs.length - 1; i >= 0; i--) {
-        hrefs[i].href = hrefs[i].getAttribute('mnr-href');
-        hrefs[i].removeAttribute('mnr-href');
+      let hrefs = document.querySelectorAll('[mnr-href]');
+      for (let href of hrefs) {
+        href.href = href.getAttribute('mnr-href');
+        href.removeAttribute('mnr-href');
       }
+    },
+    loadSvgs: function(){
+      if(typeof SVGInject === "function"){
+        let svgs = document.querySelectorAll("[mnr-svg]");
+        SVGInject(svgs);
+        // for(svg of svgs){
+        //   svg.removeAttribute('mnr-svg');
+        // }
+      }
+    },
+    mediaFinishLoad: function(){
+       this.loadSvgs();
+       this.loadImgsBack();
+       this.setSliders();
+       // console.log(this.mediaLoopCount);
+       this.mediaLoopCount = 0;
     },
 
 
-    ///////////////////////////////////////////////////////post handlers
+    ///////////////////////////////////////////////////////ajax handlers
     setSavingStatus: function(status){
       if(status == 1){ //saving
         this.binds.savingStatus = 1;
@@ -993,6 +1030,41 @@ var Mnr = (function(){
       }
     },
     
+    insertComponents: function(){
+      this.componentsHTML = document.querySelectorAll('mnr-include');
+      this.processComponents(this.componentsCount);
+    },
+    processComponents(){
+      if(this.componentsHTML.length <= this.componentsCount){
+         this.componentsCount = 0;
+         this.componentsHTML = [];
+         return;
+      }
+      if(this.componentsHTML[Mnr.componentsCount].hasAttribute('component')){
+        let data = this.componentsHTML[Mnr.componentsCount].getAttribute('component');
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4){
+              if (this.status == 200) {
+                 Mnr.componentsHTML[Mnr.componentsCount].insertAdjacentHTML('afterend', this.responseText );
+              }
+              Mnr.componentsHTML[Mnr.componentsCount].remove();
+              Mnr.componentsCount++;
+              Mnr.processComponents();
+            }
+        };
+        xhttp.open("GET", data, true);
+        xhttp.send();
+        return;
+      }
+    },
+
+
+
+    //////////////////////////////////////////////////////form handler
+
+
     
     //////////////////////////////////////////////////helpers
     hasKey: function(stash,key){
@@ -1010,7 +1082,7 @@ var Mnr = (function(){
       return [];
     },
     screenTo: function(id){
-      var scroll = window.pageYOffset;
+      let scroll = window.pageYOffset;
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     },
     replaceAll: function(str, find, replace) {
@@ -1057,11 +1129,11 @@ var Mnr = (function(){
           if(typeof(element) == 'string'){
             element = document.querySelector(element);
           }
-          var tempClass = className.split(" ");
+          let tempClass = className.split(" ");
           if(tempClass.length >= 1){
-            for (var i = tempClass.length - 1; i >= 0; i--) {
-              if(tempClass[i] != ''){
-                if(element.classList.contains(tempClass[i]) === false){
+            for (let temp of tempClass) {
+              if(temp != ''){
+                if(element.classList.contains(temp) === false){
                     return false;
                 }
               }
@@ -1105,16 +1177,16 @@ var Mnr = (function(){
             break;
             case "queryAll":
               temp = document.querySelectorAll(target);
-              for (var i = temp.length - 1; i >= 0; i--) {
+              for (let tempi of temp) {
                 switch(action){
                    case 'add':
-                     temp[i].classList.add(classes);
+                     tempi.classList.add(classes);
                    break;
                    case 'remove':
-                     temp[i].classList.remove(classes);
+                     tempi.classList.remove(classes);
                    break;
                    case 'toggle':
-                     temp[i].classList.toggle(classes);
+                     tempi.classList.toggle(classes);
                    break;
                 }
               }
@@ -1127,11 +1199,11 @@ var Mnr = (function(){
         }
     },
     validateEmail: function(email){
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
     findPosByProp: function(prop,value, arr){
-      for (var i = arr.length - 1; i >= 0; i--) {
+      for (let i = arr.length - 1; i >= 0; i--) {
         if(arr[i][prop] == value){
           return i;
         }

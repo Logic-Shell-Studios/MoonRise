@@ -1,5 +1,5 @@
 /*
-Theme Name: Siphonite
+Theme Name: MoonRise
 Author: Logic Shell Studios
 Version: 1.0
 */
@@ -36,6 +36,11 @@ main,body{
   background: -webkit-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
   background: linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d1f2c",endColorstr="#04080b",GradientType=1);
+}
+
+/*///////////////////////////////////////////////////////////////////////////////miscs*/
+.gist{
+  width: 100%;
 }
 
 
