@@ -41,6 +41,13 @@ main,body{
 /*///////////////////////////////////////////////////////////////////////////////miscs*/
 .gist{
   width: 100%;
+  max-height: unset;
+  opacity: 1;
+}
+.hideCode .gist{
+  max-height: 1px;
+  opacity: 0;
+  overflow: hidden;
 }
 
 

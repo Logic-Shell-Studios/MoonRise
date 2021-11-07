@@ -711,6 +711,11 @@ const Mnr = (function(){
          let tempSrc = this.e(elem).attr('mnr-src');
          if(tempSrc != 'set'){
             elem.src = this.root+this.b.assetsUrl+tempSrc;
+            elem.width = '200';
+            elem.height = '200';
+            if(this.e(elem).hasAttr('alt') == false){
+               this.e(elem).attr('alt','image-'+Math.floor(Math.random() * 1000));
+            }
             this.addEvent('error',elem,()=>{
               this.e(elem).class('mnrHide');
               console.warn('image skipped: '+tempSrc);
@@ -748,8 +753,6 @@ const Mnr = (function(){
           continue;
         }
       }
-
-
     },
     imgLoadScroll: function(){
       if(this.scrollImg.elems.length < this.scrollImg.dones){
@@ -758,6 +761,11 @@ const Mnr = (function(){
       for(elem of this.scrollImg.elems){
          if(this.isInViewport(elem.el) && elem.set == false){
             elem.el.src = this.root+this.b.assetsUrl+elem.src;
+            elem.el.width = '200';
+            elem.el.height = '200';
+            if(this.e(elem.el).hasAttr('alt') == false){
+               this.e(elem.el).attr('alt','image-'+Math.floor(Math.random() * 1000));
+            }
             elem.set = true;
             this.scrollImg.dones ++;
          }
@@ -1094,6 +1102,7 @@ const Mnr = (function(){
       }
       
       
+      
       return {
         e: elem,
         class: function(names, add = true){
@@ -1247,10 +1256,14 @@ const Mnr = (function(){
            _this.screenTo(elem[0],offset);
            return this;
         },
-        inView(){
+        inView: function(){
 
            return _this.isInViewport(elem[0]);
         },
+        runBinds: function(){
+           _this.runAllBinds();
+           return this;
+        }
 
       };
     },
