@@ -137,6 +137,7 @@ const Mnr = (function(){
       //   }
       // },100);
 
+
       this.finishLoad();
     },
     finishLoad: function(){
@@ -704,6 +705,8 @@ const Mnr = (function(){
       this.imgIterator();
 
       this.mediaFinishLoad();
+
+      this.imgLoadScroll();
     },
     imgIterator:  function(){
       let temp = this.e('[mnr-src]').e;
@@ -732,6 +735,11 @@ const Mnr = (function(){
       for(let elem of temp){
         let attr = this.e(elem).attr("mnr-scroll-src");
         if(attr != 'set'){
+           elem.width = '200';
+           elem.height = '200';
+           if(this.e(elem).hasAttr('alt') == false){
+              this.e(elem).attr('alt','image-'+Math.floor(Math.random() * 1000));
+           }
            this.scrollImg.elems.push({el:elem,src:attr,set:false});
            this.e(elem).removeAttr("mnr-scroll-src");
         }
@@ -759,13 +767,8 @@ const Mnr = (function(){
         return;  
       }
       for(elem of this.scrollImg.elems){
-         if(this.isInViewport(elem.el) && elem.set == false){
+         if(this.isAboveViewport(elem.el,100) && elem.set == false){
             elem.el.src = this.root+this.b.assetsUrl+elem.src;
-            elem.el.width = '200';
-            elem.el.height = '200';
-            if(this.e(elem.el).hasAttr('alt') == false){
-               this.e(elem.el).attr('alt','image-'+Math.floor(Math.random() * 1000));
-            }
             elem.set = true;
             this.scrollImg.dones ++;
          }
@@ -1260,10 +1263,13 @@ const Mnr = (function(){
 
            return _this.isInViewport(elem[0]);
         },
+        aboveView: function(){
+           return _this.isAboveViewport(elem[0]);
+        },
         runBinds: function(){
            _this.runAllBinds();
            return this;
-        }
+        },
 
       };
     },
@@ -1500,6 +1506,11 @@ const Mnr = (function(){
             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
+    },
+    isAboveViewport: function(element, offset){
+       let simplePos = element.getBoundingClientRect().top-offset;
+       let winPos = (window.innerHeight || document.documentElement.clientHeight);
+       return (winPos >= simplePos)? true : false;
     },
     
   };
