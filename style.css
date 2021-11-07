@@ -63,11 +63,28 @@ main,body{
   max-height: 800px;
   min-height: 500px;
 }
+.moonHolder > img,
+.moonHolder > svg{
+  height: auto;
+  max-width: 1200px;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  margin: auto;
+  object-fit: contain;
+  opacity: 0;
+}
+[mnr-page-loading="false"] .moonHolder > img,
+[mnr-page-loading="false"] .moonHolder > svg{
+  opacity: 1;
+}
 .moon{
   width: 800px;
   height: 800px;
   position: relative;
   margin-top: -300px;
+  z-index: 2;
 }
 
 

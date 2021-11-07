@@ -5296,10 +5296,10 @@ section > *,
 .Mnr .wFullPads{
   width: calc(100% - (var(--mnr-padSides) * 2) );
 }
-.Mnr .maxWidthFullPads{
+.Mnr .wMaxFullPads{
   max-width: calc(var(--mnr-contentWidth) - (var(--mnr-padSides) * 2) )!important;
 }
-.Mnr .maxWidthInner{
+.Mnr .wMaxInner{
   max-width: var(--mnr-innerContentWidth);
 }
 .Mnr .wAuto{
@@ -5363,34 +5363,34 @@ section > *,
 .Mnr .minWidth800px{
   min-width: 800px;
 }
-.Mnr .maxWidthFull{
+.Mnr .wMaxFull{
   max-width: 100%;
 }
-.Mnr .maxWidth50px{
+.Mnr .wMax50px{
   max-width: 50px;
 }
-.Mnr .maxWidth100px{
+.Mnr .wMax100px{
   max-width: 100px;
 }
-.Mnr .maxWidth200px{
+.Mnr .wMax200px{
   max-width: 200px;
 }
-.Mnr .maxWidth250px{
+.Mnr .wMax250px{
   max-width: 250px;
 }
-.Mnr .maxWidth300px{
+.Mnr .wMax300px{
   max-width: 300px;
 }
-.Mnr .maxWidth400px{
+.Mnr .wMax400px{
   max-width: 400px;
 }
-.Mnr .maxWidth450px{
+.Mnr .wMax450px{
   max-width: 450px;
 }
-.Mnr .maxWidth500px{
+.Mnr .wMax500px{
   max-width: 500px;
 }
-.Mnr .maxWidth800px{
+.Mnr .wMax800px{
   max-width: 800px;
 }
 
@@ -6163,31 +6163,31 @@ strong{
 
 
 /*///////////////////////////////////////////////////////////Textos - Separaciones*/
-.textSpace1{
+.txtSpace1{
   letter-spacing: 1px;
 }
-.textSpace2{
+.txtSpace2{
   letter-spacing: 2px;
 }
-.textSpace8{
+.txtSpace8{
   letter-spacing: 8px;
 }
 
 
 /*///////////////////////////////////////////////////////////Textos - Alineaciones*/
-.textL{
+.txtL{
   text-align: left;
 }
-.textR{
+.txtR{
   text-align: right;
 }
-.textC{
+.txtC{
   text-align: center;
 }
-.textJ{
+.txtJ{
   text-align: justify;
 }
-.textJM{
+.txtJM{
   text-align: justify;
   -webkit-hyphens: manual;
   -ms-hyphens: manual;
@@ -6199,16 +6199,16 @@ strong{
 
 
 /*//////////////////////////////////////////////////////Textos - Transformaciones*/
-.textUpper{
+.txtUpper{
   text-transform: uppercase;
 }
-.textCap{
+.txtCap{
   text-transform: capitalize;
 }
-.textSub{
+.txtSub{
   text-decoration: underline;
 }
-.textLine{
+.txtLine{
   text-decoration: line-through;
 }
 
@@ -6303,6 +6303,7 @@ input[type=checkbox],
 input[type=radio] {
   height: 15px!important;
   width: 15px!important;
+  min-height: 15px!important;
   background: #fff;
   cursor: pointer;
   display:inline-block;

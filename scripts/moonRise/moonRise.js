@@ -5,19 +5,14 @@ const Mnr = (function(){
   return {
     ////////////////////variables
     bodyElem: false,
-    root: '.',
+    root: './',
     running: false,
     swipers: [],
     binders: [],
     currentBody: null,
     currentTitle: null,
-    imgDone: false,
     imgList: [],
-    imgNum: 0,
     imgBackList: [],
-    imgLoop: null,
-    mediaLoopCount: 0,
-    mediaTimePass: 0,
     loadEnterTime: 100,
     loadEndTime: 100,
     elemsEvents: [],
@@ -31,7 +26,7 @@ const Mnr = (function(){
     forBinds: [],
     imgBinds: [],
     tagBinds: [],
-    binds: {},
+    b: {},
     pageLoading: true,
     initialBinds: {
       savingStatus: 0,
@@ -41,6 +36,7 @@ const Mnr = (function(){
       scrolled: false,
       windowWidth: 0,
       windowHeight: 0,
+      assetsUrl: 'assets/',
     },
 
     start:null,
@@ -92,11 +88,11 @@ const Mnr = (function(){
         this.runLoad = options['runLoad'];
       }
       if(options['binds'] != null){
-        this.binds = options['binds'];
+        this.b = options['binds'];
       }
       let temps = Object.entries(this.initialBinds);
       for (let temp of temps) {
-        this.binds[temp[0]] = temp[1];    
+        this.b[temp[0]] = temp[1];    
       }
     
       if(options['loadEnter'] != null && options['loadEnd'] != null){
@@ -156,7 +152,7 @@ const Mnr = (function(){
         this.pageLoader.end();
         // set page load false and run wow
         setTimeout(()=>{
-          this.binds.pageLoading = false;
+          this.b.pageLoading = false;
           this.pageLoading = false;
           if(this.bodyElem !== false){
             this.bodyElem.setAttribute('mnr-page-loading',false);
@@ -186,7 +182,7 @@ const Mnr = (function(){
     reload: function(){
       this.pageLoader.start();
 
-      this.binds.pageLoading = true;
+      this.b.pageLoading = true;
       this.pageLoading = true;
       if(this.bodyElem !== false){
         this.bodyElem.setAttribute('mnr-page-loading',true);
@@ -200,13 +196,13 @@ const Mnr = (function(){
     ///////////////////////////////////////////////binders
     bindAll: function(){
 
-      for (let bind of Object.keys(this.binds) ) {
+      for (let bind of Object.keys(this.b) ) {
         for(let el of document.querySelectorAll('[mnr-bind="'+bind+'"]') ){
           if(el.getAttribute('mnr-bind') != 'set'){  
             //binds property to events
             let attr = 'innerText';
             let event = null;
-            let value = this.binds[bind];
+            let value = this.b[bind];
             let type = 'text';
             switch(el.nodeName){
                case "INPUT":
@@ -229,10 +225,10 @@ const Mnr = (function(){
                 if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
                   let options = el.querySelectorAll("option[selected]");
                   let selected = Array.from(options).map(elm => elm.value);
-                  this.binds[bind] = selected;
+                  this.b[bind] = selected;
                 }
                 else{
-                  this.binds[bind] = el.value;
+                  this.b[bind] = el.value;
                 }
               }
             }
@@ -259,22 +255,22 @@ const Mnr = (function(){
             if(el.nodeName == 'INPUT' || 
               el.nodeName == 'SELECT' || 
               el.nodeName == 'TEXTAREA'){
-               el.value = this.binds[bind];
+               el.value = this.b[bind];
             }
             else{
-               el.innerText = this.binds[bind];
+               el.innerText = this.b[bind];
             }
 
             if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
               this.addEvent(event,el, e => {
                   let options = el.querySelectorAll("option:checked");
                   let selected = Array.from(options).map(elm => elm.value);
-                  this.binds[bind] = selected;
+                  this.b[bind] = selected;
               });
             }
             else{
               this.addEvent(event,el, e => {
-                  this.binds[bind] = el.value;
+                  this.b[bind] = el.value;
               });
             }
 
@@ -311,12 +307,12 @@ const Mnr = (function(){
       
       
       this.runAllBinds();
-      // console.log(this.binds);
+      // console.log(this.b);
       // console.log(this.binders);
     },
     Bind: function(prop){
-        let value = this.binds[prop];
-        Object.defineProperty(this.binds, prop, {
+        let value = this.b[prop];
+        Object.defineProperty(this.b, prop, {
             set: (newValue) => {
                 value = newValue;
                 // console.log("set: "+prop+ " "+ newValue);
@@ -349,7 +345,7 @@ const Mnr = (function(){
                 return value;
             },
         });
-        this.binds[prop] = value;
+        this.b[prop] = value;
     },
     runAllBinds(){
       this.runBindMaxText(true);
@@ -374,11 +370,11 @@ const Mnr = (function(){
         if(!elem.hasAttribute('mnr-class-set')){
           let attr = elem.getAttribute('mnr-class');
           // let allConds = Object.entries(JSON.parse(attr));
-          let binds = Object.keys(this.binds);
+          let binds = Object.keys(this.b);
           binds = binds.sort((a,b) => b.length - a.length);
           for(let bind of binds){
-            if(attr.indexOf(bind) !== -1 && attr.indexOf('Mnr.binds.'+bind) === -1){
-               attr = attr.replaceAll(bind,'Mnr.binds.'+bind);
+            if(attr.indexOf(bind) !== -1 && attr.indexOf('Mnr.b.'+bind) === -1){
+               attr = attr.replaceAll(bind,'Mnr.b.'+bind);
             }
           }
 
@@ -472,21 +468,21 @@ const Mnr = (function(){
        for (let i = this.forBinds[bind].elems.length - 1; i >= 0; i--) {
         let elem = this.forBinds[bind].elems[i];
 
-        elem.setAttribute('mnr-for-value', this.binds[bind]);
+        elem.setAttribute('mnr-for-value', this.b[bind]);
         elem.setAttribute('mnr-for-key', 0);
         elem.classList.add("mnrHide");
-        if(this.binds[bind] != null){
-         // console.log(Array.isArray(this.binds[bind]));
-         let value = this.binds[bind];
+        if(this.b[bind] != null){
+         // console.log(Array.isArray(this.b[bind]));
+         let value = this.b[bind];
          // if(typeof(value) == 'string'){
          //    value = Array.from(value);                   
          // }
          if(Array.isArray(value) ){
-            elem.setAttribute('mnr-for-value', this.binds[bind][0]);
+            elem.setAttribute('mnr-for-value', this.b[bind][0]);
             elem.setAttribute('mnr-for-key', 0);
             elem.classList.remove("mnrHide");
-            if(this.binds[bind].length > 1){
-              for(let j = this.binds[bind].length - 1; j >= 1; j--){
+            if(this.b[bind].length > 1){
+              for(let j = this.b[bind].length - 1; j >= 1; j--){
                   let temp = document.createElement('DIV');
                   temp.innerHTML = elem.outerHTML;
                   let newElem = temp.querySelector('[mnr-for]');
@@ -494,7 +490,7 @@ const Mnr = (function(){
                   newElem.setAttribute('mnr-for-clone', bind);
                   newElem.setAttribute('mnr-for-key', j);
                   newElem.removeAttribute('mnr-for');
-                  newElem.setAttribute('mnr-for-value', this.binds[bind][j]);
+                  newElem.setAttribute('mnr-for-value', this.b[bind][j]);
                   elem.insertAdjacentHTML('afterend',newElem.outerHTML);
               }
             }
@@ -572,24 +568,24 @@ const Mnr = (function(){
         let elem = this.imgBinds[bind].elems[i];
 
         elem.src = null;
-        if(this.binds[bind] != null){
-            elem.src = this.binds[bind];
+        if(this.b[bind] != null){
+            elem.src = this.b[bind];
         }
        }
     },
 
     bindPush: function(prop,val){
-      if(this.hasKey(this.binds,prop)){
-        let temp = this.binds[prop];
+      if(this.hasKey(this.b,prop)){
+        let temp = this.b[prop];
         temp.push(val);
-        this.binds[prop] = temp;
+        this.b[prop] = temp;
       }
     },
     setBinds: function(bind){
       if(typeof bind == 'object'){
         let temps = Object.entries(bind);
         for (let temp of temps) {
-          this.binds[temp[0]] = temp[1];
+          this.b[temp[0]] = temp[1];
         }
       }
       if(this.pageLoading == false){
@@ -608,25 +604,28 @@ const Mnr = (function(){
            let innerText = el.innerText;
            let type = "";
            if(el.hasAttribute("mnr-type")){
-             if(el.getAttribute("mnr-type") == "num"){
+             if(el.getAttribute("mnr-type") == "number"){
                 type = "+";
              }
              el.removeAttribute("mnr-type");
            }
-           // console.log(innerText);
-           // console.log(el.parentElement);
-           innerText = innerText.replaceAll("prnt",type+"parentElement");
 
-           innerText = innerText.replaceAll("attr",type+"getAttribute");
-           
-           innerText = innerText.replaceAll("qry",type+"document.querySelector");
+           innerText = innerText.replaceAll(";","");
+           innerText = innerText.replaceAll("script","");
+           innerText = innerText.replaceAll("alert(","");
+           innerText = innerText.replaceAll(".log(","");
+           innerText = innerText.replaceAll(".then","");
+           innerText = innerText.replaceAll("try","");
+
+           innerText = innerText.replaceAll("e()","e(el.parentNode)");
+           innerText = innerText.replaceAll("e(",type+"Mnr.e(");
 
 
-           let binds = Object.keys(this.binds);
+           let binds = Object.keys(this.b);
            binds = binds.sort((a,b) => b.length - a.length);
            for(let bind of binds){
-             if(innerText.indexOf(bind) !== -1 && innerText.indexOf('Mnr.binds.'+bind) === -1){
-                innerText = innerText.replaceAll(bind,type+'Mnr.binds.'+bind);
+             if(innerText.indexOf(bind) !== -1 && innerText.indexOf('Mnr.b.'+bind) === -1){
+                innerText = innerText.replaceAll(bind,type+'Mnr.b.'+bind);
              }
            }
 
@@ -641,14 +640,13 @@ const Mnr = (function(){
        if(this.parseBool(this.pageLoading) == false || force == true){
           
           for(let tag of this.tagBinds){
-            let el = tag.el;
+            let el = tag.el; //delcare for eval;
             try{
-              // console.log(eval(tag.ev));
               tag.el.innerText = eval(tag.ev);
             }
-            catch{
+            catch(error){
               tag.el.innerText = "";
-              console.warn("failed to parse <mnr> command");
+              console.warn("failed to parse <mnr> command "+error);
             }
           }
        }
@@ -658,16 +656,16 @@ const Mnr = (function(){
     ///////////////////////////////////////////////window handlers
     handleScroll: function(){
       if(window.pageYOffset > 10){
-        if(this.binds.scrolled == false){
-         this.binds.scrolled = true;
+        if(this.b.scrolled == false){
+         this.b.scrolled = true;
         }
         if(this.bodyElem !== false){
           this.bodyElem.classList.add('scrolled');
         }
       }
       else if(window.pageYOffset <= 10){
-        if(this.binds.scrolled){
-         this.binds.scrolled = false;
+        if(this.b.scrolled){
+         this.b.scrolled = false;
         }
         if(this.bodyElem !== false){
           this.bodyElem.classList.remove('scrolled');
@@ -691,69 +689,67 @@ const Mnr = (function(){
       let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     
-      // if(this.binds.windowWidth != width && this.pageLoading == false){
+      // if(this.b.windowWidth != width && this.pageLoading == false){
       //   this.loadLayout();
       // }
-      this.binds.windowWidth = width;
-      this.binds.windowHeight = height;
+      this.b.windowWidth = width;
+      this.b.windowHeight = height;
     },
 
     
     ////////////////////////////////////////////media handlers
     loadMedia: function(){
     
-      this.imgList = document.querySelectorAll('[mnr-src]');
-      this.imgNum = 0;
-      this.mediaLoopCount = 0;
 
-      if(this.imgList.length > 0){
-        this.imgIterator();
-      }
-      else{
-        this.imgDone = true;
-        this.mediaFinishLoad();
-      }
+      this.imgIterator();
 
-      ////set images scroll load
-      let temp = document.querySelectorAll('[mnr-scroll-src]');
-      for(elem of temp){
-        let attr = elem.getAttribute("mnr-scroll-src")
-        if(attr != 'set'){
-           this.scrollImg.elems.push({el:elem,src:attr,set:false});
-           elem.setAttribute("mnr-scroll-src","set");
-        }
-      }
+      this.mediaFinishLoad();
     },
     imgIterator:  function(){
+      let temp = this.e('[mnr-src]').e;
+      for(let elem of temp){
+         let tempSrc = this.e(elem).attr('mnr-src');
+         if(tempSrc != 'set'){
+            elem.src = this.root+this.b.assetsUrl+tempSrc;
+            this.addEvent('error',elem,()=>{
+              this.e(elem).class('mnrHide');
+              console.warn('image skipped: '+tempSrc);
+            });
+            this.addEvent('load',elem,()=>{
+              this.e(elem).removeAttr('mnr-src');
+            });
+         }
+      }
 
-      this.mediaLoopCount ++;
 
-      if(this.imgNum >= this.imgList.length){
-        this.imgDone = true;
-        this.mediaFinishLoad();
-        return;
+      ////set images scroll load
+      temp = this.e('[mnr-scroll-src]').e;
+      for(let elem of temp){
+        let attr = this.e(elem).attr("mnr-scroll-src");
+        if(attr != 'set'){
+           this.scrollImg.elems.push({el:elem,src:attr,set:false});
+           this.e(elem).removeAttr("mnr-scroll-src");
+        }
       }
-    
-      let tempSrc = this.imgList[this.imgNum ].getAttribute('mnr-src');
-      if(tempSrc != null && tempSrc != 'null'){
-          this.imgList[this.imgNum ].addEventListener('error',() => {
-            this.imgList[this.imgNum ].classList.add('mnrHide');
-            console.warn('image skipped: '+tempSrc);
-            this.imgNum +=1;
-            this.imgIterator();
-          });
-          this.imgList[this.imgNum ].addEventListener('load',() => {
-            this.imgNum +=1;
-            this.imgIterator();
-          });
-    
-          this.imgList[this.imgNum ].src = tempSrc;
-          this.imgList[this.imgNum ].removeAttribute('mnr-src');
+
+
+      // backimgs
+      temp = this.e('[mnr-back-src]').e;
+      for (let elem of temp) {
+        try{
+         
+         let tempSrc = this.e(elem).attr('mnr-back-src');
+         if(tempSrc != 'set'){
+           this.e(elem).css('background-image', 'url('+this.root+this.b.assetsUrl+tempSrc+')').removeAttr('mnr-back-src');
+         }
+        }
+        catch{
+          console.warn('background image skipped: '+tempSrc);
+          continue;
+        }
       }
-      else{
-        this.imgNum +=1;
-        this.imgIterator();
-      }
+
+
     },
     imgLoadScroll: function(){
       if(this.scrollImg.elems.length < this.scrollImg.dones){
@@ -761,29 +757,11 @@ const Mnr = (function(){
       }
       for(elem of this.scrollImg.elems){
          if(this.isInViewport(elem.el) && elem.set == false){
-            elem.el.src = elem.src;
+            elem.el.src = this.root+this.b.assetsUrl+elem.src;
             elem.set = true;
             this.scrollImg.dones ++;
          }
       }
-    },
-    loadImgsBack: function(){
-      this.imgBackList = document.querySelectorAll('[mnr-back-src]');
-      for (let backImg of this.imgBackList) {
-        try{
-         
-         let tempSrc = backImg.getAttribute('mnr-back-src');
-         if(tempSrc != null && tempSrc != 'null'){
-           backImg.style.backgroundImage = 'url('+tempSrc+')';
-           backImg.setAttribute('mnr-back-src',null);
-         }
-        }
-        catch{
-          console.warn(backImg+' skipped');
-          continue;
-        }
-      }
-      this.imgBackList = [];
     },
     setSliders: function(){
       if(typeof Swiper !== 'function'){
@@ -807,6 +785,7 @@ const Mnr = (function(){
           let prev = null;
           let next = null;
           let pag = null;
+          let pagType = null;
           if(slider.querySelector("[mnr-slider-next]")){
             slider.querySelector("[mnr-slider-next]").classList.add('swiper-button-next');
             next = slider.querySelector("[mnr-slider-next]");
@@ -818,6 +797,7 @@ const Mnr = (function(){
           if(slider.querySelector("[mnr-slider-pagination]")){
             slider.querySelector("[mnr-slider-pagination]").classList.add('swiper-pagination');
             pag = slider.querySelector("[mnr-slider-pagination]");
+            pagType = pag.getAttribute("mnr-slider-pagination");
           }
     
           
@@ -829,9 +809,14 @@ const Mnr = (function(){
              slider.innerHTML = wrapper.outerHTML;
           }
     
-          if(prev != null && next != null){
+          if(prev != null){
             slider.innerHTML += prev.outerHTML;
+          }
+          if(next != null){
             slider.innerHTML += next.outerHTML;
+          }
+          if(pag != null){
+            slider.innerHTML += pag.outerHTML;
           }
     
           if(slider.querySelector(".swiper-wrapper [mnr-slider-next]")){
@@ -860,12 +845,24 @@ const Mnr = (function(){
               nextEl: slider.querySelector(".swiper-button-next"),
               prevEl: slider.querySelector(".swiper-button-prev"),
             },
-            pagination: {
-              el: slider.querySelector(".swiper-pagination"),
-              dynamicBullets: true,
-              clickable: true,
-            }
           };
+          switch(pagType){
+            case "numbers":
+              options['pagination'] = {
+                el: ".swiper-pagination",
+                clickable: true,
+                renderBullet: function (index, className) {
+                  return '<span class="' + className + '">' + (index + 1) + "</span>";
+                },
+              };
+            break;
+            default:
+              options['pagination'] = {
+                el: slider.querySelector(".swiper-pagination"),
+                dynamicBullets: true,
+                clickable: true,
+              }
+          }
     
           for (let option of optionsTemp) {
             options[option[0]] = option[1];
@@ -988,16 +985,18 @@ const Mnr = (function(){
     },
     loadSvgs: function(){
       if(typeof SVGInject === "function"){
-        let svgs = document.querySelectorAll("[mnr-svg]");
+        let svgs = this.e("[mnr-svg]").e;
+        for(let svg of svgs){
+          svg.src = this.root+this.b.assetsUrl+this.e(svg).attr('mnr-svg');
+        }
         SVGInject(svgs);
-        // for(svg of svgs){
-        //   svg.removeAttribute('mnr-svg');
-        // }
+        for(let svg of svgs){
+          this.e(svg).removeAttr('mnr-svg');
+        }
       }
     },
     mediaFinishLoad: function(){
        this.loadSvgs();
-       this.loadImgsBack();
        this.setSliders();
        // console.log(this.mediaLoopCount);
        this.mediaLoopCount = 0;
@@ -1007,25 +1006,25 @@ const Mnr = (function(){
     ///////////////////////////////////////////////////////ajax handlers
     setSavingStatus: function(status){
       if(status == 1){ //saving
-        this.binds.savingStatus = 1;
-        this.binds.savingNotice = '';
+        this.b.savingStatus = 1;
+        this.b.savingNotice = '';
       }
       else{
         this.savingTemp = status;
         setTimeout(()=>{
-          this.binds.savingStatus = this.savingTemp;
-          if(this.binds.savingStatus == 2){ //ok
-            this.binds.savingNotice = '<span class="colorOk">Los cambios se han guardado</span>';
+          this.b.savingStatus = this.savingTemp;
+          if(this.b.savingStatus == 2){ //ok
+            this.b.savingNotice = '<span class="colorOk">Los cambios se han guardado</span>';
             setTimeout(()=>{
-              this.binds.savingNotice = '';
+              this.b.savingNotice = '';
             }, 4000);
           }
           else{ //bad
-            this.binds.savingNotice = '<span class="colorWarn">Hubo un error en el servidor, vuelve a intentarlo</span>';
+            this.b.savingNotice = '<span class="colorWarn">Hubo un error en el servidor, vuelve a intentarlo</span>';
           }
         }, 500);
         setTimeout(()=>{
-          this.binds.savingStatus = 0; //ready
+          this.b.savingStatus = 0; //ready
         }, 1500);
       }
     },
@@ -1063,6 +1062,199 @@ const Mnr = (function(){
 
 
     //////////////////////////////////////////////////////form handler
+    
+
+
+    //////////////////////////////////////////////////////element handler
+    e: function(query, all = true){
+      let elem = [];
+      let _this = this;
+      let singleNode = (function () {
+        // make an empty node list to inherit from
+        let nodelist = document.createDocumentFragment().childNodes;
+        // return a function to create object formed as desired
+        return function (node) {
+            return Object.create(nodelist, {
+                '0': {value: node, enumerable: true},
+                'length': {value: 1},
+                'item': {
+                    "value": function (i) {
+                        return this[+i || 0];
+                    }, 
+                    enumerable: true
+                }
+            }); // return an object pretending to be a NodeList
+        };
+      }());
+      if(typeof(query) == 'string'){
+        elem = (all)? document.querySelectorAll(query) : [document.querySelector(query)];
+      }
+      else{
+        elem = singleNode(query);
+      }
+      
+      
+      return {
+        e: elem,
+        class: function(names, add = true){
+          let classes = names.trim().split(' ');
+          for(let el of elem){
+            for(let clss of classes){
+              if(add){
+                el.classList.add(clss);
+              }
+              else{
+                el.classList.remove(clss);
+              }
+            }
+          }
+          return this;
+        },
+        toggleClass: function(names){
+          let classes = names.trim().split(' ');
+          for(let el of elem){
+            for(let clss of classes){
+             el.classList.toggle(clss);
+            }
+          }
+          return this;
+        },
+        css: function(property = null,value = null){
+          let styles = [];
+          if(value == null){
+            styles = getComputedStyle(elem[0]);
+            return (property == null)? styles : styles[property];
+          }
+          else{
+             for(let el of elem){
+               el.style[property] = value;
+             }
+          }
+
+          return this;
+        },
+        attr: function(attr,val = null){
+          if(val == null){
+            return elem[0].getAttribute(attr);
+          }
+          else{
+            for(let el of elem){
+              el.setAttribute(attr, val);
+            }
+          }
+          return this;
+        },
+        html: function(html = null,add = false){
+          if(html == null){
+            return elem[0].innerHTML;
+          }
+          for(let el of elem){
+            el.innerHTML = (add) ? el.innerHTML+html : html;
+          }
+          return this;
+        },
+        text: function(text = null,add = false){
+          if(text == null){
+            return elem[0].innerText;
+          }
+          for(let el of elem){
+            el.innerText = (add) ? el.innerText+text : text;
+          }
+          return this;
+        },
+        value: function(value, add = false){
+          if(elem[0].nodeName == "INPUT" || elem[0].nodeName == "TEXTAREA" || elem[0].nodeName == "SELECT"){
+            if(value == null){
+              return elem[0].value;
+            }
+            for(let el of elem){
+              el.value = (add) ? el.value+value : value;
+            }
+          }
+          else{
+            this.text(value,add);
+          }
+          return this;
+        },        
+        hide: function(anim = false){
+          this.class('mnrHide');
+          return this;
+        },
+        show: function(anim = false){
+          this.class('mnrHide',false);
+          return this;
+        },
+        hasAttr: function(names, all = true){
+          let attr = names.trim().split(' ');
+          let match = 0;
+          let compare = 0;
+          for(let el of elem){
+            for(let at of attr){
+              compare ++;
+              if(all && el.hasAttribute(at)){
+                if(el.hasAttribute(at)){
+                  match ++;
+                }
+              }
+              else{
+                return el.hasAttribute(at);
+                break;
+              }
+            }
+          }
+          return (match == compare);
+        },
+        hasClass: function(names, all = true){
+          let classes = names.trim().split(' ');
+          let match = 0;
+          let compare = 0;
+          for(let el of elem){
+            for(let clss of classes){
+              compare ++;
+              if(all){
+                if(el.classList.contains(clss)){
+                  match ++;
+                }
+              }
+              else{
+                return el.classList.contains(clss);
+                break;
+              }
+            }
+          }
+          return (match == compare);
+        },
+        removeAttr: function(names, all = true){
+          let attr = names.trim().split(' ');
+          if(all == false){
+            for(let at of attr){
+              elem.removeAttribute(at);
+            }
+          }
+          for(let el of elem){
+            for(let at of attr){
+              el.removeAttribute(at);
+            }
+          }
+          return this;
+        },
+        parent: function(){
+          elem = singleNode(elem[0].parentNode);
+          this.e = elem;
+          return this;
+        },
+        screenFocus : function(offset = 0){
+           _this.screenTo(elem[0],offset);
+           return this;
+        },
+        inView(){
+
+           return _this.isInViewport(elem[0]);
+        },
+
+      };
+    },
+   
 
 
     
@@ -1081,9 +1273,24 @@ const Mnr = (function(){
       }
       return [];
     },
-    screenTo: function(id){
+    screenTo: function(elem, offset = 0){
       let scroll = window.pageYOffset;
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      // document.querySelector(elem).scrollIntoView({ behavior: 'smooth' });
+      
+      if(typeof(elem) == 'string'){
+        elem = document.querySelector(elem);
+      }
+      if(elem == null){
+        return;
+      }
+      let bodyRect = this.bodyElem.getBoundingClientRect().top;
+      let elementRect = elem.getBoundingClientRect().top;
+      let elementPosition = elementRect - bodyRect;
+      let offsetPosition = elementPosition - offset;
+      window.scrollTo({
+           top: offsetPosition,
+           behavior: "smooth"
+      });
     },
     replaceAll: function(str, find, replace) {
     
@@ -1099,7 +1306,7 @@ const Mnr = (function(){
           y = ( r * (D-C)) + C;
           return Math.trunc(y * 100) / 100;
     },
-    parseBool: function(val){
+    parseBool: function(val, def = false){
           switch(val){
            case "true":
              return true;
@@ -1122,8 +1329,17 @@ const Mnr = (function(){
            case 0:
              return false;
            break;
+           case null:
+             return false;
+           break;
+           case 'null':
+             return false;
+           break;
+           case '':
+             return false;
+           break;
           }
-          return false;   
+          return def;   
     },
     hasClasses: function(element, className) {
           if(typeof(element) == 'string'){
