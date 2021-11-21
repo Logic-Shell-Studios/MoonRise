@@ -68,30 +68,50 @@ main,body{
 .moonHolder{
   height: 100vh;
   max-height: 800px;
-  min-height: 500px;
+  min-height: 600px;
 }
-.moonHolder > img,
-.moonHolder > svg{
+.moonHolder .content svg.back{
   height: auto;
   max-width: 1200px;
+  min-width: 800px;
   width: 100vw;
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
   margin: auto;
-  object-fit: contain;
   opacity: 0;
 }
-[mnr-page-loading="false"] .moonHolder > img,
-[mnr-page-loading="false"] .moonHolder > svg{
+.moonHolder .content svg.camp{
+  height: auto;
+  max-width: 100px;
+  min-width: 70px;
+  width: 10vw;
+  position: absolute;
+  bottom: 0;
+  right: 80px;
+  z-index: 2;
+  margin: auto;
+  opacity: 0;
+}
+.moonHolder .content svg.camp > circle{
+  display: none;
+}
+body[mnr-page-loading="false"] .moonHolder .content svg{
   opacity: 1;
+}
+@media only screen and (max-width: 500px){
+  .moonHolder .content svg.camp{
+    right: 40px;
+  }
 }
 .moon{
   width: 800px;
   height: 800px;
   position: relative;
   margin-top: -300px;
-  z-index: 2;
+  z-index: 3;
 }
 
 

@@ -23,7 +23,6 @@ Mnr.init({
       },1000);
     }
   },
-  loadEnterTime: 200,
   loadEndTime: 500,
 });
 

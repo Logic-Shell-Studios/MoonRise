@@ -2,30 +2,31 @@
 
 const Mnr = (function(){
   
+  
+
+
   return {
     ////////////////////variables
     bodyElem: false,
-    root: './',
+    root: '.',
     running: false,
     swipers: [],
     binders: [],
     currentBody: null,
     currentTitle: null,
-    imgList: [],
-    imgBackList: [],
+    imgList: {dones:0,iter:0,elems:[]},
     loadEnterTime: 100,
     loadEndTime: 100,
     elemsEvents: [],
-    loadLoop: null,
     scrollOld: 0,
     timeAddStatus: null,
-    scrollImg:{dones:0,elems:[]},
+    scrollImgOffset: 500,
     componentsHTML:[],
     componentsCount:0,
     classBinds: [],
-    forBinds: [],
     imgBinds: [],
     tagBinds: [],
+    hasWorkers: false,
     b: {},
     pageLoading: true,
     initialBinds: {
@@ -36,7 +37,7 @@ const Mnr = (function(){
       scrolled: false,
       windowWidth: 0,
       windowHeight: 0,
-      assetsUrl: 'assets/',
+      assetsUrl: '/assets/',
     },
 
     start:null,
@@ -55,9 +56,8 @@ const Mnr = (function(){
       },
     },
 
-    runStart:{},
-    runEnd:{},
-    runLoad:{},
+    run:{},
+    loadRun:[],
     
     init: function(options = {}) {
       // this.start = performance.now();
@@ -77,15 +77,15 @@ const Mnr = (function(){
       }
 
 
+      //check for webworkers
+      if (typeof(Worker) !== "undefined") {
+        this.hasWorkers = true;
+      }
+
+
       // set options
-      if(options['runStart'] != null){
-        this.runStart = options['runStart'];
-      }
-      if(options['runEnd'] != null){
-        this.runEnd = options['runEnd'];
-      }
-      if(options['runLoad'] != null){
-        this.runLoad = options['runLoad'];
+      if(options['run'] != null){
+        this.run = options['run'];
       }
       if(options['binds'] != null){
         this.b = options['binds'];
@@ -95,8 +95,10 @@ const Mnr = (function(){
         this.b[temp[0]] = temp[1];    
       }
     
-      if(options['loadEnter'] != null && options['loadEnd'] != null){
+      if(options['loadEnter'] != null){
         this.pageLoader.start = options['loadEnter'];
+      }
+      if(options['loadEnd'] != null){
         this.pageLoader.end = options['loadEnd'];
       }
       if(options['loadEnterTime'] != null && options['loadEndTime'] != null){
@@ -111,44 +113,47 @@ const Mnr = (function(){
       }
 
       // run load
-      window.addEventListener('load', ()=>{ 
-        this.load(); 
-      }); 
-    },
-    load: function(){
-      this.loadHrefs();
-
-    
-      this.addEvent('scroll',window,()=>{ this.handleScroll() });
-      this.addEvent('resize',window,()=>{ this.handleResize() });
-      
-
       this.insertComponents();
 
+      this.addEvent('scroll',window,()=>{ this.handleScroll() });
+      this.addEvent('resize',window,()=>{ this.handleResize() });
+      window.addEventListener('load', ()=>{ 
+        this.finishLoad(); 
+      }); 
+    },
+    finishLoad: function(){
+      setTimeout(()=>{
+        this.loadHrefs();
+      },100);
 
       // manage media loading
       this.loadMedia();
 
-      //check if images finish loading or the time surpas the limit
-      // this.loadLoop = setInterval(()=>{
-      //   if(this.imgDone == true || this.mediaTimePass > 20){
-      //     clearInterval(this.loadLoop);
-      //     this.finishLoad();
-      //   }
-      // },100);
 
-
-      this.finishLoad();
-    },
-    finishLoad: function(){
       if(this.pageLoading == true){
+        console.log('MOONRISE V3 running');
+
 
         this.handleScroll();
         this.handleResize();
-
        
         this.bindAll();
+        this.setForms();
         
+        this.runLoads();
+
+
+        //run functions after finish load once
+        Object.values(this.run).map(value => {
+          if(typeof value === 'string' && this.hasOwnProperty(value)){
+             this[value].init(this);
+          }
+          else if(typeof value === 'function') {
+            value.call();
+          }
+        });
+
+
         // run page load functions animation
         this.pageLoader.end();
         // set page load false and run wow
@@ -162,25 +167,13 @@ const Mnr = (function(){
           if(typeof WOW === "function"){
             new WOW().init();
           }
-
-          console.log('MOON RISE ENGINE running');
+          
           // console.log(performance.now() - this.start);
         },this.loadEndTime);
-
-        
-
-        //run functions after finish load all once
-        Object.values(this.runEnd).map(value => {
-          if(typeof value === 'string' && this.hasOwnProperty(value)){
-             this[value].init(this);
-          }
-          else if(typeof value === 'function') {
-            value.call();
-          }
-        });
       }
     },
     reload: function(){
+      return;
       this.pageLoader.start();
 
       this.b.pageLoading = true;
@@ -189,7 +182,26 @@ const Mnr = (function(){
         this.bodyElem.setAttribute('mnr-page-loading',true);
       }
 
-      this.load();
+      this.finishLoad();
+    },
+
+
+    load: function(binds = null,funct = null){
+      if(binds != null){
+        this.setBinds(binds);
+      }
+      if(typeof funct === 'function'){
+        this.loadRun.push(funct);
+        if(this.pageLoading == false){
+          this.runLoads();
+        }
+      }
+    },
+    runLoads: function(){
+      for(let funct of this.loadRun){
+        funct();
+      }
+      this.loadRun = {};
     },
     
     
@@ -301,7 +313,6 @@ const Mnr = (function(){
       }
       
       this.setBindClasses();
-      this.setBindFors();
       this.setBindImgs();
       this.setBindTags();
       
@@ -350,7 +361,6 @@ const Mnr = (function(){
     },
     runAllBinds(){
       this.runBindMaxText(true);
-      this.runBindfors(true);
       this.runBindImgs(true);
       this.runBindPrints(true);
       this.runBindClasses(true);
@@ -358,7 +368,6 @@ const Mnr = (function(){
     },
     runAllBindsSingle(bind){
       this.runBindMaxText();
-      this.runSingleBindfors(bind);
       this.runSingleBindImgs(bind);
       this.runBindPrints();
       this.runBindClasses();
@@ -421,83 +430,6 @@ const Mnr = (function(){
         }
 
         // console.log(document.querySelectorAll('[mnr-class][mnr-for-clone]'));
-      }
-    },
-
-    setBindFors: function(){
-      //for binds
-      for (let elem of document.querySelectorAll('[mnr-for]')) {
-        let bind = elem.getAttribute('mnr-for');
-        if(bind != 'set'){
-          elem.setAttribute('mnr-for','set');
-          if(this.hasKey(this.forBinds, bind)){
-            if(this.forBinds[bind].elems.includes(elem) == false){
-              this.forBinds[bind].elems.push(elem);
-            }
-          }
-          else{
-              this.forBinds[bind] = {elems:[elem]};
-          }
-        }
-      }
-    },
-    runBindfors: function(force = false){
-      if(this.parseBool(this.pageLoading) == false || force == true){
-        let clones = document.querySelectorAll('[mnr-for-clone]');
-        for(let clone of clones){
-         clone.remove();
-        }
-        for (let bind of Object.keys(this.forBinds) ) {
-          this.iterateForBinds(bind);
-
-        }
-      }   
-    },
-    runSingleBindfors: function(bind){
-      if(this.parseBool(this.pageLoading) == false && this.hasKey(this.forBinds,bind)){
-      
-        let clones = document.querySelectorAll('[mnr-for-clone="'+bind+'"]');
-        for(let clone of clones){
-         clone.remove();
-        }
-      
-        this.iterateForBinds(bind);
-      }   
-    },
-    iterateForBinds:function(bind){
-      if(this.forBinds[bind] != null){
-       for (let i = this.forBinds[bind].elems.length - 1; i >= 0; i--) {
-        let elem = this.forBinds[bind].elems[i];
-
-        elem.setAttribute('mnr-for-value', this.b[bind]);
-        elem.setAttribute('mnr-for-key', 0);
-        elem.classList.add("mnrHide");
-        if(this.b[bind] != null){
-         // console.log(Array.isArray(this.b[bind]));
-         let value = this.b[bind];
-         // if(typeof(value) == 'string'){
-         //    value = Array.from(value);                   
-         // }
-         if(Array.isArray(value) ){
-            elem.setAttribute('mnr-for-value', this.b[bind][0]);
-            elem.setAttribute('mnr-for-key', 0);
-            elem.classList.remove("mnrHide");
-            if(this.b[bind].length > 1){
-              for(let j = this.b[bind].length - 1; j >= 1; j--){
-                  let temp = document.createElement('DIV');
-                  temp.innerHTML = elem.outerHTML;
-                  let newElem = temp.querySelector('[mnr-for]');
-
-                  newElem.setAttribute('mnr-for-clone', bind);
-                  newElem.setAttribute('mnr-for-key', j);
-                  newElem.removeAttribute('mnr-for');
-                  newElem.setAttribute('mnr-for-value', this.b[bind][j]);
-                  elem.insertAdjacentHTML('afterend',newElem.outerHTML);
-              }
-            }
-         }
-        }
-       }
       }
     },
     
@@ -655,7 +587,7 @@ const Mnr = (function(){
     
     
     ///////////////////////////////////////////////window handlers
-    handleScroll: function(){
+    handleScroll: function(force = false){
       if(window.pageYOffset > 10){
         if(this.b.scrolled == false){
          this.b.scrolled = true;
@@ -674,16 +606,16 @@ const Mnr = (function(){
       }
       
       let change = false;
-      if(this.scrollOld > window.pageYOffset+1){
+      if(this.scrollOld > window.pageYOffset+10){
         change = true;
       }
-      else if(this.scrollOld < window.pageYOffset-1){
+      else if(this.scrollOld < window.pageYOffset-10){
         change = true;
       }
       if(change == true){
         this.scrollOld = window.pageYOffset;
         this.imgLoadScroll();
-      }
+      }   
     },
     handleResize: function(){
       // console.log('resize');
@@ -700,78 +632,110 @@ const Mnr = (function(){
     
     ////////////////////////////////////////////media handlers
     loadMedia: function(){
-    
+      this.setSliders();
 
       this.imgIterator();
 
-      this.mediaFinishLoad();
+      // this.imgLoadScroll();
+      this.loadSvgs();
 
-      this.imgLoadScroll();
+      this.runTimesMedia();
     },
     imgIterator:  function(){
       let temp = this.e('[mnr-src]').e;
+      let type = 'back';
+      let tempSrc = '';
       for(let elem of temp){
-         let tempSrc = this.e(elem).attr('mnr-src');
+         tempSrc = this.e(elem).attr('mnr-src');
+         type = 'back';
          if(tempSrc != 'set'){
-            elem.src = this.root+this.b.assetsUrl+tempSrc;
-            elem.width = '200';
-            elem.height = '200';
-            if(this.e(elem).hasAttr('alt') == false){
-               this.e(elem).attr('alt','image-'+Math.floor(Math.random() * 1000));
+            
+            if(elem.nodeName == 'IMG'){
+              type = 'img';
+              if(this.e(elem).hasAttr('width') == false){
+                elem.width = '0';
+              }
+              if(this.e(elem).hasAttr('height') == false){
+                elem.height = '0';
+              }
+              if(this.e(elem).hasAttr('alt') == false){
+                let alt = tempSrc.split('/');
+                alt = alt[alt.length-1];
+                alt = alt.split('.');
+                alt = alt.splice(0,alt.length-2);
+                elem.alt = alt;
+              }
             }
-            this.addEvent('error',elem,()=>{
-              this.e(elem).class('mnrHide');
-              console.warn('image skipped: '+tempSrc);
+            this.imgList.elems.push({
+              el:elem,
+              src:tempSrc,
+              set:false,
+              type:type,
             });
-            this.addEvent('load',elem,()=>{
-              this.e(elem).removeAttr('mnr-src');
-            });
+            this.e(elem).removeAttr("mnr-src");
          }
-      }
-
-
-      ////set images scroll load
-      temp = this.e('[mnr-scroll-src]').e;
-      for(let elem of temp){
-        let attr = this.e(elem).attr("mnr-scroll-src");
-        if(attr != 'set'){
-           elem.width = '200';
-           elem.height = '200';
-           if(this.e(elem).hasAttr('alt') == false){
-              this.e(elem).attr('alt','image-'+Math.floor(Math.random() * 1000));
-           }
-           this.scrollImg.elems.push({el:elem,src:attr,set:false});
-           this.e(elem).removeAttr("mnr-scroll-src");
-        }
-      }
-
-
-      // backimgs
-      temp = this.e('[mnr-back-src]').e;
-      for (let elem of temp) {
-        try{
-         
-         let tempSrc = this.e(elem).attr('mnr-back-src');
-         if(tempSrc != 'set'){
-           this.e(elem).css('background-image', 'url('+this.root+this.b.assetsUrl+tempSrc+')').removeAttr('mnr-back-src');
-         }
-        }
-        catch{
-          console.warn('background image skipped: '+tempSrc);
-          continue;
-        }
       }
     },
+    runTimesMedia: function(){
+      if(this.pageLoading == false){
+        if(this.imgList.elems.length <= 0){
+          return;
+        }
+        let checks = [];
+        let elem = this.imgList.elems[0];
+        if(elem.set == false){
+           if(elem.type == 'img'){
+             this.addEvent('error',elem.el,()=>{
+               this.e(elem.el).class('mnrHide');
+               console.warn('image skipped: '+elem.src);
+             });
+             elem.el.src = this.root+this.b.assetsUrl+elem.src;
+           }
+           else{
+             try{
+               this.e(elem.el).css('background-image', 'url('+this.root+this.b.assetsUrl+elem.src+')');
+             }
+             catch{
+               console.warn('background image skipped: '+elem.src);
+             }
+           }
+           elem.set = true;
+           this.imgList.elems.splice(0,1);
+        }
+      }
+      setTimeout(()=>{this.runTimesMedia()},300);
+    },
     imgLoadScroll: function(){
-      if(this.scrollImg.elems.length < this.scrollImg.dones){
+      if(this.imgList.elems.length <= 0){
         return;  
       }
-      for(elem of this.scrollImg.elems){
-         if(this.isAboveViewport(elem.el,100) && elem.set == false){
-            elem.el.src = this.root+this.b.assetsUrl+elem.src;
+      let checks = [];
+      let i = 0;
+      for(elem of this.imgList.elems){
+         if(this.isAboveViewport(elem.el,this.scrollImgOffset) && elem.set == false){
+            if(elem.type == 'img'){
+              this.addEvent('error',elem.el,()=>{
+                this.e(elem.el).class('mnrHide');
+                console.warn('image skipped: '+elem.src);
+              });
+              elem.el.src = this.root+this.b.assetsUrl+elem.src;
+              checks.push(i);
+            }
+            else{
+              try{
+                this.e(elem.el).css('background-image', 'url('+this.root+this.b.assetsUrl+elem.src+')');
+              }
+              catch{
+                console.warn('background image skipped: '+elem.src);
+              }
+              checks.push(i);
+            }
             elem.set = true;
-            this.scrollImg.dones ++;
          }
+         i++;
+      }
+      for ( let j = checks.length - 1; j >= 0; j--) {
+        this.imgList.elems.splice(checks[j],1);
       }
     },
     setSliders: function(){
@@ -1006,12 +970,6 @@ const Mnr = (function(){
         }
       }
     },
-    mediaFinishLoad: function(){
-       this.loadSvgs();
-       this.setSliders();
-       // console.log(this.mediaLoopCount);
-       this.mediaLoopCount = 0;
-    },
 
 
     ///////////////////////////////////////////////////////ajax handlers
@@ -1073,7 +1031,12 @@ const Mnr = (function(){
 
 
     //////////////////////////////////////////////////////form handler
-    
+    setForms: function(){
+       let forms = this.e('[mnr-form]').e;
+       for(let form of forms){
+         
+       }
+    },
 
 
     //////////////////////////////////////////////////////element handler
@@ -1264,6 +1227,7 @@ const Mnr = (function(){
            return _this.isInViewport(elem[0]);
         },
         aboveView: function(){
+          
            return _this.isAboveViewport(elem[0]);
         },
         runBinds: function(){
@@ -1512,6 +1476,8 @@ const Mnr = (function(){
        let winPos = (window.innerHeight || document.documentElement.clientHeight);
        return (winPos >= simplePos)? true : false;
     },
+
+    
     
   };
 

@@ -11,13 +11,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" href="scripts/animate.css/animate.min.css" >
-  <link rel="stylesheet" href="scripts/swiper/swiper.css" >
+  <link rel="stylesheet" mnr-href="scripts/animate.css/animate.min.css" >
+  <link rel="stylesheet" mnr-href="scripts/swiper/swiper.css" >
   <link rel="stylesheet" href="scripts/moonRise/moonRise.css" >
   <link rel="stylesheet" href="style.css" >
  
 
-  <link rel="icon" type="image/ico" mnr-href="./assets/favicon.png">
+  <link rel="icon" type="image/ico" href="./assets/favicon.png">
 
 
   <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -56,16 +56,25 @@
     
     <div class="abs posL posR posB mB20 wow slideInUp textHolder anim5">
       <h1 class="wow slideInUp txtC pB15 anim5 fontS2Xs" >MoonRise</h1>
-      <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">A Tiny FrontEnd Tool</p>
+      <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">A Tiny FrontEnd Library</p>
     </div>
 
 
   </div>
-
-  <img mnr-src="banner.png" class="anim16">
+  <div class="content absS z1 posB posR mAuto">
+    <img mnr-svg="backPlants.svg" class="anim16 back">
+    <img mnr-svg="campFire.svg" class="anim16 camp">
+  </div>
 
 </section>
 
+<section class="pT60 wow slideInLeft">
+  <form mnr-form="true" >
+   <div class="contentGrd pT20">
+     
+   </div>
+  </form>  
+</section>
 
 <section class="pT60 wow slideInLeft">
   <div class="contentGrd pT20">
@@ -154,46 +163,32 @@
             Css binding too</p>
      </div>
 
+
+     <div class="glass grdC6 grdCFullXs flxC ordC p20">
+         <select  multiple mnr-bind="selectTest" >
+           <option value="A">A</option>
+           <option value="B">B</option>
+           <option value="C">C</option>
+           <option value="D">D</option>
+           <option value="E">E</option>
+           <option value="F">F</option>
+         </select>
+     </div>
+     <div class="glass grdC6 grdCFullXs flxC ordC p20" 
+          mnr-class='{"bColorOk": "selectTest.length > 0"}'>
+         <p class="pT10" mnr-bind="selectTest"></p>
+     </div>
+
      <div class="glass grdCFull p20 ordC flxC code hideCode">
           <h4 class="txtC pT20 pBGttr">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/2d20bc07ed8579f703d146144caaeaee.js"></script>
           <p class="txtC button wMax200px bColorWhite colorBlack" 
              onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
-             <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
+             <mnr> (e().parent().hasClass('hideCode')) ? 'Show' : 'Hide' </mnr>
           </p>
 
      </div>
 
-
-
-     <div class="glass grdC6 grdCFullXs grdR1Xs  grdR2 p20">
-       <h3 class="txtC pB10">Element iteration</h3>
-       <select  multiple mnr-bind="selectTest" mnr-bind-set="true">
-           <option value="A" selected>A</option>
-           <option value="B" selected>B</option>
-           <option value="C" selected>C</option>
-           <option value="D">D</option>
-           <option value="E">E</option>
-           <option value="F">F</option>
-       </select>
-       <p class="pT10" mnr-bind="selectTest"></p>
-     </div>
-     <div class="glass grdC2 grdC3Xs flxC ordC" 
-          mnr-for="selectTest" 
-          mnr-print="mnr-for-value"
-          mnr-class='{"bColorOk" : "(mnr-for-key + 1) % 2 == 0", "bColorWarn" : "(mnr-for-key + 1) % 2 != 0"  }'>
-          
-     </div>
-
-     <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr">Code Sample</h4>
-          <script src="https://gist.github.com/alexbores/c19cd155396c0e42262c104bc26265f5.js"></script>
-          <p class="txtC button wMax200px bColorWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
-             <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
-          </p>
-
-     </div>
 
 
 
@@ -228,23 +223,14 @@
     <div class="glass grdCFull p20 flxC ordC">
        <h2 class="txtC">Deferred loading images</h2>
     </div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und1.svg"></div>
-
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-scroll-src="und1.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
 
 
     <div class="glass grdCFull p20 ordC flxC code hideCode">
@@ -259,12 +245,13 @@
   </div>
 </section>
 
+
 <!-- <section class="pT60 wow slideInLeft">
   <div class="contentGrd ">
     <div class="glass grdC6 grdCFullSm grdR4 grdR2Sm p20 flxC ordC">
        <h2 class="txtC">Mobile friendly sliders</h2>
     </div>
-    <div class="glass grdC6 grdCFullSm grdR4 bColorTWhite" 
+    <div class="glass grdC6 grdCFullSm grdR4" 
          mnr-slider='{
            "slidesPerView":1,
            "loop": true,
@@ -272,27 +259,21 @@
            "spaceBetween": 0,
            "autoplay": true}'>
 
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="./assets/und2.svg"></div>
+      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
+      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
+      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
+      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
+      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
 
       <div mnr-slider-prev class="s50 round bColorTWhite flxC ordC">
-         <img mnr-src="./assets/flecha-izquierda.svg" mnr-svg class="svgColor2 s20">
+         <img mnr-svg="flecha-izquierda.svg" class="svgColor2 s20">
       </div>
       <div mnr-slider-next  class="s50 round bColorTWhite flxC ordC">
-         <img mnr-src="./assets/flecha-derecha.svg" mnr-svg class="svgColor2 s20">
+         <img mnr-svg="flecha-derecha.svg"  class="svgColor2 s20">
       </div>
     </div>
   </div>
 </section> -->
-
-
-
 
 
 </main> 
@@ -329,14 +310,14 @@
 
 
 <script>
-  Mnr.setBinds({
-    selectTest: ['A','C'],
+  let binds = {
+    selectTest: [],
     inputTest: "",
     selectImg:[],
     dateTest: "",
-  });
-
-
+  };
+  Mnr.load(binds);
+  
 
 </script>
 
