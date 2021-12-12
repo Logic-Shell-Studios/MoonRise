@@ -109,10 +109,9 @@ const Mnr = (function(){
       this.addEvent('scroll',window,()=>{ this.handleScroll() });
       this.addEvent('resize',window,()=>{ this.handleResize() });
 
-      
+      this.loadLinks();
 
-      window.addEventListener('load', ()=>{  
-        this.loadLinks(); 
+      window.addEventListener('load', ()=>{   
         this.finishLoad(); 
       }); 
     },
