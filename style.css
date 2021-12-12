@@ -98,7 +98,7 @@ main,body{
 .moonHolder .content svg.camp > circle{
   display: none;
 }
-body[mnr-page-loading="false"] .moonHolder .content svg{
+html[mnr-page-loading="false"] .moonHolder .content svg{
   opacity: 1;
 }
 @media only screen and (max-width: 500px){

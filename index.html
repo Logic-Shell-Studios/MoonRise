@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" >
 
 <head>
 
@@ -11,22 +11,22 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" mnr-href="scripts/animate.css/animate.min.css" >
-  <link rel="stylesheet" mnr-href="scripts/swiper/swiper.css" >
-  <link rel="stylesheet" href="scripts/moonRise/moonRise.css" >
   <link rel="stylesheet" href="style.css" >
  
 
   <link rel="icon" type="image/ico" href="./assets/favicon.png">
-
+  
 
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
 
-
+  <script src="./scripts/moonRise/moonRise.js" rel="preload" as="script"></script>
+  
+  
 </head>
 
 
-<body class="Mnr" >
+<body >
 
 
 
@@ -55,7 +55,7 @@
     <div class="circle round abs posC mAuto wow slideInDown" ></div>
     
     <div class="abs posL posR posB mB20 wow slideInUp textHolder anim5">
-      <h1 class="wow slideInUp txtC pB15 anim5 fontS2Xs" >MoonRise</h1>
+      <h1 class="wow slideInUp txtC pB15 anim5 txtS2Xs" >MoonRise</h1>
       <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">A Tiny FrontEnd Library</p>
     </div>
 
@@ -79,7 +79,7 @@
 <section class="pT60 wow slideInLeft">
   <div class="contentGrd pT20">
     <div class="glass grdCFull flxC ordC p20">
-      <p class="txtC pB20 fontS3 wMaxInner">MoonRise is a tiny vanilla js and Css library to simplify the web development process.</p>
+      <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla js and Css library to simplify the web development process.</p>
 
       <a class="github-button" href="https://github.com/Logic-Shell-studios/MoonRise" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @Logic-Shell-studios on GitHub" rel="noopener noreferrer">Visit us in GitHub</a>
 
@@ -126,8 +126,8 @@
     <div class="glass grdCFull p20 ordC flxC code hideCode">
           <h4 class="txtC pT20 pBGttr">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/07025bb928c8a3052d93c4d90cdc410d.js"></script>
-          <p class="txtC button wMax200px bColorWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
+          <p class="txtC button wMax200 colorBWhite colorBlack" 
+             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
              <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
           </p>
      </div>
@@ -149,16 +149,16 @@
          <input class="mTGttr" placeholder="type something..." mnr-bind="inputTest" mnr-max-text="10">
      </div>
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"bColorOk": "inputTest.length > 0 && inputTest.length < 6", "bColorWarn":"inputTest.length >= 6"}'>
+          mnr-class='{"colorBOk": "inputTest.length > 0 && inputTest.length < 6", "colorBWarn":"inputTest.length >= 6"}'>
          <p mnr-bind="inputTest" 
             mnr-max-text="10"></p>
          
-         <p class="fontS5 fontBold colorWhite mTGttr" 
+         <p class="txtS5 fontBold colorWhite mTGttr" 
             mnr-class='{"hide": "inputTest.length <= 0"}'> 
             Length: <mnr> inputTest.length </mnr>
          </p>
 
-         <p class="fontS5 fontBold colorWhite" 
+         <p class="txtS5 fontBold colorWhite" 
             mnr-class='{"hide": "inputTest.length <= 0"}'>
             Css binding too</p>
      </div>
@@ -175,15 +175,15 @@
          </select>
      </div>
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"bColorOk": "selectTest.length > 0"}'>
+          mnr-class='{"colorBOk": "selectTest.length > 0"}'>
          <p class="pT10" mnr-bind="selectTest"></p>
      </div>
 
      <div class="glass grdCFull p20 ordC flxC code hideCode">
           <h4 class="txtC pT20 pBGttr">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/2d20bc07ed8579f703d146144caaeaee.js"></script>
-          <p class="txtC button wMax200px bColorWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
+          <p class="txtC button wMax200 colorBWhite colorBlack" 
+             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
              <mnr> (e().parent().hasClass('hideCode')) ? 'Show' : 'Hide' </mnr>
           </p>
 
@@ -209,8 +209,8 @@
      <div class="glass grdCFull p20 ordC flxC code hideCode">
           <h4 class="txtC pT20 pBGttr">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/6a8f162988909835ae2094bec18d9413.js"></script>
-          <p class="txtC button wMax200px bColorWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
+          <p class="txtC button wMax200 colorBWhite colorBlack" 
+             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
              <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
           </p>
      </div>
@@ -236,8 +236,8 @@
     <div class="glass grdCFull p20 ordC flxC code hideCode">
           <h4 class="txtC pT20 pBGttr">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/01d56273ff79798b87b76ca330913003.js"></script>
-          <p class="txtC button wMax200px bColorWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').runBinds()">
+          <p class="txtC button wMax200 colorBWhite colorBlack" 
+             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
              <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
           </p>
      </div>
@@ -265,11 +265,11 @@
       <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
       <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
 
-      <div mnr-slider-prev class="s50 round bColorTWhite flxC ordC">
-         <img mnr-svg="flecha-izquierda.svg" class="svgColor2 s20">
+      <div mnr-slider-prev class="s50 round colorBTWhite flxC ordC">
+         <img mnr-svg="flecha-izquierda.svg" class="colorSvg2 s20">
       </div>
-      <div mnr-slider-next  class="s50 round bColorTWhite flxC ordC">
-         <img mnr-svg="flecha-derecha.svg"  class="svgColor2 s20">
+      <div mnr-slider-next  class="s50 round colorBTWhite flxC ordC">
+         <img mnr-svg="flecha-derecha.svg"  class="colorSvg2 s20">
       </div>
     </div>
   </div>
@@ -289,9 +289,9 @@
   </div>
 </section>
 
-<section class="bColor1 z5 " id="footer">
-    <div class="content fullContent bColorBlack flxC ordC privacyBar minHeight50">
-      <p class="fontS5 colorTWhite txtC pT20 pB20">A <a class="colorWhite" rel="noopener noreferrer" target="_blank" href="https://logicshellstudios.com">Logic Shell Studios</a> Creation</p>
+<section class="colorB1 z5 " id="footer">
+    <div class="content fullContent colorBBlack flxC ordC privacyBar minHeight50">
+      <p class="txtS5 colorTWhite txtC pT20 pB20">A <a class="colorWhite" rel="noopener noreferrer" target="_blank" href="https://logicshellstudios.com">Logic Shell Studios</a> Creation</p>
    </div>
 </section>
 
@@ -300,12 +300,8 @@
 
 
 
-<script src="scripts/swiper/swiper.js" rel="preload" as="script"></script>
-<script src="scripts/wow/dist/wow.min.js" rel="preload" as="script"></script>
-<script src="scripts/svg-inject/svg-inject.min.js" rel="preload" as="script"></script>
-<script src="scripts/moonRise/moonRise.js"  rel="preload" as="script"></script>
-<script src="functions.js"  rel="preload" as="script"></script>
 
+<script src="functions.js"  rel="preload" as="script"></script>
 
 
 
@@ -317,6 +313,7 @@
     dateTest: "",
   };
   Mnr.load(binds);
+  
   
 
 </script>
