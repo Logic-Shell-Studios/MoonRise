@@ -110,10 +110,9 @@ const Mnr = (function(){
       
       this.insertComponents();
       this.loadThird();
-      
+      this.getLinks();
 
       window.addEventListener('load', ()=>{ 
-        this.getLinks();
         this.loadReady();
       }); 
     },
