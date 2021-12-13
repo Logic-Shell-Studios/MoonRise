@@ -38,6 +38,13 @@ main,body{
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d1f2c",endColorstr="#04080b",GradientType=1);
 }
 
+html body{
+  opacity: 0;
+}
+html[mnr-page-loading="false"] body{
+  opacity: 1;
+}
+
 /*///////////////////////////////////////////////////////////////////////////////miscs*/
 .gist{
   width: 100%;
@@ -175,6 +182,9 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   z-index: 9999999;
   overflow: hidden;
   background-color: var(--mnr-color1);
+  position: fixed;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 #pageLoader.load{
   opacity: 0;

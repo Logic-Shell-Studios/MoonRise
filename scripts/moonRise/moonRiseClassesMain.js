@@ -1,10 +1,7 @@
 
 const mnrClasses = function(){
-  let sizesScreen = [1140,960,720,500];
-  let sizesPrefixes = ['Lg','Md','Sm','Xs'];
   let sizesScreenFull = [0,1140,960,720,500];
   let sizesPrefixesFull = ['','Lg','Md','Sm','Xs'];
-  let zIndex = ['-1','1','2','3','4','5','10','15','20'];
 
   let classes = `
    @charset "UTF-8";
@@ -66,11 +63,11 @@ const mnrClasses = function(){
 
   `;
 
-  for (let i = 0; i < sizesScreen.length; i++) {
+  for (let i = 1; i < sizesScreenFull.length; i++) {
     classes += `
-       @media only screen and (max-width: ${sizesScreen[i]}px){
+       @media only screen and (max-width: ${sizesScreenFull[i]}px){
          :root {
-           --mnr-padSides: var(--mnr-padSides${sizesPrefixes[i]});
+           --mnr-padSides: var(--mnr-padSides${sizesPrefixesFull[i]});
          }
        }
     `;
@@ -332,10 +329,10 @@ const mnrClasses = function(){
 
   `;
 
-
+let zIndex = ['-1','1','2','3','4','5','10','15','20'];
 for (let i = 0; i < zIndex.length; i++) {
    classes += `
-     .Mnr .z${zIndex[i]} {${zIndex[i]};}
+     .Mnr .z${zIndex[i]} {z-index:${zIndex[i]};}
    `;
 }
 classes += `
@@ -416,26 +413,16 @@ for (var size = 0; size < sizesScreenFull.length; size++) {
   
   // proportional
   for (let i = 2; i < 12; i++) {
-     if(sizesScreenFull[size] == 0){
-       classes += `
-         .grdC${i}.grd > * 
-       `;
-     }
      classes += `
-        ,.grdC${i}.grd .grdCFull${sizesPrefixesFull[size]}
+        .grdC${i}.grd .grdCFull${sizesPrefixesFull[size]}
         ,.grdC${i}.grd .grdC${i}${sizesPrefixesFull[size]}
      `;
   
   
-     for (let j = 0; j < sizesPrefixes.length; j++) {
-       if(sizesScreenFull[size] == 0){
-         classes += `
-           ,.grdC${i}${sizesPrefixes[j]}.grd > *
-         `;
-       }
+     for (let j = 1; j < sizesPrefixesFull.length; j++) {
        classes += `
-         ,.grdC${i}${sizesPrefixes[j]}.grd .grdCFull${sizesPrefixesFull[size]}
-         ,.grdC${i}${sizesPrefixes[j]}.grd .grdC${i}${sizesPrefixesFull[size]}
+         .grdC${i}${sizesPrefixesFull[j]}.grd .grdCFull${sizesPrefixesFull[size]}
+         ,.grdC${i}${sizesPrefixesFull[j]}.grd .grdC${i}${sizesPrefixesFull[size]}
        `;
      }
      classes += `
@@ -446,12 +433,9 @@ for (var size = 0; size < sizesScreenFull.length; size++) {
      
      
      for (let j = 1; j < i; j++) {
-       classes += `
-         .grdC${i}.grd .grdC${j}${sizesPrefixesFull[size]}
-       `;
-       for (let k= 0; k < sizesPrefixes.length; k++) {
+       for (let k= 0; k < sizesPrefixesFull.length; k++) {
          classes += `
-           ,.grdC${i}${sizesPrefixes[k]}.grd .grdC${j}${sizesPrefixesFull[size]}
+           .grdC${i}${sizesPrefixesFull[k]}.grd .grdC${j}${sizesPrefixesFull[size]}
          `;
        }
        classes += `
@@ -689,222 +673,6 @@ for (let size = 0; size < sizesScreenFull.length; size++) {
   }
 
 }
-
-
-
-/*//////////////////////////////////////////////////////////////////////////////////////*/
-/*//////////////////////////////////////////////////////////////////////////////Espacios*/
-
-
-/*///////////////////////////////////////////////////////////////////Espacios*/
-let spaces = [0,5,10,15,20,25,30,35,40,45,50,60,70,80,90,100];
-let dirs = ['','T','B','R','L'];
-let prefix = ['','-top','-bottom','-right','-left'];
-for (let size = 0; size < sizesScreenFull.length; size++) {
-   if(sizesScreenFull[size] != 0){
-    classes += `
-      @media only screen and (max-width: ${sizesScreenFull[size]}px){
-    `;
-   }
-
-   for (let i = 0; i < spaces.length; i++) {
-     for (let j = 0; j < dirs.length; j++) {
-       classes += `
-          .p${dirs[j]}${spaces[i]}${sizesPrefixesFull[size]}{
-            padding${prefix[j]}: ${spaces[i]}px;
-          }
-          .m${dirs[j]}${spaces[i]}${sizesPrefixesFull[size]}{
-            margin${prefix[j]}: ${spaces[i]}px;
-          }
-       `;
-     }
-   }
-   classes += `
-    .pL${sizesPrefixesFull[size]}{
-      padding-left: var(--mnr-padSides);
-    }
-    .pR${sizesPrefixesFull[size]}{
-      padding-right: var(--mnr-padSides);
-    }
-    .pRGttr${sizesPrefixesFull[size]}{
-      padding-right: var(--mnr-gutter);
-    }
-    .pLGttr${sizesPrefixesFull[size]}{
-      padding-left: var(--mnr-gutter);
-    }
-    .mL${sizesPrefixesFull[size]}{
-      margin-left: var(--mnr-padSides);
-    }
-    .mR${sizesPrefixesFull[size]}{
-      margin-right: var(--mnr-padSides);
-    }
-    .mRGttr${sizesPrefixesFull[size]}{
-      margin-right: var(--mnr-gutter);
-    }
-    .mLGttr${sizesPrefixesFull[size]}{
-      margin-left: var(--mnr-gutter);
-    }
-    .mAuto${sizesPrefixesFull[size]}{
-      margin: auto;
-    }
-  `;
-  for (let j = 0; j < dirs.length; j++) {
-    classes += `
-       .m${dirs[j]}Auto${sizesPrefixesFull[size]}{
-         margin${prefix[j]}: auto;
-       }
-    `;
-  }
-   
-  if(sizesScreenFull[size] != 0){
-   classes += `
-     }
-   `;
-  }
-}
-
-
-
-/*////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////////////////////////////////////////Imagenes*/
-
-dirs = ['C','T','B','R','L'];
-prefix = ['center','top','bottom','right','left'];
-for (let size = 0; size < sizesScreenFull.length; size++) {
-  if(sizesScreenFull[size] != 0){
-    classes += `
-      @media only screen and (max-width: ${sizesScreenFull[size]}px){
-    `;
-  }
-
-  for (let j = 0; j < dirs.length; j++) {
-    classes += `
-       .back${dirs[j]}${sizesPrefixesFull[size]}{
-         background-position: ${prefix[j]};
-       }
-    `;
-  }
-
-  classes += `
-    .backCover${sizesPrefixesFull[size]}{
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-    .backContain${sizesPrefixesFull[size]}{
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    .backFixed${sizesPrefixesFull[size]}{
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-    }
-    .imgCover${sizesPrefixesFull[size]}{
-      object-fit: cover;
-    }
-    .imgContain${sizesPrefixesFull[size]}{
-      object-fit: contain;
-    }
-    .imgInit${sizesPrefixesFull[size]}{
-      object-fit: initial;
-    }
-
-
-  `;
-
-  for (let j = 0; j < 10; j++) {
-     classes += `
-        .Mnr .opacity${j}${sizesPrefixesFull[size]}{
-          opacity: 0.${j};
-        }
-     `;
-  }
-  classes += `
-     .Mnr .opacityFull${sizesPrefixesFull[size]}{
-       opacity: 1;
-     }
-  `;
-  
-
-  
-
-  if(sizesScreenFull[size] != 0){
-   classes += `
-     }
-   `;
-  }
-}
-
-
-/*////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////////////////////////////////////////Display*/
-classes += `
-   .Mnr .displayBlock{
-     display: block;
-   }
-   .Mnr .displayInBlock{
-     display: inline-block;
-   }
-   
-   .Mnr .mnrHide{
-     display: none!important;
-   }
-   .Mnr .hide,
-   .Mnr .showSm,
-   .Mnr .showFlexSm,
-   .Mnr .showBlockSm,
-   .Mnr .showXs,
-   .Mnr .showFlexXs,
-   .Mnr .showBlockXs,
-   .Mnr .showMd,
-   .Mnr .showFlexMd,
-   .Mnr .showBlockMd,
-   .Mnr .showLg,
-   .Mnr .showFlexLg,
-   .Mnr .showBlockLg{
-     display: none;
-   }
-   .Mnr .show{
-     display: initial;
-   }
-   .Mnr .showFlex{
-     display: flex;
-   }
-   .Mnr .showBlock{
-     display: block;
-   }
-`;
-for (let size = 1; size < sizesScreenFull.length; size++) {
-  if(sizesScreenFull[size] != 0){
-    classes += `
-      @media only screen and (max-width: ${sizesScreenFull[size]}px){
-    `;
-  }
-
-  classes += `
-     .Mnr .hide${sizesPrefixesFull[size]}{
-       display: none;
-     }
-     .Mnr .show${sizesPrefixesFull[size]}{
-       display: initial;
-     }
-     .Mnr .showFlex${sizesPrefixesFull[size]}{
-       display: flex;
-     }
-     .Mnr .showBlock${sizesPrefixesFull[size]}{
-       display: block;
-     }
-  `;
-
-  if(sizesScreenFull[size] != 0){
-   classes += `
-     }
-   `;
-  }
-}
-
-
-
 
 
 /*////////////////////////////////////////////////////////////////////////////////////*/

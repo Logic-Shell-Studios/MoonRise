@@ -61,12 +61,9 @@ const Mnr = (function(){
       }
       this.running = true;
       
-      this.loadThird();
-
       try {
         this.e('html').attr('mnr-page-loading',true);
         this.e('html').class('Mnr');
-        
       }
       catch(err) {
         console.error('<html> tag not found: '+err);
@@ -104,15 +101,18 @@ const Mnr = (function(){
         this.root = document.getElementById('mnr-mainRoot').value;
       }
 
-      this.insertComponents();
+      
 
       this.addEvent('scroll',window,()=>{ this.handleScroll() });
       this.addEvent('resize',window,()=>{ this.handleResize() });
-
+      
+      this.loadThird();
+      this.insertComponents();
       this.loadLinks();
 
-      window.addEventListener('load', ()=>{   
-        this.finishLoad(); 
+      window.addEventListener('load', ()=>{ 
+        this.e('main').css('display','initial');  
+        this.finishLoad();
       }); 
     },
     finishLoad: function(){
@@ -150,12 +150,11 @@ const Mnr = (function(){
         // run page load functions animation
         this.pageLoader.end();
         // set page load false and run wow
+        this.b.pageLoading = false;
+        this.pageLoading = false;
+        this.e('html').attr('mnr-page-loading',false);
+        
         setTimeout(()=>{
-          this.b.pageLoading = false;
-          this.pageLoading = false;
-
-          this.e('html').attr('mnr-page-loading',false);
-          
           
           if(typeof WOW === "function"){
             new WOW().init();
@@ -177,7 +176,7 @@ const Mnr = (function(){
     },
 
 
-    load: function(binds = null,funct = null){
+    load: function(binds = null, funct = null){
       if(binds != null){
         this.setBinds(binds);
       }
@@ -226,20 +225,19 @@ const Mnr = (function(){
       document.head.insertBefore(style, Mnr.e("head meta").e[0]);
 
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
-        let styleString = eval(response);
-        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
-
-        Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesAnims.js', (response)=>{
-          let styleString = eval(response);
-          this.e('[mnr-main-css]').e[0].innerHTML += styleString;
-          this.e('html').css('opacity',1);
-        });
+       let styleString = eval(response);
+       this.e('[mnr-main-css]').e[0].innerHTML += styleString;
       });
 
-      
+      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesSpaces.js', (response)=>{
+        let styleString = eval(response);
+        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+      });
 
-
-      
+      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesAnims.js', (response)=>{
+        let styleString = eval(response);
+        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+      });
     },
     
     
@@ -1156,13 +1154,21 @@ const Mnr = (function(){
         },
         css: function(property = null,value = null){
           let styles = [];
-          if(value == null){
+          if(value == null && typeof property !== 'Object'){
             styles = getComputedStyle(elem[0]);
             return (property == null)? styles : styles[property];
           }
           else{
              for(let el of elem){
-               el.style[property] = value;
+               
+               if(typeof property == 'Object'){
+                  for(let style of Object.keys(property) ){
+                    el.style[style] = property[style];
+                  }
+               }
+               else{
+                 el.style[property] = value;
+               }
              }
           }
 
@@ -1580,7 +1586,5 @@ const Mnr = (function(){
 })();
 
 
-
-
-Mnr.e('html').css('opacity','0');
 Mnr.e('html').css('background-color','black');
+Mnr.e('main').css('display','none');
