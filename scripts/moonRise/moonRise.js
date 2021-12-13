@@ -228,6 +228,11 @@ const Mnr = (function(){
        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
       });
 
+      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesContainers.js', (response)=>{
+        let styleString = eval(response);
+        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+      });
+
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesSpaces.js', (response)=>{
         let styleString = eval(response);
         this.e('[mnr-main-css]').e[0].innerHTML += styleString;

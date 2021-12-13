@@ -1,9 +1,7 @@
 
-const mnrClasses = function(){
-  let sizesScreen = [1140,960,720,500];
+var mnrClasses = function(){
   let sizesScreenFull = [0,1140,960,720,500];
   let sizesPrefixesFull = ['','Lg','Md','Sm','Xs'];
-  let zIndex = ['-1','1','2','3','4','5','10','15','20'];
 
   let classes = '';
 /*//////////////////////////////////////////////////////////////////////////////////////*/
@@ -337,6 +335,7 @@ for (let size = 0; size < sizesScreenFull.length; size++) {
    `;
   }
 }
+
 
 
 
