@@ -22,8 +22,7 @@ const Mnr = (function(){
     classBinds: [],
     imgBinds: [],
     tagBinds: [],
-    mainStyle: [],
-    stylesLoades: 4,
+    mainStyle: '',
     b: {},
     pageLoading: true,
     initialBinds: {
@@ -118,7 +117,7 @@ const Mnr = (function(){
       }); 
     },
     loadReady: function(){
-      if(this.mainStyle.length == this.stylesLoades){
+      if(this.mainStyle != ''){
         this.loadLinks();
         this.finishLoad();
         return;
@@ -232,19 +231,7 @@ const Mnr = (function(){
     },
     getLinks: function(){
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
-        this.mainStyle.push(response);
-      });
-
-      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesContainers.js', (response)=>{
-        this.mainStyle.push(response);
-      });
-
-      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesSpaces.js', (response)=>{
-        this.mainStyle.push(response);
-      });
-
-      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesAnims.js', (response)=>{
-        this.mainStyle.push(response);
+        this.mainStyle = response;
       });
     },
     loadLinks: function(){
@@ -252,12 +239,8 @@ const Mnr = (function(){
        this.e(style).attr('mnr-main-css',true);
        document.head.insertBefore(style, Mnr.e("head meta").e[0]);
        
-       let stylesString = '';
-       for(let style of this.mainStyle){
-         stylesString += eval(style);
-       }
-       this.e('[mnr-main-css]').e[0].innerHTML = stylesString;
-       this.mainStyle = [];
+       this.e('[mnr-main-css]').e[0].innerHTML = eval(this.mainStyle);
+       this.mainStyle = '';
     },
     
     
