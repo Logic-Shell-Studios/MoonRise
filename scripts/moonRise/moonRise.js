@@ -111,7 +111,6 @@ const Mnr = (function(){
       this.insertComponents();
       this.loadThird();
       
-      
 
       window.addEventListener('load', ()=>{ 
         this.getLinks();
@@ -122,12 +121,12 @@ const Mnr = (function(){
       if(this.mainStyle.length == this.stylesLoades){
         this.loadLinks();
         this.finishLoad();
-        console.log('ready');
+        // console.log('ready');
         return;
       }
       setTimeout(()=>{
         this.loadReady();
-        console.log('checking '+this.stylesLoades);
+        // console.log('checking '+this.stylesLoades);
       },100);
     },
     finishLoad: function(){
@@ -259,7 +258,6 @@ const Mnr = (function(){
          this.e('[mnr-main-css]').e[0].innerHTML += eval(style);
        }
        this.mainStyle = [];
-       // this.screenTo('body');
     },
     
     

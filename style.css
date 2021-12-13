@@ -42,10 +42,16 @@ main,body{
 }
 
 html body{
+  opacity: 0;
+}
+html body #pageLoader{
   display: none;
 }
 html[mnr-page-loading="false"] body{
-  display: block;
+  opacity: 1;
+}
+html[mnr-page-loading="false"] body #pageLoader{
+  display: flex;
 }
 
 /*///////////////////////////////////////////////////////////////////////////////miscs*/
