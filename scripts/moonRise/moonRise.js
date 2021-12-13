@@ -22,6 +22,8 @@ const Mnr = (function(){
     classBinds: [],
     imgBinds: [],
     tagBinds: [],
+    mainStyle: [],
+    stylesLoades: 4,
     b: {},
     pageLoading: true,
     initialBinds: {
@@ -106,13 +108,27 @@ const Mnr = (function(){
       this.addEvent('scroll',window,()=>{ this.handleScroll() });
       this.addEvent('resize',window,()=>{ this.handleResize() });
       
-      this.loadThird();
       this.insertComponents();
-      this.loadLinks();
+      this.loadThird();
+      
+      
 
       window.addEventListener('load', ()=>{ 
-        this.finishLoad();
+        this.getLinks();
+        this.loadReady();
       }); 
+    },
+    loadReady: function(){
+      if(this.mainStyle.length == this.stylesLoades){
+        this.loadLinks();
+        this.finishLoad();
+        console.log('ready');
+        return;
+      }
+      setTimeout(()=>{
+        this.loadReady();
+        console.log('checking '+this.stylesLoades);
+      },100);
     },
     finishLoad: function(){
       setTimeout(()=>{
@@ -217,31 +233,33 @@ const Mnr = (function(){
       link.rel = "stylesheet";
       document.head.insertBefore(link, Mnr.e("head meta").e[0]);
     },
-    loadLinks: function(){
-      
-      let style = document.createElement('style');
-      this.e(style).attr('mnr-main-css',true);
-      document.head.insertBefore(style, Mnr.e("head meta").e[0]);
-
+    getLinks: function(){
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
-       let styleString = eval(response);
-       this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+        this.mainStyle.push(response);
       });
 
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesContainers.js', (response)=>{
-        let styleString = eval(response);
-        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+        this.mainStyle.push(response);
       });
 
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesSpaces.js', (response)=>{
-        let styleString = eval(response);
-        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+        this.mainStyle.push(response);
       });
 
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesAnims.js', (response)=>{
-        let styleString = eval(response);
-        this.e('[mnr-main-css]').e[0].innerHTML += styleString;
+        this.mainStyle.push(response);
       });
+    },
+    loadLinks: function(){
+       let style = document.createElement('style');
+       this.e(style).attr('mnr-main-css',true);
+       document.head.insertBefore(style, Mnr.e("head meta").e[0]);
+       
+       for(let style of this.mainStyle){
+         this.e('[mnr-main-css]').e[0].innerHTML += eval(style);
+       }
+       this.mainStyle = [];
+       // this.screenTo('body');
     },
     
     

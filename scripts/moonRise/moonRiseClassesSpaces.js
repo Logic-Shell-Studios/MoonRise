@@ -1,5 +1,5 @@
 
-var mnrClasses = function(){
+(()=>{
   let sizesScreenFull = [0,1140,960,720,500];
   let sizesPrefixesFull = ['','Lg','Md','Sm','Xs'];
 
@@ -344,5 +344,4 @@ return classes;
 
 
 
-}
-mnrClasses();
+})();
