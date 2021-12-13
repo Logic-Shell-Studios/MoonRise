@@ -701,7 +701,6 @@ const Mnr = (function(){
          tempSrc = this.e(elem).attr('mnr-src');
          type = 'back';
          if(tempSrc != 'set'){
-            
             if(elem.nodeName == 'IMG'){
               type = 'img';
               if(this.e(elem).hasAttr('width') == false){
@@ -718,12 +717,14 @@ const Mnr = (function(){
                 elem.alt = alt;
               }
             }
+            
             this.imgList.elems.push({
               el:elem,
               src:tempSrc,
               set:false,
               type:type,
             });
+            
             this.e(elem).removeAttr("mnr-src");
          }
       }
