@@ -23,6 +23,7 @@ const Mnr = (function(){
     imgBinds: [],
     tagBinds: [],
     mainStyle: '',
+    stylesReady: false,
     b: {},
     pageLoading: true,
     initialBinds: {
@@ -117,8 +118,7 @@ const Mnr = (function(){
       }); 
     },
     loadReady: function(){
-      if(this.mainStyle != ''){
-        this.loadLinks();
+      if(this.stylesReady == true){
         this.finishLoad();
         return;
       }
@@ -232,6 +232,7 @@ const Mnr = (function(){
     getLinks: function(){
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
         this.mainStyle = response;
+        this.loadLinks();
       });
     },
     loadLinks: function(){
@@ -241,6 +242,7 @@ const Mnr = (function(){
        
        this.e('[mnr-main-css]').e[0].innerHTML = eval(this.mainStyle);
        this.mainStyle = '';
+       this.stylesReady = true;
     },
     
     
