@@ -111,7 +111,6 @@ const Mnr = (function(){
       this.loadLinks();
 
       window.addEventListener('load', ()=>{ 
-        this.e('main').css('display','initial');  
         this.finishLoad();
       }); 
     },
@@ -153,7 +152,7 @@ const Mnr = (function(){
         this.b.pageLoading = false;
         this.pageLoading = false;
         this.e('html').attr('mnr-page-loading',false);
-        
+
         setTimeout(()=>{
           
           if(typeof WOW === "function"){
@@ -1584,7 +1583,3 @@ const Mnr = (function(){
   };
 
 })();
-
-
-Mnr.e('html').css('background-color','black');
-Mnr.e('main').css('display','none');

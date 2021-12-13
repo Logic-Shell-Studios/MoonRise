@@ -30,6 +30,9 @@ Version: 1.0
   src: url('./assets/Poppins-SemiBold.ttf') format('truetype');
 }
 
+html{
+  background-color: black;
+}
 main,body{
   background: rgb(13,31,44);
   background: -moz-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
@@ -42,7 +45,7 @@ html body{
   display: none;
 }
 html[mnr-page-loading="false"] body{
-  display: initial;
+  display: block;
 }
 
 /*///////////////////////////////////////////////////////////////////////////////miscs*/
