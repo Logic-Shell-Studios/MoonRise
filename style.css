@@ -39,10 +39,10 @@ main,body{
 }
 
 html body{
-  opacity: 0;
+  display: none;
 }
 html[mnr-page-loading="false"] body{
-  opacity: 1;
+  display: initial;
 }
 
 /*///////////////////////////////////////////////////////////////////////////////miscs*/
