@@ -24,6 +24,7 @@ const Mnr = (function(){
     tagBinds: [],
     mainStyle: '',
     stylesReady: false,
+    eWaits: [],
     b: {},
     pageLoading: true,
     initialBinds: {
@@ -109,7 +110,6 @@ const Mnr = (function(){
       this.addEvent('resize',window,()=>{ this.handleResize() });
       
       this.insertComponents();
-      this.loadThird();
       this.getLinks();
 
       window.addEventListener('load', ()=>{ 
@@ -149,28 +149,18 @@ const Mnr = (function(){
 
         //run functions after finish load once
         Object.values(this.run).map(value => {
-          if(typeof value === 'string' && this.hasOwnProperty(value)){
-             this[value].init(this);
-          }
-          else if(typeof value === 'function') {
+          if(typeof value === 'function') {
             value.call();
           }
         });
 
-        // run page load functions animation
         this.pageLoader.end();
-        // set page load false and run wow
         this.b.pageLoading = false;
         this.pageLoading = false;
         this.e('html').attr('mnr-page-loading',false);
 
         setTimeout(()=>{
           
-          if(typeof WOW === "function"){
-            new WOW().init();
-          }
-          
-          // console.log(performance.now() - this.start);
         },this.loadEndTime);
       }
     },
@@ -202,31 +192,6 @@ const Mnr = (function(){
         funct();
       }
       this.loadRun = {};
-    },
-    
-    loadThird: function(){
-      let script = document.createElement('script');
-      script.src = this.root+"/scripts/swiper/swiper.js";
-      document.head.insertBefore(script, Mnr.e("head meta").e[0]);
-
-      script = document.createElement('script');
-      script.src = this.root+"/scripts/wow/dist/wow.min.js";
-      document.head.insertBefore(script, Mnr.e("head meta").e[0]);
-
-      script = document.createElement('script');
-      script.src = this.root+"/scripts/svg-inject/svg-inject.min.js";
-      document.head.insertBefore(script, Mnr.e("head meta").e[0]);
-      
-      
-      let link = document.createElement('link');
-      this.e(link).attr('mnr-href', this.root+"/scripts/animate.css/animate.min.css");
-      link.rel = "stylesheet";
-      document.head.insertBefore(link, Mnr.e("head meta").e[0]);
-
-      link = document.createElement('link');
-      this.e(link).attr('mnr-href', this.root+"/scripts/swiper/swiper.css");
-      link.rel = "stylesheet";
-      document.head.insertBefore(link, Mnr.e("head meta").e[0]);
     },
     getLinks: function(){
       Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
@@ -730,7 +695,7 @@ const Mnr = (function(){
            }
            else{
              try{
-               this.e(elem.el).css('background-image', 'url('+this.root+this.b.assetsUrl+elem.src+')');
+               this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+elem.src+')'});
              }
              catch{
                console.warn('background image skipped: '+elem.src);
@@ -740,7 +705,7 @@ const Mnr = (function(){
            this.imgList.elems.splice(0,1);
         }
       }
-      setTimeout(()=>{this.runTimesMedia()},300);
+      setTimeout(()=>{this.runTimesMedia()},100);
     },
     imgLoadScroll: function(){
       if(this.imgList.elems.length <= 0){
@@ -760,7 +725,7 @@ const Mnr = (function(){
             }
             else{
               try{
-                this.e(elem.el).css('background-image', 'url('+this.root+this.b.assetsUrl+elem.src+')');
+                this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+elem.src+')'});
               }
               catch{
                 console.warn('background image skipped: '+elem.src);
@@ -777,7 +742,6 @@ const Mnr = (function(){
     },
     setSliders: function(){
       if(typeof Swiper !== 'function'){
-        console.warn("Swiper not found");
         return;
       }
       if(this.swipers.length > 0){
@@ -1131,12 +1095,25 @@ const Mnr = (function(){
       }
       
       
-      
       return {
         e: elem,
+        query: query,
+        singleNode: singleNode,
+        wating: false,
+        chain: [],
+        elem: function(num = 0){
+          
+            this.e = this.singleNode(this.e[num]);
+            return this;
+          
+        },
         class: function(names, add = true){
+          if(this.isWaiting(['class',[names,add]])){
+             return this;
+          }
+
           let classes = names.trim().split(' ');
-          for(let el of elem){
+          for(let el of this.e){
             for(let clss of classes){
               if(add){
                 el.classList.add(clss);
@@ -1150,41 +1127,42 @@ const Mnr = (function(){
         },
         toggleClass: function(names){
           let classes = names.trim().split(' ');
-          for(let el of elem){
+          for(let el of this.e){
             for(let clss of classes){
              el.classList.toggle(clss);
             }
           }
           return this;
         },
-        css: function(property = null,value = null){
+        css: function(property = null){
+          if(this.isWaiting(['css',[property]])){
+             return this;
+          }
+
           let styles = [];
-          if(value == null && typeof property !== 'Object'){
-            styles = getComputedStyle(elem[0]);
+          if(property == null || typeof property == 'string'){
+            styles = getComputedStyle(this.e[0]);
             return (property == null)? styles : styles[property];
           }
           else{
-             for(let el of elem){
+            if(typeof property == 'object'){
+             for(let el of this.e){
                
-               if(typeof property == 'Object'){
                   for(let style of Object.keys(property) ){
                     el.style[style] = property[style];
                   }
-               }
-               else{
-                 el.style[property] = value;
-               }
-             }
+              }
+            }
           }
 
           return this;
         },
         attr: function(attr,val = null){
           if(val == null){
-            return elem[0].getAttribute(attr);
+            return this.e[0].getAttribute(attr);
           }
           else{
-            for(let el of elem){
+            for(let el of this.e){
               el.setAttribute(attr, val);
             }
           }
@@ -1192,28 +1170,28 @@ const Mnr = (function(){
         },
         html: function(html = null,add = false){
           if(html == null){
-            return elem[0].innerHTML;
+            return this.e[0].innerHTML;
           }
-          for(let el of elem){
+          for(let el of this.e){
             el.innerHTML = (add) ? el.innerHTML+html : html;
           }
           return this;
         },
         text: function(text = null,add = false){
           if(text == null){
-            return elem[0].innerText;
+            return this.e[0].innerText;
           }
-          for(let el of elem){
+          for(let el of this.e){
             el.innerText = (add) ? el.innerText+text : text;
           }
           return this;
         },
         value: function(value, add = false){
-          if(elem[0].nodeName == "INPUT" || elem[0].nodeName == "TEXTAREA" || elem[0].nodeName == "SELECT"){
+          if(this.e[0].nodeName == "INPUT" || this.e[0].nodeName == "TEXTAREA" || this.e[0].nodeName == "SELECT"){
             if(value == null){
-              return elem[0].value;
+              return this.e[0].value;
             }
-            for(let el of elem){
+            for(let el of this.e){
               el.value = (add) ? el.value+value : value;
             }
           }
@@ -1234,7 +1212,7 @@ const Mnr = (function(){
           let attr = names.trim().split(' ');
           let match = 0;
           let compare = 0;
-          for(let el of elem){
+          for(let el of this.e){
             for(let at of attr){
               compare ++;
               if(all && el.hasAttribute(at)){
@@ -1254,7 +1232,7 @@ const Mnr = (function(){
           let classes = names.trim().split(' ');
           let match = 0;
           let compare = 0;
-          for(let el of elem){
+          for(let el of this.e){
             for(let clss of classes){
               compare ++;
               if(all){
@@ -1274,10 +1252,10 @@ const Mnr = (function(){
           let attr = names.trim().split(' ');
           if(all == false){
             for(let at of attr){
-              elem.removeAttribute(at);
+              this.e.removeAttribute(at);
             }
           }
-          for(let el of elem){
+          for(let el of this.e){
             for(let at of attr){
               el.removeAttribute(at);
             }
@@ -1285,26 +1263,48 @@ const Mnr = (function(){
           return this;
         },
         parent: function(){
-          elem = singleNode(elem[0].parentNode);
-          this.e = elem;
+          this.e = this.singleNode(this.e[0].parentNode);
+          this.e = this.e;
           return this;
         },
         screenFocus : function(offset = 0){
-           _this.screenTo(elem[0],offset);
+           _this.screenTo(this.e[0],offset);
            return this;
         },
         inView: function(){
 
-           return _this.isInViewport(elem[0]);
+           return _this.isInViewport(this.e[0]);
         },
         aboveView: function(){
           
-           return _this.isAboveViewport(elem[0]);
+           return _this.isAboveViewport(this.e[0]);
         },
         loadBinds: function(){
            _this.runAllBinds();
            return this;
         },
+        wait: function(time = 0){
+           
+           setTimeout(()=>{
+              console.log('waited');
+              this.wating = false;
+
+              for (var i = 0; i < this.chain.length; i++) {
+                this[this.chain[i][0]](...this.chain[i][1]);
+              }
+              return this;
+           },time);
+           this.wating = true;
+           return this;
+
+        },
+        isWaiting: function(data){
+           if(this.wating){
+             this.chain.push(data);
+             return true;
+           }
+           return false;
+        }
 
       };
     },
@@ -1589,3 +1589,5 @@ const Mnr = (function(){
   };
 
 })();
+
+

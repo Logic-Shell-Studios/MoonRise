@@ -11,16 +11,24 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" href="style.css" >
- 
 
-  <link rel="icon" type="image/ico" href="./assets/favicon.png">
   
+  <link rel="icon" type="image/ico" href="./assets/favicon.png">
 
+  <link rel="stylesheet" mnr-href="/scripts/animate.css/animate.min.css" >
+  <link rel="stylesheet" mnr-href="/scripts/swiper/swiper.css" >
+  <script src="./scripts/svg-inject/svg-inject.min.js" rel="preload" async defer as="script"></script>
+  <script src="./scripts/wow/dist/wow.min.js" rel="preload" async defer as="script"></script>
+  <script src="./scripts/swiper/swiper.js" rel="preload" async defer as="script"></script>
+  
+  
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  
   
 
   <script src="./scripts/moonRise/moonRise.js" rel="preload" as="script"></script>
+
+  <link rel="stylesheet" href="style.css" >
   
   
 </head>
@@ -296,6 +304,11 @@
 </section>
 
 
+<h1 class="testHolder" id="testHolder1">test1</h1>
+<h1 class="testHolder" id="testHolder2">test2</h1>
+<h1 class="testHolder" id="testHolder3">test3</h1>
+<h1 class="testHolder" id="testHolder4">test4</h1>
+
 </main> 
 
 
@@ -312,7 +325,17 @@
     selectImg:[],
     dateTest: "",
   };
-  Mnr.load(binds);
+  let test4;
+  Mnr.load(binds,()=>{
+
+    let test1 = Mnr.e('.testHolder');
+    test4 = Mnr.e('#testHolder4');
+
+    console.log( test4.class('show1').wait(5000).css({height:'100px'}).css({width:'200px'}).class('show2') );
+
+
+
+  });
   
   
 

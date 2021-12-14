@@ -262,6 +262,13 @@ section{
 }
 
 
+h1,h2,h3,h4,h5,h6{
+  font-family: "title";
+  letter-spacing: var(--mnr-titleSpacing);
+  line-height:  var(--mnr-titleLineHeight);
+  font-weight: 400;
+  margin:unset;
+}
 
 .Mnr .fontRegular{
   font-family: "regular";
@@ -301,13 +308,7 @@ strong{
   font-weight: bold;
 }
 
-h1,h2,h3,h4,h5,h6{
-  font-family: "title";
-  letter-spacing: var(--mnr-titleSpacing);
-  line-height:  var(--mnr-titleLineHeight);
-  font-weight: 400;
-  margin:unset;
-}
+
 
 
 `;
