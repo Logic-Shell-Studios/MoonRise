@@ -752,39 +752,6 @@ section{
 }
 
 
-/*////////////////////////////////////////////////////Miscell - Swiper*/
-.swiper-container, 
-.swiper-wrapper, 
-.swiper-slide, 
-.swiper-slide img{
-  transition-duration: 300ms;
-}
-.swiper-slider{
-  position: relative;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-.swiper-button-next,
-.swiper-button-prev {
-  width: 40px;
-  height: 40px;
-  background-image: none;
-}
-.swiper-button-next *,
-.swiper-button-prev *{
-  width: 30px;
-  height: 30px;
-}
-.swiper-pagination{
-  position: relative;
-}
-.swiper-pagination-bullet-active {
-  background: white;
-}
-
-
-
 
 
 
@@ -1453,12 +1420,6 @@ for (let size = sizesScreenFull.length - 1; size >= 0; size--) {
     .mR${sizesPrefixesFull[size]}{
       margin-right: var(--mnr-padSides);
     }
-    .mRGttr${sizesPrefixesFull[size]}{
-      margin-right: var(--mnr-gutter);
-    }
-    .mLGttr${sizesPrefixesFull[size]}{
-      margin-left: var(--mnr-gutter);
-    }
     .mAuto${sizesPrefixesFull[size]}{
       margin: auto;
     }
@@ -1468,6 +1429,9 @@ for (let size = sizesScreenFull.length - 1; size >= 0; size--) {
        .m${dirs[j]}Auto${sizesPrefixesFull[size]}{
          margin${prefix[j]}: auto;
        }
+       .m${dirs[j]}Gttr${sizesPrefixesFull[size]}{
+         margin${prefix[j]}: var(--mnr-gutter);
+        }
     `;
   }
 

@@ -16,10 +16,12 @@ Mnr.init({
 
     Mnr.e('#pageLoader').wait(1000).class('hide');
 
-
-    if(typeof WOW === "function"){
-      new WOW().init();
-    }
+    setTimeout(()=>{
+      if(typeof WOW === "function"){
+        new WOW().init();
+      }
+    },500);
+    
   },
   loadEndTime: 500,
 });

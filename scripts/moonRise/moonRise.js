@@ -35,7 +35,8 @@ const Mnr = (function(){
       scrolled: false,
       windowWidth: 0,
       windowHeight: 0,
-      assetsUrl: '/assets/',
+      assetsUrl: '/assets',
+      scriptsUrl: '/scripts'
     },
 
     start:null,
@@ -110,7 +111,7 @@ const Mnr = (function(){
       this.addEvent('resize',window,()=>{ this.handleResize() });
       
       this.insertComponents();
-      this.getLinks();
+      this.getStyles();
 
       window.addEventListener('load', ()=>{ 
         this.loadReady();
@@ -159,9 +160,9 @@ const Mnr = (function(){
         this.pageLoading = false;
         this.e('html').attr('mnr-page-loading',false);
 
-        setTimeout(()=>{
+        // setTimeout(()=>{
           
-        },this.loadEndTime);
+        // },this.loadEndTime);
       }
     },
     reload: function(){
@@ -193,18 +194,18 @@ const Mnr = (function(){
       }
       this.loadRun = {};
     },
-    getLinks: function(){
-      Mnr.fetchGetText(this.root+'/scripts/moonRise/moonRiseClassesMain.js', (response)=>{
+    getStyles: function(){
+      Mnr.fetchGetText(this.root+this.b.scriptsUrl+'/moonRise/moonRiseClassesMain.js', (response)=>{
         this.mainStyle = response;
-        this.loadLinks();
+        this.loadStyles();
       });
     },
-    loadLinks: function(){
+    loadStyles: function(){
        let style = document.createElement('style');
        this.e(style).attr('mnr-main-css',true);
        document.head.insertBefore(style, Mnr.e("head meta").e[0]);
        
-       this.e('[mnr-main-css]').e[0].innerHTML = eval(this.mainStyle);
+       this.e('[mnr-main-css]').e[0].textContent = eval(this.mainStyle);
        this.mainStyle = '';
        this.stylesReady = true;
     },
@@ -691,11 +692,11 @@ const Mnr = (function(){
                this.e(elem.el).class('mnrHide');
                console.warn('image skipped: '+elem.src);
              });
-             elem.el.src = this.root+this.b.assetsUrl+elem.src;
+             elem.el.src = this.root+this.b.assetsUrl+'/'+elem.src;
            }
            else{
              try{
-               this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+elem.src+')'});
+               this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+'/'+elem.src+')'});
              }
              catch{
                console.warn('background image skipped: '+elem.src);
@@ -720,12 +721,12 @@ const Mnr = (function(){
                 this.e(elem.el).class('mnrHide');
                 console.warn('image skipped: '+elem.src);
               });
-              elem.el.src = this.root+this.b.assetsUrl+elem.src;
+              elem.el.src = this.root+this.b.assetsUrl+'/'+elem.src;
               checks.push(i);
             }
             else{
               try{
-                this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+elem.src+')'});
+                this.e(elem.el).css({'background-image': 'url('+this.root+this.b.assetsUrl+'/'+elem.src+')'});
               }
               catch{
                 console.warn('background image skipped: '+elem.src);
@@ -963,7 +964,7 @@ const Mnr = (function(){
       if(typeof SVGInject === "function"){
         let svgs = this.e("[mnr-svg]").e;
         for(let svg of svgs){
-          svg.src = this.root+this.b.assetsUrl+this.e(svg).attr('mnr-svg');
+          svg.src = this.root+this.b.assetsUrl+'/'+this.e(svg).attr('mnr-svg');
         }
         SVGInject(svgs);
         for(let svg of svgs){
@@ -1286,7 +1287,7 @@ const Mnr = (function(){
         wait: function(time = 0){
            
            setTimeout(()=>{
-              console.log('waited');
+              // console.log('waited');
               this.wating = false;
 
               for (var i = 0; i < this.chain.length; i++) {
@@ -1296,7 +1297,6 @@ const Mnr = (function(){
            },time);
            this.wating = true;
            return this;
-
         },
         isWaiting: function(data){
            if(this.wating){
@@ -1571,18 +1571,60 @@ const Mnr = (function(){
 
       return arr.filter((i) => arr.indexOf(i) === arr.lastIndexOf(i));
     },
-    getHex: function(){
+    getHexColor: function(){
 
       return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`;
-    },
-    getScreenWidth: function(){
     },
     shareHeight: function(){
        let elems = Mnr.e('[mnr-copy-height]').e;
        for(let elem of elems){
            
        }
-    }
+    },
+    sanitizeHTML: function(str, nodes = false){
+      function clean (html) {
+        let nodes = html.children;
+        for (let node of nodes) {
+          removeAttributes(node);
+          clean(node);
+        }
+      }
+      function removeAttributes (elem) {
+        let atts = elem.attributes;
+        for (let {name, value} of atts) {
+          if (!isPossiblyDangerous(name, value)) continue;
+          elem.removeAttribute(name);
+        }
+      }
+      function removeScripts (html) {
+        let scripts = html.querySelectorAll('script');
+        for (let script of scripts) {
+          script.remove();
+        }
+      }
+      function isPossiblyDangerous (name, value) {
+        let val = value.replace(/\s+/g, '').toLowerCase();
+        if (['src', 'href', 'xlink:href'].includes(name)) {
+          if (val.includes('javascript:') || val.includes('data:text/html')) return true;
+        }
+        if (name.startsWith('on')) return true;
+      }
+
+      let html = this.stringToHTML(str);
+
+      // Sanitize it
+      removeScripts(html);
+      clean(html);
+
+      // If the user wants HTML nodes back, return them
+      // Otherwise, pass a sanitized string back
+      return nodes ? html.childNodes : html.innerHTML;
+    },
+    stringToHTML: function(str) {
+      let parser = new DOMParser();
+      let doc = parser.parseFromString(str, 'text/html');
+      return doc.body || document.createElement('body');
+    },
 
     
     

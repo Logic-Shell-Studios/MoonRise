@@ -34,10 +34,16 @@ html{
   background-color: black;
 }
 main,body{
-  background: rgb(13,31,44);
+  /*background: rgb(13,31,44);
   background: -moz-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
   background: -webkit-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
-  background: linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
+  background: linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);*/
+  
+  background: rgb(10,14,19,1);
+  background: -moz-linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
+  background: -webkit-linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
+  background: linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
+  
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d1f2c",endColorstr="#04080b",GradientType=1);
 }
 
@@ -64,6 +70,36 @@ html[mnr-page-loading="false"] body #pageLoader{
   max-height: 1px;
   opacity: 0;
   overflow: hidden;
+}
+
+.swiper-container, 
+.swiper-wrapper, 
+.swiper-slide, 
+.swiper-slide img{
+  transition-duration: 300ms;
+}
+.swiper-slider{
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  width: 40px;
+  height: 40px;
+  background-image: none;
+}
+.swiper-button-next *,
+.swiper-button-prev *{
+  width: 30px;
+  height: 30px;
+}
+.swiper-pagination{
+  position: relative;
+}
+.swiper-pagination-bullet-active {
+  background: white;
 }
 
 
@@ -111,11 +147,8 @@ html[mnr-page-loading="false"] body #pageLoader{
   margin: auto;
   opacity: 0;
 }
-.moonHolder .content svg.camp > circle{
-  display: none;
-}
 html[mnr-page-loading="false"] .moonHolder .content svg{
-  opacity: 1;
+  opacity: 0.7;
 }
 @media only screen and (max-width: 500px){
   .moonHolder .content svg.camp{
@@ -162,9 +195,11 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   width: 28%;
   height: 28%;
   background-color: rgba(255,255,255,0.4);
+
   box-shadow: -1px 0px 400px 65px rgba(255,255,255,0.75);
   -webkit-box-shadow: -1px 0px 400px 30px rgba(255,255,255,0.75);
   -moz-box-shadow: -1px 0px 400px 30px rgba(255,255,255,0.75);
+
 }
 .moon .glare.animated{
   opacity: 0;
@@ -177,10 +212,11 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   height: 30%;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur( 10px );
+
   border: 2px solid rgba(255,255,255,0.1);
   box-shadow: 0 0 40px rgba(8,7,16,0.6);
-
   background-color: rgba(250,235,215,0.60);
+
 }
 
 
@@ -190,7 +226,8 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   opacity: 1;
   z-index: 9999999;
   overflow: hidden;
-  background-color: var(--mnr-color1);
+  /*background-color: var(--mnr-color1);*/
+  background-color: rgba(10,14,19,1);
   position: fixed;
   min-width: 100vw;
   min-height: 100vh;

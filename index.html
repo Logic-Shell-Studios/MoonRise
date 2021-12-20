@@ -257,7 +257,7 @@
 <!-- <section class="pT60 wow slideInLeft">
   <div class="contentGrd ">
     <div class="glass grdC6 grdCFullSm grdR4 grdR2Sm p20 flxC ordC">
-       <h2 class="txtC">Mobile friendly sliders</h2>
+       <h2 class="txtC">Swiper Integration</h2>
     </div>
     <div class="glass grdC6 grdCFullSm grdR4" 
          mnr-slider='{
@@ -304,10 +304,6 @@
 </section>
 
 
-<h1 class="testHolder" id="testHolder1">test1</h1>
-<h1 class="testHolder" id="testHolder2">test2</h1>
-<h1 class="testHolder" id="testHolder3">test3</h1>
-<h1 class="testHolder" id="testHolder4">test4</h1>
 
 </main> 
 
@@ -325,17 +321,7 @@
     selectImg:[],
     dateTest: "",
   };
-  let test4;
-  Mnr.load(binds,()=>{
-
-    let test1 = Mnr.e('.testHolder');
-    test4 = Mnr.e('#testHolder4');
-
-    console.log( test4.class('show1').wait(5000).css({height:'100px'}).css({width:'200px'}).class('show2') );
-
-
-
-  });
+  Mnr.load(binds);
   
   
 
