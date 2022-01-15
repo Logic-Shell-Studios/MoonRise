@@ -16,17 +16,13 @@
   <link rel="icon" type="image/ico" href="./assets/favicon.png">
 
   <link rel="stylesheet" mnr-href="/scripts/animate.css/animate.min.css" >
-  <link rel="stylesheet" mnr-href="/scripts/swiper/swiper.css" >
-  <script src="./scripts/svg-inject/svg-inject.min.js" rel="preload" async defer as="script"></script>
   <script src="./scripts/wow/dist/wow.min.js" rel="preload" async defer as="script"></script>
-  <script src="./scripts/swiper/swiper.js" rel="preload" async defer as="script"></script>
   
   
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   
   
-
-  <script src="./scripts/moonRise/moonRise.js" rel="preload" as="script"></script>
+  <script src="./scripts/moonRise/moonRise.min.js" rel="preload" as="script"></script>
 
   <link rel="stylesheet" href="style.css" >
   
@@ -76,15 +72,9 @@
 
 </section>
 
-<section class="pT60 wow slideInLeft">
-  <form mnr-form="true" >
-   <div class="contentGrd pT20">
-     
-   </div>
-  </form>  
-</section>
 
-<section class="pT60 wow slideInLeft">
+
+<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
   <div class="contentGrd pT20">
     <div class="glass grdCFull flxC ordC p20">
       <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla js and Css library to simplify the web development process.</p>
@@ -96,7 +86,7 @@
   </div>
 </section>
 
-<section class="pT60 wow slideInLeft">
+<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
 
   <div class="contentGrd pT20">
     <div class="glass grdCFull flxC ordC">
@@ -146,7 +136,16 @@
 </section>
 
 
-<section class="pT60 wow slideInLeft">
+<!-- <section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
+  <form mnr-form="true" >
+   <div class="contentGrd pT20">
+     
+   </div>
+  </form>  
+</section> -->
+
+
+<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
   <div class="contentGrd">
      <div class="glass grdCFull flxC ordC">
        <h2 class="txtC">Two-Way data binding</h2>
@@ -226,7 +225,7 @@
   </div>
 </section>
 
-<section class="pT60 wow slideInLeft">
+<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
   <div class="contentGrd">
     <div class="glass grdCFull p20 flxC ordC">
        <h2 class="txtC">Deferred loading images</h2>
@@ -254,40 +253,8 @@
 </section>
 
 
-<!-- <section class="pT60 wow slideInLeft">
-  <div class="contentGrd ">
-    <div class="glass grdC6 grdCFullSm grdR4 grdR2Sm p20 flxC ordC">
-       <h2 class="txtC">Swiper Integration</h2>
-    </div>
-    <div class="glass grdC6 grdCFullSm grdR4" 
-         mnr-slider='{
-           "slidesPerView":1,
-           "loop": true,
-           "centeredSlides": true,
-           "spaceBetween": 0,
-           "autoplay": true}'>
-
-      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
-      <div class=""><img class="wFull hFull imgCover" mnr-src="und2.svg"></div>
-
-      <div mnr-slider-prev class="s50 round colorBTWhite flxC ordC">
-         <img mnr-svg="flecha-izquierda.svg" class="colorSvg2 s20">
-      </div>
-      <div mnr-slider-next  class="s50 round colorBTWhite flxC ordC">
-         <img mnr-svg="flecha-derecha.svg"  class="colorSvg2 s20">
-      </div>
-    </div>
-  </div>
-</section> -->
-
-
-
-
-<section>
-  <div class="contentGrd pT60 pB60">
+<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
+  <div class="contentGrd pB60">
     <div class="glass grdCFull flxC ordC">
       <p class="txtC txtS3 fontBold">we appreciate your support</p>
     </div>
@@ -321,10 +288,11 @@
     selectImg:[],
     dateTest: "",
   };
-  Mnr.load(binds);
-  
-  
+  Mnr.load(binds,()=>{
 
+  });
+
+  
 </script>
 
 
