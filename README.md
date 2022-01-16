@@ -1,5 +1,5 @@
 # MoonRise
-A Tiny Frontend Framework
+A Tiny Frontend Library
 
 
 Check it on:
