@@ -9,31 +9,25 @@ const Mnr = (function(){
   let currentBody = null;
   let currentTitle = null;
   let imgList = {dones:0,iter:0,elems:[]};
-  let loadEnterTime = 100;
-  let loadEndTime = 100;
-  let elemsEvents = [];
+  let eTree = [];
   let scrollOld = 0;
-  let scrollSensitivity = 15;
+  let scrollSensitivity = 40;
   let timeAddStatus = null;
   let scrollImgOffset = 500;
   let componentsHTML =[];
   let componentsCount =0;
   let classBinds = [];
-  let styleBinds = [];
-  let imgBinds = [];
   let tagBinds = [];
   let mainStyle = '';
-  let eWaits = [];
   let b = {};
   let pageLoading = true;
+  let assetsPath = '/assets';
   let initialBinds = {
     savingStatus: 0,
     pageLoading: true,
     scrolled: false,
     windowWidth: 0,
     windowHeight: 0,
-    assetsUrl: '/assets',
-    scriptsUrl: '/scripts'
   }
 
   let start = null;
@@ -91,11 +85,10 @@ const Mnr = (function(){
       loadStyles();
     }
     
-    
-    addEvent('scroll',window,()=>{ handleScroll() });
-    addEvent('resize',window,()=>{ handleResize() });
+    window.addEventListener('scroll',handleScroll);
+    window.addEventListener('resize',handleResize);
+    window.addEventListener('load',finishLoad);
 
-    addEvent('load'  ,window,()=>{ finishLoad() });
   };
   const finishLoad = () => {
       loadHrefs();
@@ -111,22 +104,19 @@ const Mnr = (function(){
         handleResize();
        
         bindAll();
+
         setForms();
         
-        runLoads();
-
-
         //run functions after finish load once
         Object.values(run).map(value => {
-          if(typeof value === 'function') {
-            value();
-          }
+          load(null,value);
         });
+
+        runLoads();
 
         b.pageLoading = false;
         pageLoading = false;
         e('html').attr('mnr-page-loading',false);
-
       }
   };
   const reload = () => {
@@ -140,7 +130,6 @@ const Mnr = (function(){
   const load = (binds = null, funct = null) => {
     if(binds != null){
       setBinds(binds);
-      // console.log(b);
     }
     if(typeof funct === 'function'){
       loadRun.push(funct);
@@ -150,8 +139,13 @@ const Mnr = (function(){
     }  
   };
   const runLoads = () => {
-    for(let funct of loadRun){
-      funct();
+    for (var i = 0; i < loadRun.length; i++) {
+      try{
+        loadRun[i].call(Mnr);
+      }
+      catch(error){
+        console.warn('error trying to call function in loads '+error);
+      }
     }
     loadRun = {};
   };
@@ -163,16 +157,22 @@ const Mnr = (function(){
   const bindAll = () => {
     for (let bind of Object.keys(b) ) {
       for(let el of e('[mnr-bind="'+bind+'"]').e ){
-        if(el.getAttribute('mnr-bind') != 'set'){  
+        if(e(el).attr('mnr-bind') != 'set'){  
           //binds property to events
           let attr = 'innerText';
           let event = null;
-          let value = b[bind];
           let type = 'text';
           switch(el.nodeName){
              case "INPUT":
                attr = 'value';
                event = 'keyup';
+               type = el.type;
+               if(el.type == 'date'){
+                 event = 'change';
+               }
+               else if(u.parseBool(type) == false){
+                 type = 'text';
+               }
              break;
              case "TEXTAREA":
                attr = 'value';
@@ -181,66 +181,63 @@ const Mnr = (function(){
              case "SELECT":
                attr = 'value';
                event = 'change';
+               if(e(el).hasAttr('multiple')){
+                 type = 'multiple';
+               }
              break;
+             case "IMG":
+               attr = 'src';
+               event = null;
+             break;
+             default:
+               attr = 'innerText';
+               event = null;
           }
-          if(el.nodeName == 'INPUT' || 
-            el.nodeName == 'SELECT' || 
-            el.nodeName == 'TEXTAREA'){
-            if(u.parseBool(el.getAttribute('mnr-bind-set')) == true){
-              if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
-                let options = e("option[selected]").e;
-                let selected = Array.from(options).map(elm => elm.value);
-                b[bind] = selected;
-              }
-              else{
-                b[bind] = el.value;
-              }
-            }
-          }
-
           
-          if(el.hasAttribute('mnr-bind-attr')){
-            attr = el.getAttribute('mnr-bind-attr');
+          // overwrite attribute and values
+          if(e(el).hasAttr('mnr-bind-attr')){
+            attr = e(el).attr('mnr-bind-attr');
           }
-          if(el.hasAttribute('mnr-bind-event')){
-            event = el.getAttribute('mnr-bind-event');
-          }
-
-          if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
-             type = 'multiple';
-          }
-          else if(el.nodeName == 'INPUT'){
-            if(el.type == 'date'){
-             type = 'date';
-             event = 'change';
-            }
+          if(e(el).hasAttr('mnr-bind-event')){
+            event = e(el).attr('mnr-bind-event');
           }
 
-
-          if(el.nodeName == 'INPUT' || 
-            el.nodeName == 'SELECT' || 
-            el.nodeName == 'TEXTAREA'){
-             el.value = b[bind];
-          }
-          else{
-             el.innerText = b[bind];
-          }
-
-          if(el.nodeName == 'SELECT' && el.hasAttribute('multiple')){
-            addEvent(event,el, e => {
-                let options = el.querySelectorAll("option:checked");
-                let selected = Array.from(options).map(elm => elm.value);
-                b[bind] = selected;
-            });
-          }
-          else{
-            addEvent(event,el, e => {
-                b[bind] = el.value;
-            });
-          }
-
-          
+          //element set default values
+          if(u.parseBool(e(el).attr('mnr-bind-set')) == true){
             
+            if(el.nodeName == 'SELECT' && type == 'multiple'){
+              let options = e("option[selected]",el).e;
+              let selected = Array.from(options).map(elm => elm.value);
+              b[bind] = selected;
+            }
+            else{
+              b[bind] = el[attr];
+            }
+          }
+
+          // add events
+          let bindEvent = null;
+          if(type == 'multiple'){
+            bindEvent = (ev)=>{
+               let options = e("option:checked",el).e;
+               let selected = Array.from(options).map(elm => elm.value);
+               b[bind] = selected;
+            }
+          }
+          else{
+            bindEvent = (ev)=>{
+               b[bind] = el[attr];
+            }
+          }
+
+          // add event function
+          if(event != null){
+            el.addEventListener(event,bindEvent);
+          }
+
+
+          el[attr] = b[bind];
+          
           // generate binder
           let elData = {
             el: el,
@@ -249,8 +246,6 @@ const Mnr = (function(){
             type: type,
           };
           if(u.hasKey(binders, bind)){
-            el.setAttribute('mnr-bind','set');
-
             if(u.findPosByProp('el',el,binders[bind].elems) === false){
               binders[bind].elems.push(elData);
             }
@@ -258,13 +253,14 @@ const Mnr = (function(){
           else{
             binders[bind] = {elems:[elData],bind:bind};
           }
+          e(el).attr('mnr-bind','set');
         }    
       }
       Bind(bind);
     }
     
     setBindClasses();
-    setBindImgs();
+    // setBindImgs();
     setBindTags();
     
     
@@ -283,11 +279,11 @@ const Mnr = (function(){
             if(u.hasKey(binders, prop)){
               for (let elem of binders[prop].elems) {
                 if(elem.type == 'multiple'){
-                  for(let opt of elem.el.querySelectorAll("option")){
+                  for(let opt of e("option",elem.el).e){
                     opt.removeAttribute('selected');
                   }
                   for(let val of newValue){
-                    let opt = elem.el.querySelector("option[value='"+val+"']");
+                    let opt = e("option[value='"+val+"']",elem.el).e[0];
                     if(opt){
                      opt.setAttribute('selected',true);
                      opt.checked = true;
@@ -312,14 +308,12 @@ const Mnr = (function(){
   };
   const runAllBinds = () =>{
     runBindMaxText(true);
-    runBindImgs(true);
     runBindPrints(true);
     runBindClasses(true);
     runBindTags(true);
   };
   const runAllBindsSingle = (bind) =>{
     runBindMaxText();
-    runSingleBindImgs(bind);
     runBindPrints();
     runBindClasses();
     runBindTags();
@@ -405,46 +399,6 @@ const Mnr = (function(){
       }
   };
   
-  const setBindImgs = () => {
-      //image binds
-      for (let elem of e('[mnr-bind-src]').e) {
-        let bind = elem.getAttribute('mnr-bind-src');
-        if(bind != 'set'){
-          elem.setAttribute('mnr-bind-src','set');
-          if(u.hasKey(imgBinds, bind)){
-            if(imgBinds[bind].elems.includes(elem) == false){
-              imgBinds[bind].elems.push(elem);
-            }
-          }
-          else{
-              imgBinds[bind] = {elems:[elem]};
-          }
-        }
-      }
-  };
-  const runBindImgs = (force = false) => {
-      if(u.parseBool(pageLoading) == false || force == true){
-        for (let bind of Object.keys(imgBinds) ) {
-          iterateImgBinds(bind);
-        }
-      }   
-  };
-  const runSingleBindImgs = (bind) => {
-      if(u.parseBool(pageLoading) == false && u.hasKey(imgBinds,bind)){
-        iterateImgBinds(bind);
-      }   
-  };
-  const iterateImgBinds = (bind) => {
-       for (let i = imgBinds[bind].elems.length - 1; i >= 0; i--) {
-        let elem = imgBinds[bind].elems[i];
-
-        elem.src = null;
-        if(b[bind] != null){
-            elem.src = b[bind];
-        }
-       }
-  };
-
   const bindPush = (prop,val) => {
       if(u.hasKey(b,prop)){
         let temp = b[prop];
@@ -492,11 +446,11 @@ const Mnr = (function(){
 
       let type = "";
       if(el){
-        if(el.hasAttribute("mnr-type")){
-          if(el.getAttribute("mnr-type") == "number"){
+        if(e(el).hasAttr("mnr-type")){
+          if(e(el).attr("mnr-type") == "number"){
              type = "+";
           }
-          el.removeAttribute("mnr-type");
+          e(el).removeAttr("mnr-type");
         }
       }
 
@@ -531,19 +485,18 @@ const Mnr = (function(){
 
       return string;
   };
-
+  
 
 
   ///////////////////////////////////window handlers
   const handleScroll = (force = false) => {
-    if(window.pageYOffset > scrollSensitivity){
+    if(window.pageYOffset > 10){
       if(b.scrolled == false){
        b.scrolled = true;
       }
       e('html').class('scrolled');
-      
     }
-    else if(window.pageYOffset <= scrollSensitivity){
+    else if(window.pageYOffset <= 10){
       if(b.scrolled){
        b.scrolled = false;
       }
@@ -557,10 +510,12 @@ const Mnr = (function(){
     else if(scrollOld < window.pageYOffset-scrollSensitivity){
       change = true;
     }
-    if(change == true){
+    if(change){
       scrollOld = window.pageYOffset;
-      imgLoadScroll();
-      runBindClasses();
+      // imgLoadScroll();
+      // runBindClasses();
+      // runBindTags();
+      // console.log('change');
     }   
   };
   const handleResize = () => {
@@ -587,12 +542,63 @@ const Mnr = (function(){
 
   ///////////////////////////////////media handlers
   const loadMedia = () => {
-    imgIterator();
+    // imgIterator();
 
-    imgLoadScroll();
+    // imgLoadScroll();
 
-    runTimesMedia();
+    // runTimesMedia();
+
+    getMedia();
   };
+  const getMedia = () =>{
+    for(let el of e('[mnr-src]').e){
+      setMedia(el);
+    }
+  }
+  const setMedia = (el) => {
+    let errorLoad = (ev)=>{
+      e(el).class('mnrHide');
+      console.warn('image skipped: '+el.src);
+    };
+    let src = e(el).attr('mnr-src');
+    if( src != 'set'){
+       if(el.nodeName == 'IMG'){
+         if(e(el).hasAttr('alt') == false){
+           let alt = src.split('/');
+           alt = alt[alt.length-1];
+           alt = alt.split('.');
+           alt = alt.splice(0,alt.length-2);
+           el.alt = alt;
+         }
+         el.addEventListener('error',errorLoad);
+       }
+
+       e(el).setViewTrigger(
+        function(){
+          console.log(this);
+          this.resetClasses().class('imgLoaded');
+          let el = this.e[0];
+          if(el.nodeName == 'IMG'){
+            el.src = root+assetsPath+'/'+this.attr('mnr-src-loading');
+          }
+          else{
+            try{
+             this.css({'background-image': 'url('+root+assetsPath+'/'+this.attr('mnr-src-loading')+')'});
+            }
+            catch{
+              console.warn('background image skipped: '+el.src);
+            }
+          }
+          this.removeAttr('mnr-src-loading');
+        },
+        function(){
+          this.class('imgLoading anim5')
+        },true);
+       
+       e(el).attr('mnr-src-loading', src)
+       e(el).removeAttr('mnr-src');
+    }
+  }
   const imgIterator = () => {
     let temp = e('[mnr-src]').e;
     let type = 'back';
@@ -603,12 +609,6 @@ const Mnr = (function(){
        if(tempSrc != 'set'){
           if(elem.nodeName == 'IMG'){
             type = 'img';
-            if(e(elem).hasAttr('width') == false){
-              elem.width = '0';
-            }
-            if(e(elem).hasAttr('height') == false){
-              elem.height = '0';
-            }
             if(e(elem).hasAttr('alt') == false){
               let alt = tempSrc.split('/');
               alt = alt[alt.length-1];
@@ -636,17 +636,18 @@ const Mnr = (function(){
       }
       let checks = [];
       let elem = imgList.elems[0];
+      let errorLoad = (ev)=>{
+        e(elem.el).class('mnrHide');
+        console.warn('image skipped: '+elem.src);
+      };
       if(elem.set == false){
          if(elem.type == 'img'){
-           addEvent('error',elem.el,()=>{
-             e(elem.el).class('mnrHide');
-             console.warn('image skipped: '+elem.src);
-           });
-           elem.el.src = root+b.assetsUrl+'/'+elem.src;
+           elem.el.addEventListener('error',errorLoad);
+           elem.el.src = root+assetsPath+'/'+elem.src;
          }
          else{
            try{
-             e(elem.el).css({'background-image': 'url('+root+b.assetsUrl+'/'+elem.src+')'});
+             e(elem.el).css({'background-image': 'url('+root+assetsPath+'/'+elem.src+')'});
            }
            catch{
              console.warn('background image skipped: '+elem.src);
@@ -664,19 +665,21 @@ const Mnr = (function(){
     }
     let checks = [];
     let i = 0;
+
     for(elem of imgList.elems){
-       if(u.isAboveViewport(elem.el,scrollImgOffset) && elem.set == false){
+       if(e(elem.el).aboveView() && elem.set == false){
           if(elem.type == 'img'){
-            addEvent('error',elem.el,()=>{
+            let errorLoad = (ev)=>{
               e(elem.el).class('mnrHide');
               console.warn('image skipped: '+elem.src);
-            });
-            elem.el.src = root+b.assetsUrl+'/'+elem.src;
+            };
+            elem.el.addEventListener('error',errorLoad);
+            elem.el.src = root+assetsPath+'/'+elem.src;
             checks.push(i);
           }
           else{
             try{
-              e(elem.el).css({'background-image': 'url('+root+b.assetsUrl+'/'+elem.src+')'});
+              e(elem.el).css({'background-image': 'url('+root+assetsPath+'/'+elem.src+')'});
             }
             catch{
               console.warn('background image skipped: '+elem.src);
@@ -764,27 +767,11 @@ const Mnr = (function(){
 
 
   /////////////////////////////////element handler
-  const e = (query, all = true) => {
+  const e = (query, rltv = document) => {
     let elem = [];
-    let singleNode = (function () {
-      // make an empty node list to inherit from
-      let nodelist = document.createDocumentFragment().childNodes;
-      // return a function to create object formed as desired
-      return function (node) {
-          return Object.create(nodelist, {
-              '0': {value: node, enumerable: true},
-              'length': {value: 1},
-              'item': {
-                  "value": function (i) {
-                      return this[+i || 0];
-                  }, 
-                  enumerable: true
-              }
-          }); // return an object pretending to be a NodeList
-      };
-    }());
+    let main = rltv;
     if(typeof(query) == 'string'){
-      elem = (all)? document.querySelectorAll(query) : [document.querySelector(query)];
+      elem = rltv.querySelectorAll(query);
     }
     else{
       elem = singleNode(query);
@@ -793,24 +780,46 @@ const Mnr = (function(){
     
     return {
       e: elem,
+      eBack: elem,
       query: query,
       singleNode: singleNode,
-      wating: false,
+      waiting: false,
+      chainPos: 0,
+      waitingTotal: 0,
       chain: [],
-      elem: function(num = 0){
-        
-          this.e = this.singleNode(this.e[num]);
-          return this; 
-      },
+      chainWait: [],
+      looping: false,
+      result: null,
+      results: [],
+      addedClasses: [],
+      addedAttr: [],
+      eventMethods : [],
+      q: function(query){
+        if(typeof(query) == 'string'){
+         let elem = [];
+         let main = rltv;
+         elem = this.e[0].querySelectorAll(query);
+
+         this.e = elem;
+         this.query = query;
+        }
+
+        return this;
+      },  
       class: function(names, add = true){
         if(this.isWaiting(['class',[names,add]])){
            return this;
         }
-
+        
+        // console.log(names);
         let classes = names.trim().split(' ');
         for(let el of this.e){
           for(let clss of classes){
             if(add){
+              
+              if(this.hasClass(clss) == false){
+                 this.addedClasses.push(clss);
+              }
               el.classList.add(clss);
             }
             else{
@@ -824,9 +833,44 @@ const Mnr = (function(){
         let classes = names.trim().split(' ');
         for(let el of this.e){
           for(let clss of classes){
+           
+           if(this.hasClass(clss) == false){
+              this.addedClasses.push(clss);
+           }
            el.classList.toggle(clss);
           }
         }
+        return this;
+      },
+      hasClass: function(names, all = true){
+        let classes = names.trim().split(' ');
+        let match = 0;
+        let compare = 0;
+        for(let el of this.e){
+          for(let clss of classes){
+            compare ++;
+            if(all){
+              if(el.classList.contains(clss)){
+                match ++;
+              }
+            }
+            else{
+              return el.classList.contains(clss);
+              break;
+            }
+          }
+        }
+        return (match == compare);
+      },
+      resetClasses: function(){
+        if(this.isWaiting(['resetClasses',[]])){
+           return this;
+        }
+        for (let i = this.addedClasses.length - 1; i >= 0; i--) {
+          this.class(this.addedClasses[i],false);
+          this.addedClasses.splice(i,1);
+        }
+
         return this;
       },
       css: function(property = null){
@@ -859,7 +903,52 @@ const Mnr = (function(){
         else{
           for(let el of this.e){
             el.setAttribute(attr, val);
+
+            if(this.hasAttr(attr) == false){
+              this.addedAttr.push(attr);
+            }
+            
           }
+        }
+        return this;
+      },
+      hasAttr: function(names, all = true){
+        let attr = names.trim().split(' ');
+        let match = 0;
+        let compare = 0;
+        for(let el of this.e){
+          for(let at of attr){
+            compare ++;
+            if(all && el.hasAttribute(at)){
+              if(el.hasAttribute(at)){
+                match ++;
+              }
+            }
+            else{
+              return el.hasAttribute(at);
+              break;
+            }
+          }
+        }
+        return (match == compare);
+      }, 
+      removeAttr: function(names){
+        let attr = names.trim().split(' ');
+        for(let el of this.e){
+          for(let at of attr){
+            el.removeAttribute(at);
+          }
+        }
+        return this;
+      },
+      resetAttrs: function(){
+        if(this.isWaiting(['resetAttrs',[]])){
+           return this;
+        }
+
+        for (let i = this.addedAttr.length - 1; i >= 0; i--) {
+          this.removeAttr(this.addedAttr[i],false);
+          this.addedAttr.splice(i,1);
         }
         return this;
       },
@@ -873,6 +962,10 @@ const Mnr = (function(){
         return this;
       },
       text: function(text = null,add = false){
+        if(this.isWaiting(['text',[text,add]])){
+           return this;
+        }
+
         if(text == null){
           return this.e[0].innerText;
         }
@@ -902,67 +995,28 @@ const Mnr = (function(){
       show: function(anim = false){
         this.class('mnrHide',false);
         return this;
-      },
-      hasAttr: function(names, all = true){
-        let attr = names.trim().split(' ');
-        let match = 0;
-        let compare = 0;
-        for(let el of this.e){
-          for(let at of attr){
-            compare ++;
-            if(all && el.hasAttribute(at)){
-              if(el.hasAttribute(at)){
-                match ++;
-              }
-            }
-            else{
-              return el.hasAttribute(at);
-              break;
-            }
-          }
-        }
-        return (match == compare);
-      },
-      hasClass: function(names, all = true){
-        let classes = names.trim().split(' ');
-        let match = 0;
-        let compare = 0;
-        for(let el of this.e){
-          for(let clss of classes){
-            compare ++;
-            if(all){
-              if(el.classList.contains(clss)){
-                match ++;
-              }
-            }
-            else{
-              return el.classList.contains(clss);
-              break;
-            }
-          }
-        }
-        return (match == compare);
-      },
-      removeAttr: function(names, all = true){
-        let attr = names.trim().split(' ');
-        if(all == false){
-          for(let at of attr){
-            this.e.removeAttribute(at);
-          }
-        }
-        for(let el of this.e){
-          for(let at of attr){
-            el.removeAttribute(at);
-          }
-        }
-        return this;
-      },
+      }, 
       parent: function(){
         this.e = this.singleNode(this.e[0].parentNode);
-        this.e = this.e;
         return this;
       },
-      screenFocus : function(offset = 0){
+      child: function(num = 0){
+        this.e = this.singleNode(this.e[0].children[num]);
+        return this;
+      },
+      elem: function(num = 0){
+         this.e = this.singleNode(this.e[num]);
+         return this; 
+      },
+      elems: function(){
+         this.e = this.eBack;
+         return this;
+      },
+      children: function(){
+        this.e = this.e[0].children;
+        return this;
+      },
+      screenFocus: function(offset = 0){
          u.screenTo(this.e[0],offset);
          return this;
       },
@@ -975,38 +1029,143 @@ const Mnr = (function(){
          return u.isAboveViewport(this.e[0],offset);
       },
       loadBinds: function(){
-         u.runAllBinds();
+         runAllBinds();
          return this;
+      },
+      event: function(events, method = null){
+        
+        if(method != null){
+          for(let el of this.e){
+            events = (typeof(events) === 'string') ? events.split(' ') : [events];
+            events = u.removeDuplicate(events);
+
+            for(event of events){
+              if(event == ''){
+                continue;
+              }
+              let eventTemp = (ev)=>{
+                let _this = this
+                _this.ev = ev;
+                method.call(_this);
+              }
+              el.addEventListener(event,eventTemp);
+            }
+          }
+        }
+
+        return this;
       },
       wait: function(time = 0){
          
+         if(this.isWaiting(['wait',[time]])){
+           return this;
+         }
+        
+         this.waitingTotal += time;
+          
          setTimeout(()=>{
-            // console.log('waited');
-            this.wating = false;
+            this.waiting = false;
+            let tempChain = u.deepCopy(this.chainWait);
+            for (let i = 0; i < tempChain.length; i++) {
+              
+              this.chainWait.splice(0,1);
+              this[tempChain[i][0]](...tempChain[i][1]);
 
-            for (var i = 0; i < this.chain.length; i++) {
-              this[this.chain[i][0]](...this.chain[i][1]);
+              if(tempChain[i][0] == 'wait'){
+                break;
+              }
             }
+            
             return this;
          },time);
-         this.wating = true;
+
+         this.waiting = true;
          return this;
       },
       isWaiting: function(data){
-         if(this.wating){
+         
+         if(this.waiting){
            this.chain.push(data);
+           this.chainWait.push(data);
            return true;
          }
          return false;
+      },
+      run: function(funct){
+        if(this.isWaiting(['run',[funct]])){
+           return this;
+        }
+        try{
+          let _this = this;
+          this.result = funct.call(_this);
+        }
+        catch(error){
+          console.warn('error trying to call function in chain '+error);
+        }
+
+        this.results.push(this.result);
+
+        return this;
+      },
+      setViewTrigger: function(enter = null, exit = null,once = null){
+        for(let el of this.e){
+          let interFunct = (entries, observer) => {
+            entries.forEach(entry => {
+              if(entry.isIntersecting) {
+                once = (once == null) ? false : once;
+
+                if(once == true){
+                  observer.unobserve(entry.target)
+                }
+
+                if(enter != null){
+                  let _this = this;
+                  enter.call(_this);
+                }
+              }
+              else{
+                if(exit != null){
+                  let _this = this;
+                  exit.call(_this);
+                }
+              }
+            });
+          };
+          let observer = new IntersectionObserver(interFunct);
+          observer.observe(el)
+        }
+
+        return this;
       }
 
     };
   };
 
 
+
+  const singleNode = (function () {
+    // make an empty node list to inherit from
+    let nodelist = document.createDocumentFragment().childNodes;
+    // return a function to create object formed as desired
+    return function (node) {
+        return Object.create(nodelist, {
+            '0': {value: node, enumerable: true},
+            'length': {value: 1},
+            'item': {
+                "value": function (i) {
+                    return this[+i || 0];
+                }, 
+                enumerable: true
+            }
+        }); // return an object pretending to be a NodeList
+    };
+  }());
+
+
   /////////////////////////////////utilities
   const u = (function(){
     return {
+       
        hasKey: function(stash,key){
          try{
            return key in stash;
@@ -1174,6 +1333,10 @@ const Mnr = (function(){
 
          return arr.filter((i) => arr.indexOf(i) === arr.lastIndexOf(i));
        },
+       removeDuplicate: function(arr){
+
+          return [...new Set(arr)];
+       },
        getHexColor: function(){
 
          return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`;
@@ -1225,31 +1388,9 @@ const Mnr = (function(){
     };
   })();
   
-  const addEvent = (event,element,funct) => {
-    let found = false;
-    let i = -1;
-    
-    for (let elem of elemsEvents) {
-      i++;
-      if(elem.el == element){
-        found = true;
-        for (let e of elem.events) {
-          if(e == event){
-             console.log('element already has that event');
-             return;
-          }
-        }
-        break;
-      }
-    }
-    if(found == false){
-      elemsEvents.push({el:element,events:[event]});
-    }
-    else{
-      elemsEvents[i].events.push(event);
-    }
-    element.addEventListener(event,funct);
-  };
+ 
+
+
 
   /////////////////////////////////////////////////////css
   const setCss = () => {
@@ -1399,6 +1540,9 @@ const Mnr = (function(){
         img{
           pointer-events: none;
           object-fit: contain;
+        }
+        img.imgLoading{
+          opacity:0
         }
         .svg{
           transform: none;
@@ -2888,20 +3032,22 @@ const Mnr = (function(){
   //////////////////////////////////////////////////expose
   return {
     //variables
-    b: b,
+    b,
+    root,
+    assetsPath,
+    binders,
 
     //methods
     init,
     reload,
     load,
 
+
     bindPush,
-    addEvent,
     
+    el:null,
     e,
     u,
-
-
   }
 
 })();

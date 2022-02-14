@@ -22,7 +22,7 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   
   
-  <script src="./scripts/moonRise/moonRise.min.js" rel="preload" as="script"></script>
+  <script src="./scripts/moonRise/moonRise.js" rel="preload" as="script"></script>
 
   <link rel="stylesheet" href="style.css" >
   
@@ -54,115 +54,62 @@
 
 <section class="moonHolder anim5 overflowYShow">
   <div class="moon wow flxC ordC">
-    <!-- <div class="noise"></div> -->
     <div class="glare round wow anim8 slideInDown" data-wow-delay="-0.8s"></div>
     <div class="circle round abs posC mAuto wow slideInDown" ></div>
     
     <div class="abs posL posR posB mB20 wow slideInUp textHolder anim5">
       <h1 class="wow slideInUp txtC pB15 anim5 txtS2Xs" >MoonRise</h1>
-      <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">A Tiny FrontEnd Library</p>
+      <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">A Tiny Front-End Library</p>
     </div>
 
 
-  </div>
-  <div class="content absS z1 posB posR mAuto">
-    <img mnr-svg="backPlants.svg" class="anim16 back">
-    <img mnr-svg="campFire.svg" class="anim16 camp">
   </div>
 
 </section>
 
 
 
-<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
+<section class="pT60 anim8" >
   <div class="contentGrd pT20">
     <div class="glass grdCFull flxC ordC p20">
-      <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla js and Css library to simplify the web development process.</p>
+      <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla Js and Css library to simplify the web development process.</p>
 
       <a class="github-button" href="https://github.com/Logic-Shell-studios/MoonRise" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @Logic-Shell-studios on GitHub" rel="noopener noreferrer">Visit us in GitHub</a>
 
 
     </div>
-  </div>
-</section>
-
-<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
-
-  <div class="contentGrd pT20">
-    <div class="glass grdCFull flxC ordC">
-       <h2 class="txtC">Responsive Grid Layout</h2>
-    </div>
+    
     
 
-    <div class="glass grdC4 grdC3Md"></div>
-    <div class="glass grdC2 grdC3Md"></div>
-    <div class="glass grdC2 grdC3Md"></div>
-    <div class="glass grdC4 grdC3Md"></div>
-
-    <div class="glass grdC3 grdC6Sm"></div>
-    <div class="glass grdC6 grdCFullSm grd">
-      <div class="glass grdC3 grdC6Sm"></div>
-      <div class="glass grdC3 grdC6Sm"></div>
-    </div>
-    <div class="glass grdC3 grdC6Sm grdRS2Sm"></div>
-
-    <div class="glass grdC6 grd">
-      <div class="glass grdC2 "></div>
-      <div class="glass grdC2 "></div>
-      <div class="glass grdC2 "></div>
-      <div class="glass grdC3 "></div>
-      <div class="glass grdC3 "></div>
-    </div>
-    <div class="glass grdC6 grd">
-      <div class="glass grdC3 "></div>
-      <div class="glass grdC3 "></div>
-      <div class="glass grdC2 grdC2Xs "></div>
-      <div class="glass grdC3 grdC2Xs "></div>
-      <div class="glass grdC1 grdC2Xs "></div>
-    </div>
-
-    <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr">Code Sample</h4>
-          <script src="https://gist.github.com/alexbores/07025bb928c8a3052d93c4d90cdc410d.js"></script>
-          <p class="txtC button wMax200 colorBWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
-             <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
-          </p>
-     </div>
-
   </div>
-
-
 </section>
 
 
-<!-- <section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
-  <form mnr-form="true" >
-   <div class="contentGrd pT20">
-     
-   </div>
-  </form>  
-</section> -->
 
 
-<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}'>
+<section class="pT60 anim8" >
   <div class="contentGrd">
      <div class="glass grdCFull flxC ordC">
        <h2 class="txtC">Two-Way data binding</h2>
      </div>
 
      <div class="glass grdC6 grdCFullXs flxC ordC p20">
-         <input placeholder="type something..." mnr-bind="inputTest" mnr-max-text="10">
-         <input class="mTGttr" placeholder="type something..." mnr-bind="inputTest" mnr-max-text="10">
+         <input placeholder="type something here..." mnr-bind="inputTest" mnr-max-text="10" >
+         <input class="mTGttr" placeholder="or here..." mnr-bind="inputTest" mnr-max-text="10">
      </div>
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
           mnr-class='{"colorBOk": "inputTest.length > 0 && inputTest.length < 6", "colorBWarn":"inputTest.length >= 6"}'>
          <p mnr-bind="inputTest" 
-            mnr-max-text="10"></p>
+            mnr-max-text="10" ></p>
          
          <p class="txtS5 fontBold colorWhite mTGttr" 
             mnr-class='{"hide": "inputTest.length <= 0"}'> 
             Length: <mnr> inputTest.length </mnr>
+         </p>
+
+         <p class="txtS5 colorWhite" 
+            mnr-class='{"hide": "inputTest.length > 0"}'> 
+            results block
          </p>
 
          <p class="txtS5 fontBold colorWhite" 
@@ -184,6 +131,11 @@
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
           mnr-class='{"colorBOk": "selectTest.length > 0"}'>
          <p class="pT10" mnr-bind="selectTest"></p>
+
+         <p class="txtS5 colorWhite" 
+            mnr-class='{"hide": "selectTest.length > 0"}'> 
+            results block
+         </p>
      </div>
 
      <div class="glass grdCFull p20 ordC flxC code hideCode">
@@ -207,10 +159,10 @@
        </select>
      </div>
      <div class="grdC3 grdC6Sm">
-       <img class="wFull h300 imgCover" mnr-bind-src="selectImg">
+       <img class="wFull h300 imgCover" mnr-bind="selectImg">
      </div>
      <div class="grdC3 grdC6Sm">
-       <img class="wFull h300 imgCover" mnr-bind-src="selectImg">
+       <img class="wFull h300 imgCover" mnr-bind="selectImg">
      </div>
 
      <div class="glass grdCFull p20 ordC flxC code hideCode">
@@ -225,11 +177,12 @@
   </div>
 </section>
 
-<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
+<section class="pT60 anim8"  >
   <div class="contentGrd">
     <div class="glass grdCFull p20 flxC ordC">
        <h2 class="txtC">Deferred loading images</h2>
     </div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg" id="testImg"></div>
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
@@ -237,7 +190,99 @@
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
     <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
+    <div class="grdCFull">
+      <img class="wFull hAuto imgCover" mnr-src="testBigImg.png" >
+    </div>
 
 
     <div class="glass grdCFull p20 ordC flxC code hideCode">
@@ -253,7 +298,7 @@
 </section>
 
 
-<section class="pT60 anim8" mnr-class='{"opacityFull": "e().inView(-100)","opacity0":"e().inView(-100) == false"}' >
+<section class="pT60 anim8"  >
   <div class="contentGrd pB60">
     <div class="glass grdCFull flxC ordC">
       <p class="txtC txtS3 fontBold">we appreciate your support</p>
@@ -269,6 +314,11 @@
       <p class="txtS5 colorTWhite txtC pT20 pB20">A <a class="colorWhite" rel="noopener noreferrer" target="_blank" href="https://logicshellstudios.com">Logic Shell Studios</a> Creation</p>
    </div>
 </section>
+
+<div id="test">
+   <h1>test1</h1>
+   <h1>test2</h1>
+</div>
 
 
 
@@ -287,12 +337,34 @@
     inputTest: "",
     selectImg:[],
     dateTest: "",
+    waitTest: 0,
   };
-  Mnr.load(binds,()=>{
-
-  });
 
   
+  Mnr.load(binds,function(){
+      // let increse = () => {
+      //   console.log(this.b.waitTest);
+      //   this.b.waitTest ++;
+      // };
+      // this.e('#test h1')
+      // .wait(4000).class('color1').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('color2').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('colorOk').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('color2').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('colorOk').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('color2').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('colorOk').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('color2').text(Mnr.b.waitTest).run(increse)
+      // .wait(1000).resetClasses().class('colorOk').text(Mnr.b.waitTest).run(increse)
+     
+
+      this.e('#test h1').event('click');
+  });
+  
+  
+
+  
+
 </script>
 
 
