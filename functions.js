@@ -1,26 +1,34 @@
-
 Mnr.init({
   binds:{
     
   },
-  run: {
+  onLoad: {
     loadEnd: function(){
-      Mnr.e('#pageLoader .glare').class('expand',false).class('contract');
-      Mnr.e('#pageLoader .glare').class('expand',false).class('contract');
 
-      Mnr.e('#pageLoader .moon').class('load3');
-
-      Mnr.e('#pageLoader').class('load');
-
-      Mnr.e('#pageLoader').class('hide');
-
-      setTimeout(()=>{
+      this.e('#pageLoader')
+      .child('.glare')
+      .wait(200)
+      .class('expand',false)
+      .class('contract')
+      .initial()
+      .wait(400)
+      .child('.moon')
+      .class('load3')
+      .wait(300)
+      .initial()
+      .class('load')
+      .run(()=>{
         if(typeof WOW === "function"){
           new WOW().init();
         }
-      },500);
+      })
+      .wait(300)
+      .class('mnrHide')
+      .html(' ')
+      
       
     },
   }
 });
+
 
