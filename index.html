@@ -11,11 +11,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="viewport" content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-
+  <style mnr-styles=""></style>
   
   <link rel="icon" type="image/ico" href="./assets/favicon.png">
 
-  <link rel="stylesheet" mnr-href="/scripts/animate.css/animate.min.css" >
+  <link rel="stylesheet" href="/scripts/animate.css/animate.min.css" >
   <script src="./scripts/wow/dist/wow.min.js" rel="preload" async defer as="script"></script>
   
   
@@ -23,7 +23,9 @@
   
   
   <script src="./scripts/moonRise/moonRise.js" rel="preload" as="script"></script>
-
+  <script src="./scripts/moonRise/moonRiseStyles.js" rel="preload" as="script"></script>
+  
+  
   <link rel="stylesheet" href="style.css" >
   
   
@@ -70,7 +72,7 @@
 
 
 <section class="pT60 anim8" >
-  <div class="contentGrd pT20">
+  <div class="contentGrd pT20 ">
     <div class="glass grdCFull flxC ordC p20">
       <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla Js and Css library to simplify the web development process.</p>
 
@@ -89,18 +91,17 @@
 
 <section class="pT60 anim8" >
   <div class="contentGrd">
-     <div class="glass grdCFull flxC ordC">
+     <div class="glass grdCFull flxC ordC  anim8 ">
        <h2 class="txtC">Two-Way data binding</h2>
      </div>
 
-     <div class="glass grdC6 grdCFullXs flxC ordC p20">
-         <input placeholder="type something here..." mnr-bind="inputTest" mnr-max-text="10" >
-         <input class="mTGttr" placeholder="or here..." mnr-bind="inputTest" mnr-max-text="10">
+     <div class="glass grdC6 grdCFullXs flxC ordC p20" id="target">
+         <input placeholder="type something here..." mnr-bind="inputTest" >
+         <input class="mTGttr" placeholder="or here..." mnr-bind="inputTest" >
      </div>
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"colorBOk": "inputTest.length > 0 && inputTest.length < 6", "colorBError":"inputTest.length >= 6"}'>
-         <p mnr-bind="inputTest" 
-            mnr-max-text="10" ></p>
+          mnr-class='{"paintedBlock": "inputTest.length > 0 && inputTest.length < 6", "paintedBlockError":"inputTest.length >= 6"}'>
+         <p mnr-bind="inputTest"></p>
          
          <p class="txtS5 fontBold colorWhite mTGttr" 
             mnr-class='{"hide": "inputTest.length <= 0"}'> 
@@ -118,7 +119,7 @@
      </div>
 
 
-     <div class="glass grdC6 grdCFullXs flxC ordC p20">
+     <div class="glass grdC6 grdCFullXs flxC ordC p20 ">
          <select  multiple mnr-bind="selectTest" >
            <option value="A">A</option>
            <option value="B">B</option>
@@ -129,7 +130,7 @@
          </select>
      </div>
      <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"colorBOk": "selectTest.length > 0"}'>
+          mnr-class='{"paintedBlock": "selectTest.length > 0"}'>
          <p class="pT10" mnr-bind="selectTest"></p>
 
          <p class="txtS5 colorWhite" 
@@ -182,19 +183,19 @@
     <div class="glass grdCFull p20 flxC ordC">
        <h2 class="txtC">Deferred loading images</h2>
     </div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg" id="testImg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg" id="testImg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
+    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
 
 
 
     <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr">Code Sample</h4>
+          <h4 class="txtC pT20 pBGttr ">Code Sample</h4>
           <script src="https://gist.github.com/alexbores/01d56273ff79798b87b76ca330913003.js"></script>
           <p class="txtC button wMax200 colorBWhite colorBlack" 
              onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
@@ -212,7 +213,7 @@
       <p class="txtC txtS3 fontBold">we appreciate your support</p>
     </div>
     <div class="grdCFull flxC ordC">
-      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="Logicshell" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy us a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="Logicshell" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
     </div>
   </div>
 </section>
@@ -223,10 +224,6 @@
    </div>
 </section>
 
-<!-- <div id="test">
-   <h1>test1</h1>
-   <h1>test2</h1>
-</div> -->
 
 
 </main> 
@@ -244,23 +241,36 @@
     inputTest: "",
     selectImg:[],
     dateTest: "",
+    scrolled: false,
   };
 
-  
+
   Mnr.onLoad(binds,function(){
-     
-     
+    console.log('run index')
   });
   
   Mnr.onScroll(function(){
-     let scroll = window.pageYOffset;
-     let opacVal = this.u.mapValue(scroll,0.0,500.0,0.0,1.0);
-     opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
-     this.e('.moonHolder').css({opacity:opacVal});
+     if(window.pageYOffset > 10 && this.b.scrolled == false){
+       this.b.scrolled = true;
+       this.e('html').class('scrolled');
+     }
+     else if(window.pageYOffset <= 10){
+       this.b.scrolled = false;
+       this.e('html').class('scrolled',0);
+     }
+     
+     if(window.pageYOffset < 600){
+       let scroll = window.pageYOffset;
+       let opacVal = this.u.mapValue(scroll,0.0,500.0,0.0,1.0);
+       opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
+       opacVal = (opacVal > 0.90) ? 1 : opacVal;
+       this.e('.moonHolder').css({opacity:opacVal});
+     }
   });
 
   
-
+  
+    
 </script>
 
 

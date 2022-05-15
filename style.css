@@ -34,17 +34,7 @@ html{
   background-color: black;
 }
 main,body{
-  /*background: rgb(13,31,44);
-  background: -moz-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
-  background: -webkit-linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);
-  background: linear-gradient(180deg, rgba(13,31,44,1) 0%, rgba(12,30,42,1) 31%, rgba(4,8,11,1) 100%);*/
-  
   background: rgb(10,14,19,1);
-  background: -moz-linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
-  background: -webkit-linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
-  background: linear-gradient(180deg, rgba(10,14,19,1) 0%, rgba(14,18,23,1) 31%, rgba(4,8,11,1) 100%);
-  
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d1f2c",endColorstr="#04080b",GradientType=1);
 }
 
 html body{
@@ -70,36 +60,6 @@ html[mnr-page-loading="false"] body #pageLoader{
   max-height: 1px;
   opacity: 0;
   overflow: hidden;
-}
-
-.swiper-container, 
-.swiper-wrapper, 
-.swiper-slide, 
-.swiper-slide img{
-  transition-duration: 300ms;
-}
-.swiper-slider{
-  position: relative;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-.swiper-button-next,
-.swiper-button-prev {
-  width: 40px;
-  height: 40px;
-  background-image: none;
-}
-.swiper-button-next *,
-.swiper-button-prev *{
-  width: 30px;
-  height: 30px;
-}
-.swiper-pagination{
-  position: relative;
-}
-.swiper-pagination-bullet-active {
-  background: white;
 }
 
 
@@ -163,8 +123,8 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
 }
 .moon.animated .glare{
   opacity: 1;
-  width: 28%;
-  height: 28%;
+  width: 55%;
+  height: 55%;
   background-color: rgba(255,255,255,0.4);
 
   box-shadow: -1px 0px 400px 65px rgba(255,255,255,0.75);
@@ -178,8 +138,8 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
 }
 
 .moon .circle {
-  width: 30%;
-  height: 30%;
+  width: 45%;
+  height: 45%;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur( 10px );
 
@@ -367,4 +327,12 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   100% {
     opacity: 0;
   }
+}
+
+
+.paintedBlock{
+  background-color: var(--mnr-colorOk);
+}
+.paintedBlockError{
+  background-color: var(--mnr-colorError);
 }

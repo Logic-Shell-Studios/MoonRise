@@ -1,10 +1,6 @@
-Mnr.init({
-  binds:{
-    
-  },
-  onLoad: {
-    loadEnd: function(){
-
+Mnr.init();
+Mnr.onLoad(null,function(){
+      console.log('run main');
       this.e('#pageLoader')
       .child('.glare')
       .wait(200)
@@ -25,10 +21,6 @@ Mnr.init({
       .wait(300)
       .class('mnrHide')
       .html(' ')
-      
-      
-    },
-  }
 });
 
 
