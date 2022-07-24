@@ -41,27 +41,27 @@
 </noscript>
 
 
+
+<main>
+
 <div id="pageLoader" class="fixedFull posC zMax hFull wFull flxC ordC anim8" >
-    <div class="moon animated flxC ordC anim8">
+    <div class="moon ready flxC ordC anim8">
       <div class="glare round anim8 expand"></div>
       <div class="circle round abs posC mAuto " ></div>
     </div>
 </div>
 
 
-<main>
-
-
 
 <section class="moonHolder anim5 overflowYShow">
   <div class="fixed">
-    <div class="moon wow flxC ordC ">
-      <div class="glare round wow anim8 slideInDown" data-wow-delay="-0.8s"></div>
-      <div class="circle round abs posC mAuto wow slideInDown" ></div>
+    <div class="moon flxC ordC anim16">
+      <div class="glare round anim8" ></div>
+      <div class="circle round abs posC mAuto" ></div>
       
-      <div class="abs posL posR posB mB20 wow slideInUp textHolder anim5">
-        <h1 class="wow slideInUp txtC pB15 anim5 txtS2Xs" >MoonRise</h1>
-        <p class="wow slideInUp txtC fontTitle anim5" data-wow-delay="0.1s">For a fast web development</p>
+      <div class="abs posL posR posB mB20  textHolder anim16">
+        <h1 class="txtC pB15 anim5 txtS2Xs" >MoonRise</h1>
+        <p class="txtC fontTitle anim5">Simple tool set for web development</p>
       </div>
 
 
@@ -72,16 +72,16 @@
 
 
 <section class="pT60 anim8" >
-  <div class="contentGrd pT20 ">
-    <div class="glass grdCFull flxC ordC p20">
+  <div class="content pT20 hMin200">
+    <div class="flxC ordC p20">
       <p class="txtC pB20 txtS3 wMaxInner">MoonRise is a tiny vanilla Js and Css library to simplify the web development process.</p>
+
+      <p class="mB20 txtC wMaxInner">This toolset includes handlers for elements, data-binding, lazy image loading, a list of handy utilities and style rules.</p>
 
       <a class="github-button" href="https://github.com/Logic-Shell-studios/MoonRise" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Follow @Logic-Shell-studios on GitHub" rel="noopener noreferrer">Visit us in GitHub</a>
 
 
     </div>
-    
-    
 
   </div>
 </section>
@@ -90,136 +90,139 @@
 
 
 <section class="pT60 anim8" >
-  <div class="contentGrd">
-     <div class="glass grdCFull flxC ordC  anim8 ">
-       <h2 class="txtC">Two-Way data binding</h2>
+  <div class="content ">
+     <div class="glass flxC ordC wFull mB20 p20">
+       <h2 class="txtC">Features </h2>
      </div>
+    
+    <!-- data binding -->
+    <div class="glass flxC ordC itmS p20" >
+          <h3 class="mB20">Two-way data binding</h3>
 
-     <div class="glass grdC6 grdCFullXs flxC ordC p20" id="target">
-         <input placeholder="type something here..." mnr-bind="inputTest" >
-         <input class="mTGttr" placeholder="or here..." mnr-bind="inputTest" >
-     </div>
-     <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"paintedBlock": "inputTest.length > 0 && inputTest.length < 6", "paintedBlockError":"inputTest.length >= 6"}'>
-         <p mnr-bind="inputTest"></p>
-         
-         <p class="txtS5 fontBold colorWhite mTGttr" 
-            mnr-class='{"hide": "inputTest.length <= 0"}'> 
-            Length: <mnr> inputTest.length </mnr>
-         </p>
+          <p class="mB20 ">Create a 2-way data binding by using the "mnr-bind" custom attribute to any html element and bind any of its attributes with a bind variable</p>
+          <p class="mB20">Declare some bind variables and assign them to an element:</p>
+          
+          <code class="mB20">
+            &lt;script&gt; Mnr.onLoad({ inputVariable:'' }); &lt;/script&gt; <br>
+            &lt;input mnr-bind="inputVariable" /&gt; <br>
+            &lt;p mnr-bind="inputVariable" &gt;&lt;/p&gt;
+          </code>
 
-         <p class="txtS5 colorWhite" 
-            mnr-class='{"hide": "inputTest.length > 0"}'> 
-            results block
-         </p>
+          <input class="input mB20" placeholder="type something here..." mnr-bind="inputTest ">
+          <input class="input mB20" placeholder="or here..." mnr-bind="inputTest ">
+          <div class="mB20 flxC ordC p20 wFull colorBrdWhite round3" 
+             mnr-class='{"paintedBlock": "inputTest.length > 0 && inputTest.length < 6", "paintedBlockError":"inputTest.length >= 6"}'>
+            <p mnr-bind="inputTest"></p>
+            
+            <p class="txtS5 fontBold colorWhite mTGttr" 
+               mnr-class='{"hide": "inputTest.length <= 0"}'> 
+               Length: <mnr> inputTest.length </mnr>
+            </p>
 
-         <p class="txtS5 fontBold colorWhite" 
-            mnr-class='{"hide": "inputTest.length <= 0"}'>
-            Css binding too</p>
-     </div>
+            <p class="txtS5 colorWhite" 
+               mnr-class='{"hide": "inputTest.length > 0"}'> 
+               results block
+            </p>
 
+          </div>
 
-     <div class="glass grdC6 grdCFullXs flxC ordC p20 ">
-         <select  multiple mnr-bind="selectTest" >
-           <option value="A">A</option>
-           <option value="B">B</option>
-           <option value="C">C</option>
-           <option value="D">D</option>
-           <option value="E">E</option>
-           <option value="F">F</option>
-         </select>
-     </div>
-     <div class="glass grdC6 grdCFullXs flxC ordC p20" 
-          mnr-class='{"paintedBlock": "selectTest.length > 0"}'>
-         <p class="pT10" mnr-bind="selectTest"></p>
+          <select class="mB20 input" multiple mnr-bind="selectTest" >
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+          </select>
+          <div class="mB20 flxC ordC p20 wFull colorBrdWhite round3" 
+               mnr-class='{"paintedBlock": "selectTest.length > 0"}'>
+              <p class="pT10" mnr-bind="selectTest"></p>
 
-         <p class="txtS5 colorWhite" 
-            mnr-class='{"hide": "selectTest.length > 0"}'> 
-            results block
-         </p>
-     </div>
+              <p class="txtS5 colorWhite" 
+                 mnr-class='{"hide": "selectTest.length > 0"}'> 
+                 results block
+              </p>
+          </div>
+          <p class="mT20 mB20">The most relevant attribute of the binded element will be updated if not explicited set</p>
+          <p class="mB20">For example if the element is a paragraph or heading it will update the "text" attribute, if it is an input the "value" will be update and if it is an image it will be the "src" attribute</p>
+          <div class="mB20 flxGrd20">
+            <div class="flxCell6 flxCellFullSm">
+              <select  class="mB20 wFull input" mnr-bind="selectImg" mnr-bind-set="true">
+                  <option value="./assets/und1.svg" selected>img src A</option>
+                  <option value="./assets/und2.svg">img src B</option>
+              </select>
+              <p class="mB20" >the current img src is: <strong><mnr>selectImg</mnr></strong></p>
+            </div>
+            <div class="flxCell6 flxCellFullSm flxC ordC">
+              <img class="wFull wMax300 h200 imgContain" mnr-bind="selectImg">
+            </div>
+          </div>
 
-     <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr">Code Sample</h4>
-          <script src="https://gist.github.com/alexbores/2d20bc07ed8579f703d146144caaeaee.js"></script>
-          <p class="txtC button wMax200 colorBWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
-             <mnr> (e().parent().hasClass('hideCode')) ? 'Show' : 'Hide' </mnr>
-          </p>
+          <p class="mT20 mB20">Different attributes can be bind in a single element by especify it in the "mnr-bind" tag</p>
+          <p class="mB20">Only inputs or textareas will update the value of the binding variable when a change occurs to the "value" attribute, every other case wil behave as a single-way data binding.</p>
+          <code class="mB20"> 
+           &lt;input mnr-bind="id, placeholder, value, :bindVariable" /&gt; <br>
+           &lt;p mnr-bind="id:bindVariable" &gt;&lt;/p&gt;
+          </code>
 
-     </div>
+          <p class="mB20">The binding update process runs through a debounce function to maintain performance, the default value is 100ms but it can be changed by passing the <code> debounceBindTime </code> option when Moonrise initialize.</p>
+    </div>
+    
 
+    <div class="glass flxC ordC itmS p20" >
+          <h3 class="mB20">DOM Manipulation</h3>
+          
+          <p class="mB20 ">Target HTML elements using <code>Mnr.e(query|element)</code></p>
+          <p class="mB20">The DOM Manipulation method always returns an array of elements and you can use sub methods to chain different actions:</p>
+          
+          <code class="mB20">
+            &lt;div class="box anim5" &gt;&lt;/div&gt;
+            &lt;script&gt; <br>
+              Mnr.e('.box').css({height:'100px'}).class('colorGreen');
+            <br>&lt;/script&gt; <br>
+            
+          </code>
 
+          <h4 class="mB20">Waiting:</h4>
+          <p class="mB20">You can use the "wait" sub-method in a chain of actions to set a waiting time before continuing with the rest of the chain:</p>
 
-
-     <div class="glass grdC6 grdCFullSm h300 grdCS1 p20 ">
-       <h3 class="txtC pB10">Image Binding</h3>
-       <select  mnr-bind="selectImg" mnr-bind-set="true">
-           <option value="./assets/und1.svg" selected>A</option>
-           <option value="./assets/und2.svg">B</option>
-       </select>
-     </div>
-     <div class="grdC3 grdC6Sm">
-       <img class="wFull h300 imgCover" mnr-bind="selectImg">
-     </div>
-     <div class="grdC3 grdC6Sm">
-       <img class="wFull h300 imgCover" mnr-bind="selectImg">
-     </div>
-
-     <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr">Code Sample</h4>
-          <script src="https://gist.github.com/alexbores/6a8f162988909835ae2094bec18d9413.js"></script>
-          <p class="txtC button wMax200 colorBWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
-             <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
-          </p>
-     </div>
+          <code class="mB20">
+            &lt;div class="box" onClick="waitTest(this)" &gt;&lt;/div&gt;
+            &lt;script&gt; <br>
+              const waitTest = function(el){
+                <br>  Mnr.e(el)<br>   .css({right: 0})<br>  .wait(500)<br>  .css({top: '100%'})
+                <br>  .wait(500)<br>  .css({right:'100%'})<br>  .wait(500)<br>  .css({top:0});
+              }
+            <br>&lt;/script&gt; <br>
+            
+          </code>
+          
+          <p class="mB10">Click the box:</p>
+          <div class="rltv hMin200 wFull colorBrdWhite round3">
+             <div class="box anim5 abs mAuto s50 colorBrdOk colorBOk round3" 
+                  onclick="waitTest(this)"></div>
+          </div>
+    </div>
+     
 
   </div>
 </section>
+
+
+
+
+
 
 <section class="pT60 anim8"  >
-  <div class="contentGrd">
-    <div class="glass grdCFull p20 flxC ordC">
-       <h2 class="txtC">Deferred loading images</h2>
-    </div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg" id="testImg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-    <div class="grdC3 grdC6Sm"><img class="wFull hAuto imgCover" mnr-src="./assets/und2.svg"></div>
-
-
-
-    <div class="glass grdCFull p20 ordC flxC code hideCode">
-          <h4 class="txtC pT20 pBGttr ">Code Sample</h4>
-          <script src="https://gist.github.com/alexbores/01d56273ff79798b87b76ca330913003.js"></script>
-          <p class="txtC button wMax200 colorBWhite colorBlack" 
-             onclick="Mnr.e(this).parent().toggleClass('hideCode').loadBinds()">
-             <mnr> (e().parent().hasClass('hideCode'))? 'Show' : 'Hide' </mnr>
-          </p>
-     </div>
-
+  <div class="content pB60">
+   <div class="glass wfull flxC ordC p10 hMin200">
+    <p class="mB20 txtC txtS3 fontBold">we appreciate your support</p>
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="Logicshell" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee?" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
   </div>
 </section>
 
-
-<section class="pT60 anim8"  >
-  <div class="contentGrd pB60">
-    <div class="glass grdCFull flxC ordC">
-      <p class="txtC txtS3 fontBold">we appreciate your support</p>
-    </div>
-    <div class="grdCFull flxC ordC">
-      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="Logicshell" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
-    </div>
-  </div>
-</section>
-
-<section class="colorB1 z5 " id="footer">
-    <div class="content fullContent colorBBlack flxC ordC privacyBar minHeight50">
+<section class="z5 " id="footer">
+    <div class="content fullContent flxC ordC privacyBar hMin50">
       <p class="txtS5 colorTWhite txtC pT20 pB20">A <a class="colorWhite" rel="noopener noreferrer" target="_blank" href="https://logicshellstudios.com">Logic Shell Studios</a> Creation</p>
    </div>
 </section>
@@ -233,45 +236,6 @@
 
 <script src="functions.js"  rel="preload" as="script"></script>
 
-
-
-<script>
-  let binds = {
-    selectTest: [],
-    inputTest: "",
-    selectImg:[],
-    dateTest: "",
-    scrolled: false,
-  };
-
-
-  Mnr.onLoad(binds,function(){
-    console.log('run index')
-  });
-  
-  Mnr.onScroll(function(){
-     if(window.pageYOffset > 10 && this.b.scrolled == false){
-       this.b.scrolled = true;
-       this.e('html').class('scrolled');
-     }
-     else if(window.pageYOffset <= 10){
-       this.b.scrolled = false;
-       this.e('html').class('scrolled',0);
-     }
-     
-     if(window.pageYOffset < 600){
-       let scroll = window.pageYOffset;
-       let opacVal = this.u.mapValue(scroll,0.0,500.0,0.0,1.0);
-       opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
-       opacVal = (opacVal > 0.90) ? 1 : opacVal;
-       this.e('.moonHolder').css({opacity:opacVal});
-     }
-  });
-
-  
-  
-    
-</script>
 
 
 

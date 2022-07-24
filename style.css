@@ -10,8 +10,14 @@ Version: 1.0
   --mnr-color2: rgb(207,34,87);
   --mnr-color3: rgb(231,13,108);
   --mnr-color4: #91d4df;
+  --mnr-colorWhite: white;
   
   --mnr-textColor: var(--mnr-colorWhite);
+
+  --mainBackColor: rgb(10,14,19,1);
+  --backLigth: rgba(253,255,255,0.70);
+  --inLight: rgba(250,235,215,0.60);
+  --farLight:  rgba(255,255,255,0.75);
 }
 
 @font-face {
@@ -31,10 +37,7 @@ Version: 1.0
 }
 
 html{
-  background-color: black;
-}
-main,body{
-  background: rgb(10,14,19,1);
+  background-color: var(--mainBackColor);
 }
 
 html body{
@@ -62,6 +65,20 @@ html[mnr-page-loading="false"] body #pageLoader{
   overflow: hidden;
 }
 
+code{
+  font-size: var(--mnr-fontS5); 
+  letter-spacing: 1px;
+  display: inline-block;
+  color: #008400;
+  background-color: #f1f1f1;
+  padding: 5px 7px;
+}
+
+@media screen and (max-width: 400px){
+  .bmc-btn {
+    font-size: 18px!important;
+  }
+}
 
 /*///////////////////////////////////////////////////////////////////////////////glass*/
 .glass{
@@ -69,7 +86,7 @@ html[mnr-page-loading="false"] body #pageLoader{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur( 10px );
   border: 2px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  box-shadow: 0 0 4px rgba(8,7,16,0.6);
 }
 
 .inicio #menu{
@@ -86,67 +103,52 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   opacity: 0.7;
 }
 
+
+
 .moon{
   width: 800px;
   height: 800px;
   position: relative;
   margin-top: -300px;
   z-index: 3;
+  top: -100vh;
 }
-
-
+.moon.ready{
+  top: 0;
+}
 .moon .textHolder{
   opacity: 0;
+  bottom: -200px;
 }
-.moon.animated .textHolder{
+.moon.ready .textHolder.ready{
   opacity: 1;
+  bottom: 0;
 }
-.moon .textHolder.animated{
-  opacity: 0.6;
-}
-
-
-.moon .textHolder *{
-  opacity: 0.6;
-}
-.moon.animated .textHolder *{
-  opacity: 1;
-}
-.moon .textHolder .animated{
-  opacity: 0.6;
-}
-
 .moon .glare{
   opacity: 0;
   width: 0%;
   height: 0%;
 }
-.moon.animated .glare{
+.moon .glare.ready{
   opacity: 1;
-  width: 55%;
-  height: 55%;
-  background-color: rgba(255,255,255,0.4);
-
-  box-shadow: -1px 0px 400px 65px rgba(255,255,255,0.75);
-  -webkit-box-shadow: -1px 0px 400px 30px rgba(255,255,255,0.75);
-  -moz-box-shadow: -1px 0px 400px 30px rgba(255,255,255,0.75);
+  width: 45%;
+  height: 45%;
 }
-.moon .glare.animated{
-  opacity: 0;
-  width: 0%;
-  height: 0%;
+.moon.ready .glare{
+  background-color: var(--farLight);
+  box-shadow: -1px 0px 400px 100px var(--farLight);
 }
-
+.moon .glare.noShine{
+  box-shadow: -1px 0px 100px 50px var(--farLight);
+}
 .moon .circle {
   width: 45%;
   height: 45%;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur( 10px );
-
-  border: 2px solid rgba(255,255,255,0.1);
-  box-shadow: 0 0 40px rgba(8,7,16,0.6);
-  background-color: rgba(250,235,215,0.60);
-
+  border: 2px solid rgb(255 255 255 / 2%);
+  box-shadow: 0 0 40px var(--backLigth);
+  background-color: var(--inLight);
 }
 
 
@@ -155,82 +157,17 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
   opacity: 1;
   z-index: 9999999;
   overflow: hidden;
-  /*background-color: var(--mnr-color1);*/
-  background-color: rgba(10,14,19,1);
+  background-color: var(--mainBackColor);
   position: fixed;
   min-width: 100vw;
   min-height: 100vh;
 }
 #pageLoader.load{
   opacity: 0;
-  background: rgba( 13, 31, 44, 0.70 );
   z-index: -1;
 }
 #pageLoader.back{
   z-index: -1;
-}
-.loader{
-  border: 4px solid rgba(13,31,44,0.0);
-  border-top: 4px solid rgba( 207,34,87, 0.8 );
-  border-radius: 50%;
-}
-#pageLoader .spinner{
-  margin: 50px auto;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #faebd7;
-  background: -moz-linear-gradient(left, #faebd7 10%, #faebd747 42%);
-  background: -webkit-linear-gradient(left, #faebd7 10%, #faebd747 42%);
-  background: -o-linear-gradient(left, #faebd7 10%, #faebd747 42%);
-  background: -ms-linear-gradient(left, #faebd7 10%, #faebd747 42%);
-  background: linear-gradient(to right, #faebd7 10%, #faebd747 42%);
-  position: relative;
-  -webkit-animation: load3 0.8s infinite linear;
-  animation: load3 0.8s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}
-#pageLoader .spinner:before {
-  width: 50%;
-  height: 50%;
-  background: #faebd7;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
-}
-#pageLoader .spinner:after {
-  background: var(--mnr-color1);
-  width: 92%;
-  height: 92%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  -webkit-transition: all .8s;
-  -moz-transition: all .8s;
-  -o-transition: all .8s;
-  -ms-transition: all .8s;
-  transition: all .8s;
-}
-
-#pageLoader .spinner.load{
-  background-color: #faebd7;
-}
-#pageLoader .spinner.load:after{
-  background-color: #faebd7;
-  width: 100%;
-  height: 100%;
-}
-#pageLoader .spinner.load3{
-  margin-top: -160vh;
 }
 
 #pageLoader .moon.load3{
@@ -336,3 +273,7 @@ html[mnr-page-loading="false"] .moonHolder .content svg{
 .paintedBlockError{
   background-color: var(--mnr-colorError);
 }
+
+
+
+ 

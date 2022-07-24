@@ -9,14 +9,16 @@ const Mnr = (function(){
   let currentTitle = null;
   let imgList = {dones:0,iter:0,elems:[]};
   let scrollOld = 0;
-  let scrollSensitivity = 40;
+  let scrollSensitivity = 5;
   let timeAddStatus = null;
   let scrollImgOffset = 500;
   let componentsHTML =[];
   let componentsCount =0;
   let classBinds = [];
   let tagBinds = [];
+  let debounceBinds = 50;
   let b = {};
+  let bCalls = {};
   let initialBinds = {
     pageLoading: true,
     windowWidth: 0,
@@ -46,8 +48,11 @@ const Mnr = (function(){
     e('html').attr('mnr-page-loading',true);
 
     // set options
+    if(options['debounceBindTime'] != null){
+     debounceBinds = options['debounceBindTime'];
+    }
     if(options['onLoad'] != null){
-      Object.values(options['onLoad'])?.map(value => {
+      Object.values(options['onLoad']).map(value => {
           onLoad(null,value);
       });
     }
@@ -138,124 +143,208 @@ const Mnr = (function(){
     return (...args) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        cb(...args);
+        requestAnimationFrame(()=>{
+          cb(...args);
+        });
       }, delay);
     }
   };
   
 
   ///////////////////////////////////binders
-  const bindAll = () => {
-    for (let bind of Object.keys(b) ) {
-      for(let el of e('[mnr-bind="'+bind+'"]').e ){
-        if(e(el).attr('mnr-bind') != 'set'){  
-          //binds property to events
-          let attr = 'innerText';
-          let event = null;
-          let type = 'text';
-          switch(el.nodeName){
-             case "INPUT":
-               attr = 'value';
-               event = 'keyup';
-               type = el.type;
-               if(el.type == 'date'){
-                 event = 'change';
-               }
-               else if(!!type == false){
-                 type = 'text';
-               }
-             break;
-             case "TEXTAREA":
-               attr = 'value';
-               event = 'keyup';
-             break;
-             case "SELECT":
-               attr = 'value';
-               event = 'change';
-               if(e(el).hasAttr('multiple')){
-                 type = 'multiple';
-               }
-             break;
-             case "IMG":
-               attr = 'src';
-               event = null;
-             break;
-             default:
-               attr = 'innerText';
-               event = null;
-          }
-          
-          // overwrite attribute and values
-          if(e(el).hasAttr('mnr-bind-attr')){
-            attr = e(el).attr('mnr-bind-attr');
-          }
-          if(e(el).hasAttr('mnr-bind-event')){
-            event = e(el).attr('mnr-bind-event');
-          }
+  const setBinderTree = () =>{
+    let bindEls = Array.from(e('[mnr-bind]:not([mnr-bind="set"])').e).map(el=>{ 
+                   return {
+                    el,
+                    list:e(el).attr('mnr-bind').replace(/\s/g, ''),
+                    binds:[],
+                    event:null,
+                    type:null,
+                   } 
+                 });
 
-          //element set default values
-          if(!!(e(el).attr('mnr-bind-set'))){
-            
-            if(el.nodeName == 'SELECT' && type == 'multiple'){
-              let options = e("option[selected]",el).e;
-              let selected = Array.from(options).map(elm => elm.value);
-              b[bind] = selected;
-            }
-            else{
-              b[bind] = el[attr];
-            }
-          }
+    bindEls.map(el=>{
+       let list = el.list.split(',');
+       let def = getDefaultBindData(el.el);
+       el.event = def.event;
+       el.type = def.type;
+       e(el.el).attr('mnr-bind','set');
+       if(list.length == 1 && list[0].split(':').length == 1){
+         el.binds.push({
+           attr: def.attr,
+           prop: list[0],
+         });
+         return;
+       }
+       let pairs = list.map(l=>{
+         let pair = l.split(':');
+         return {
+           attr: (!!pair[0])? ((pair[0] == 'text')? 'innerText': pair[0]) : def.attr,
+           prop: (!!pair[1])? pair[1] : null,
+         };
+       });
 
-          // add events
-          let bindEvent = null;
-          if(type == 'multiple'){
-            bindEvent = debounce((ev)=>{
-               let options = e("option:checked",el).e;
-               let selected = Array.from(options).map(elm => elm.value);
-               b[bind] = selected;
-            },200);
-          }
-          else{
-            bindEvent = debounce((ev)=>{
-               b[bind] = el[attr];
-            },200);
-          }
-
-          // add event function
-          if(event != null){
-            el.addEventListener(event,bindEvent);
-          }
+       pairs = pairs.filter(p=>{
+         if(!!p.attr){
+           p.prop = p.prop ?? pairs.filter(p=>p.prop != null)[0]?.prop;
+           return true; 
+         }
+         return false;
+           
+       });
+       
+       el.binds = pairs;
+    });
+    
 
 
-          el[attr] = b[bind];
-          
-          // generate binder
-          let elData = {
-            el: el,
-            attr: attr,
-            event: event,
-            type: type,
-          };
-          if(u.hasKey(binders, bind)){
-            if(u.findPosByProp('el',el,binders[bind].elems) === false){
-              binders[bind].elems.push(elData);
-            }
-          }
-          else{
-            binders[bind] = {elems:[elData],bind:bind,calls:[]};
-          }
-          e(el).attr('mnr-bind','set');
-        }    
+    assignToBinder(bindEls);
+  };
+  const assignToBinder = (data) =>{
+    data.map(el=>{
+       let props = el.binds.map(bi=>{
+          pushToBinder({
+           el: el.el,
+           attrs: [bi.attr],
+           event: el.event,
+           type: el.type,
+           bind: bi.prop,
+          });
+       });
+    });
+
+    Object.keys(b).map(bi=>{
+      pushToBinder({
+        el: null,
+        attrs: null,
+        event: null,
+        type: null,
+        bind: bi,
+      });
+    });
+  }
+  const getDefaultBindData = (el) =>{
+    let attr = 'innerText';
+    let event = null;
+    let type = 'text';
+    switch(el.nodeName){
+       case "INPUT":
+         attr = 'value';
+         event = 'keyup';
+         type = el.type;
+         if(!!type == false){
+           type = 'text';
+         }
+         if(type != 'text'){
+           event = 'change';
+         }
+       break;
+       case "TEXTAREA":
+         attr = 'value';
+         event = 'keyup';
+       break;
+       case "SELECT":
+         attr = 'value';
+         event = 'change';
+         if(e(el).hasAttr('multiple')){
+           type = 'multiple';
+         }
+       break;
+       case "IMG":
+         attr = 'src';
+         event = null;
+         type = null;
+       break;
+    }
+    attr = e(el).attr('mnr-bind-attr') ?? attr;
+    event = e(el).attr('mnr-bind-event') ?? event;
+    return {attr,event,type};
+  };
+  const pushToBinder = ({el,attrs,event,type,bind}) =>{
+    
+    let elData = {
+      el,
+      attrs,
+      event,
+      type,
+    }
+    if(u.hasKey(binders, bind)){
+      if(elData.el){
+        let pos = u.findPosByProp('el',el,binders[bind].elems);
+        if(pos === false){
+          binders[bind].elems.push(elData);
+        }
+        else{
+          binders[bind].elems[pos].attrs = [...binders[bind].elems[pos].attrs,...attrs]; 
+          binders[bind].elems[pos].attrs = u.removeDuplicate(binders[bind].elems[pos].attrs);
+        }
       }
-      Bind(bind);
+    }
+    else{
+      if(elData.el){
+        binders[bind] = {elems:[elData],bind,calls:[]};
+      }
+      else{
+        binders[bind] = {elems:[],bind,calls:[]};
+      }
+    }
+  }
+  const bindAll = () => {
+    setBinderTree();
+
+    for (let bind of Object.keys(b) ) {
+        if(u.hasKey(binders, bind) == false) continue;
+
+        binders[bind].elems.map(elem=>{
+            let el = elem.el;
+            let attrs = elem.attrs;
+            let type = elem.type;
+            let event = elem.event;
+            //element set default values
+            if(!!(e(el).attr('mnr-bind-set'))){
+              
+              if(el.nodeName == 'SELECT' && type == 'multiple'){
+                let options = e("option[selected]",el).e;
+                let selected = Array.from(options).map(elm => elm.value);
+                b[bind] = selected;
+              }
+              else{
+                attrs.map(a=>{
+                  b[bind] = el[a];
+                });
+              }
+            }
+
+            // add events
+            // console.log(`currentBind : ${el.nodeName} ${attrs}  ${event} ${bind}`);
+            attrs.map(a=>{
+              let bindEvent = null;
+              if(type == 'multiple' && a == 'value'){
+                bindEvent = debounce((ev)=>{
+                   let options = e("option:checked",el).e;
+                   let selected = Array.from(options).map(elm => elm.value);
+                   b[bind] = selected;
+                },debounceBinds);
+              }
+              else if(a == 'value'){
+                bindEvent = debounce((ev)=>{
+                   // console.log(`binded: ${el.nodeName} - ${a}`);
+                   b[bind] = el[a];
+                },debounceBinds);
+              }
+
+              // add event function
+              if(event != null){
+                el.addEventListener(event,bindEvent);
+              }
+            });
+        });  
+        Bind(bind);
     }
     
     setBindClasses();
     setBindTags();
     
-    
-    
-    // forceAllBinds();
     // console.log(b);
     // console.log(binders);
   };
@@ -268,20 +357,29 @@ const Mnr = (function(){
             // Set elements to new value
             if(u.hasKey(binders, prop)){
               for (let elem of binders[prop].elems) {
-                if(elem.type == 'multiple'){
-                  for(let opt of e("option",elem.el).e){
-                    opt.removeAttribute('selected');
-                  }
-                  for(let val of newValue){
-                    let opt = e("option[value='"+val+"']",elem.el).e[0];
-                    if(opt){
-                     opt.setAttribute('selected',true);
-                     opt.checked = true;
+                for(let a of elem.attrs){
+                  // console.log(a);
+                  // console.log(elem.el);
+                  if(elem.type == 'multiple' && a == 'value'){
+                    for(let opt of e("option",elem.el).e){
+                      e(opt).removeAttr('selected');
+                    }
+                    for(let val of newValue){
+                      let opt = e("option[value='"+val+"']",elem.el).e[0];
+                      if(opt){
+                       e(opt).attr('selected',true);
+                       opt.checked = true;
+                      }
                     }
                   }
-                }
-                else{
-                  elem.el[elem.attr] = newValue;
+                  else{
+                    if(u.hasKey(elem.el,a)){
+                      elem.el[a] = newValue;
+                    }
+                    else{
+                      e(elem.el).attr(a,newValue);
+                    }
+                  }
                 }
               }
             }
@@ -297,12 +395,10 @@ const Mnr = (function(){
     b[prop] = value;
   };
   const forceAllBinds = () => {
-    runBindPrints(true);
     runBindClasses(true);
     runBindTags(true);
   };
   const runAllBinds = debounce((prop) =>{
-    runBindPrints();
     runBindClasses();
     runBindTags();
 
@@ -355,29 +451,6 @@ const Mnr = (function(){
       }
   };
   
-  const runBindPrints = (force = true) => {
-      //print binds
-      if(b.pageLoading == false || force == true){
-        for (let elem of e('[mnr-print]').e) {
-          if(elem.nodeName == 'INPUT' || 
-            elem.nodeName == 'SELECT' || 
-            elem.nodeName == 'TEXTAREA'){
-            elem.value = elem.getAttribute(elem.getAttribute('mnr-print'));
-          }
-          else{
-            elem.innerText = elem.getAttribute(elem.getAttribute('mnr-print'));
-          }
-        }
-      }
-  };
-  
-  const bindPush = (prop,val) => {
-      if(u.hasKey(b,prop)){
-        let temp = b[prop];
-        temp.push(val);
-        b[prop] = temp;
-      }
-  };
   const setBinds = (bind) => {
       if(typeof bind == 'object'){
         let temps = Object.entries(bind);
@@ -390,10 +463,22 @@ const Mnr = (function(){
       }
   };
 
-  const bindCall = (callback,prop) => {
-    binders[prop]?.calls.push(callback);
+  const onUpdate = (callback,prop) => {
+    if(bCalls[prop]){
+      bCalls[prop].calls.push(callback);
+    }
+    else{
+      bCalls[prop] = {calls:[callback]};
+    }
   };
   const runBindCalls = (prop) => {
+    if(bCalls[prop]?.calls.length > 0 && binders[prop]){
+      bCalls[prop].calls.map(c=>{
+        binders[prop].calls.push(c);
+      });
+      bCalls[prop] = null;
+    }
+
     let _this = this;
     binders[prop]?.calls?.map(c=>{
       c?.call(this);
@@ -469,7 +554,6 @@ const Mnr = (function(){
   };
   
 
-  
 
 
   ///////////////////////////////////window handlers
@@ -559,20 +643,15 @@ const Mnr = (function(){
 
   /////////////////////////////////element handler
   const e = (query, rltv = document) => {
-    let elem = [];
-    if(typeof(query) == 'string'){
-      elem = rltv.querySelectorAll(query);
-    }
-    else{
-      elem = singleNode(query);
-    }
     
+    let elem = getQuery(query,rltv);
     
     return {
       e: elem,
       eBack: elem,
       query: [query],
       singleNode: singleNode,
+      getQuery: getQuery,
       waiting: false,
       chainPos: 0,
       waitingTotal: 0,
@@ -584,13 +663,9 @@ const Mnr = (function(){
       addedAttr: [],
       eventMethods : [],
       q: function(query){
-        if(typeof(query) == 'string'){
-         let elem = [];
-         elem = this.e[0].querySelectorAll(query);
-
-         this.e = elem;
-         this.query.push(query);
-        }
+        
+        this.e = getQuery(query,this.e[0]);
+        this.query.push(query);
 
         return this;
       },  
@@ -669,7 +744,7 @@ const Mnr = (function(){
 
         return this;
       },
-      css: function(property = null){
+      css: function(property){
         if(this.isWaiting(['css',[property]])){
            return this;
         }
@@ -692,7 +767,7 @@ const Mnr = (function(){
 
         return this;
       },
-      attr: function(attr,val = null){
+      attr: function(attr,val){
         if(val == null){
           return this.e[0].getAttribute(attr);
         }
@@ -748,7 +823,7 @@ const Mnr = (function(){
         }
         return this;
       },
-      html: function(html = null,add = false){
+      html: function(html,add = false,sanitize = true){
         if(this.isWaiting(['html',[html,add]])){
            return this;
         }
@@ -758,20 +833,20 @@ const Mnr = (function(){
         }
 
         for(let el of this.e){
-          if(add){
-            el.insertAdjacentHTML('beforeend',html);
+          if(sanitize){
+            html = u.sanitizeStr(html);
           }
-          else{
-            el.innerHTML = html;
+          if(!add){
+            el.innerHTML = '';
           }
+          el.insertAdjacentHTML('beforeend',html);
         }
-        bindAll();
-        loadMedia();
+        
         
 
         return this;
       },
-      text: function(text = null,add = false){
+      text: function(text,add = false){
         if(this.isWaiting(['text',[text,add]])){
            return this;
         }
@@ -827,6 +902,10 @@ const Mnr = (function(){
         }
         return this;
       },
+      el: function(num = 0){
+
+         return this.e[num];
+      },
       elem: function(num = 0){
          this.e = this.singleNode(this.e[num]);
          return this; 
@@ -838,6 +917,10 @@ const Mnr = (function(){
       children: function(){
         this.e = this.e[0].children;
         return this;
+      },
+      hasElems: function(){
+
+        return !!(this.e.length);
       },
       screenFocus: function(offset = 0){
          u.screenTo(this.e[0],offset);
@@ -852,17 +935,18 @@ const Mnr = (function(){
          return u.isAboveViewport(this.e[0],offset);
       },
       loadBinds: function(){
-         runAllBinds();
+         bindAll();
+         loadMedia();
          return this;
       },
-      event: function(events, method = null){
+      event: function(events, method){
         
         if(method != null){
           for(let el of this.e){
             events = (typeof(events) === 'string') ? events.split(' ') : [events];
             events = u.removeDuplicate(events);
 
-            for(event of events){
+            for(let event of events){
               if(event == ''){
                 continue;
               }
@@ -887,19 +971,20 @@ const Mnr = (function(){
          this.waitingTotal += time;
           
          setTimeout(()=>{
-            this.waiting = false;
-            let tempChain = u.deepCopy(this.chainWait);
-            for (let i = 0; i < tempChain.length; i++) {
-              
-              this.chainWait.splice(0,1);
-              this[tempChain[i][0]](...tempChain[i][1]);
+            requestAnimationFrame(()=>{
+              this.waiting = false;
+              let tempChain = u.deepCopy(this.chainWait);
+              for (let i = 0; i < tempChain.length; i++) {
+                
+                this.chainWait.splice(0,1);
+                this[tempChain[i][0]](...tempChain[i][1]);
 
-              if(tempChain[i][0] == 'wait'){
-                break;
+                if(tempChain[i][0] == 'wait'){
+                  break;
+                }
               }
-            }
-            
-            return this;
+              return this;
+            });
          },time);
 
          this.waiting = true;
@@ -930,7 +1015,11 @@ const Mnr = (function(){
 
         return this;
       },
-      setViewTrigger: function(enter = null, exit = null,once = null){
+      setInScreen: function(offset = 0){
+        u.screenTo(this.e[0],offset);
+        return this;
+      },
+      setViewTrigger: function(enter, exit,once){
         for(let el of this.e){
           let interFunct = (entries, observer) => {
             entries.forEach(entry => {
@@ -960,24 +1049,29 @@ const Mnr = (function(){
 
         return this;
       },
-      newElem: function(){
-        //create element inside
-      },
-      moveElem: function(){
-        //move existing element to inside of this elements, by query and by element
-      },
-      copyElem: function(){
-        //copy existing element to inside of this elements, by query and by element
-      },
       destroy: function(){
-        //autodestroy this elements
+        for(let el of this.e){
+          el.remove();
+        }
+        this.e = [];
+        this.eBack = [];
+        return this;
       }
 
     };
   };
 
 
-
+  const getQuery = function(query,rltv = document){
+       let elem = [];
+       if(typeof(query) == 'string'){
+         elem = rltv.querySelectorAll(query);
+       }
+       else{
+         elem = singleNode(query);
+       }
+       return elem;
+  }
   const singleNode = (function () {
     // make an empty node list to inherit from
     let nodelist = document.createDocumentFragment().childNodes;
@@ -1023,7 +1117,14 @@ const Mnr = (function(){
          }
          return temp;
        },
-       screenTo: function(elem, offset = 0){
+       screenToTop: function(offset = 0, behavior='smooth'){
+         let offsetPosition = 0 - offset;
+         window.scrollTo({
+              top: offsetPosition,
+              behavior: behavior
+         });
+       },
+       screenTo: function(elem, offset = 0,behavior='smooth'){
          let scroll = window.pageYOffset;
          // document.querySelector(elem).scrollIntoView({ behavior: 'smooth' });
          
@@ -1039,7 +1140,7 @@ const Mnr = (function(){
          let offsetPosition = elementPosition - offset;
          window.scrollTo({
               top: offsetPosition,
-              behavior: "smooth"
+              behavior: behavior
          });
        },
        replaceAll: function(str, find, replace) {
@@ -1055,10 +1156,6 @@ const Mnr = (function(){
              r =  ((X-A)/(B-A));
              y = ( r * (D-C)) + C;
              return Math.trunc(y * 100) / 100;
-       },
-       validateEmail: function(email){
-         let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-         return re.test(email);
        },
        findPosByProp: function(prop,value, arr){
          for (let i = arr.length - 1; i >= 0; i--) {
@@ -1149,7 +1246,7 @@ const Mnr = (function(){
 
          return `#${Math.random().toString(16).slice(2, 8).padEnd(6, '0')}`;
        },
-       sanitizeHTML: function(str, nodes = false){
+       sanitizeStr: function(str){
          function clean (html) {
            let nodes = html.children;
            for (let node of nodes) {
@@ -1177,21 +1274,38 @@ const Mnr = (function(){
            }
            if (name.startsWith('on')) return true;
          }
-
-         let html = u.stringToHTML(str);
+         
+         let html = document.createElement('div');
+         html.insertAdjacentHTML('beforeend',str);
 
          // Sanitize it
          removeScripts(html);
          clean(html);
 
-         // If the user wants HTML nodes back, return them
-         // Otherwise, pass a sanitized string back
-         return nodes ? html.childNodes : html.innerHTML;
+         return html.innerHTML;
        },
        stringToHTML: function(str) {
          let parser = new DOMParser();
          let doc = parser.parseFromString(str, 'text/html');
+         console.log(doc);
          return doc.body || document.createElement('body');
+       },
+       bool: function(val){
+          switch(val){
+           case '':
+             return false;
+           break;
+           case 'false':
+             return false;
+           break;
+           case '0':
+             return false;
+           break;
+           case 'null':
+             return false;
+           break;
+          }
+          return !!val;   
        },
     };
   })();
@@ -1209,12 +1323,11 @@ const Mnr = (function(){
     reload,
     onLoad,
     onScroll,
-    bindCall,
+    onUpdate,
 
     debounce,
 
-
-    bindPush,
+  
     
     el:null,
     e,
@@ -1222,3 +1335,4 @@ const Mnr = (function(){
   }
 
 })();
+Object.freeze(Mnr);
