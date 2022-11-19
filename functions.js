@@ -55,17 +55,20 @@ Mnr.onLoad(binds,function(){
 
   
 Mnr.onScroll(function(){
-   if(window.pageYOffset > 10 && this.b.scrolled == false){
+   if(window.pageYOffset > 0 && this.b.scrolled == false){
      this.b.scrolled = true;
      this.e('html').class('scrolled');
    }
-   else if(window.pageYOffset <= 10){
+   else if(window.pageYOffset <= 30){
      this.b.scrolled = false;
+
      this.e('html').class('scrolled',0);
    }
-   
+
+   console.log(window.pageYOffset);
+
    if(this.b.ready === true){
-    if(window.pageYOffset <= 10){
+    if(window.pageYOffset <= 50){
       this.e('.moonHolder .moon').css({top:0,opacity:1});
       this.e('.moonHolder .circle').css({opacity:1,top:0});
 
@@ -73,13 +76,13 @@ Mnr.onScroll(function(){
       this.e('.moonHolder .textHolder').css({opacity:1,bottom:0});
 
     }
-    else if(window.pageYOffset > 10){
+    else if(window.pageYOffset > 50){
       let scroll = window.pageYOffset;
       let opacVal = this.u.mapValue(scroll,0.0,500.0,0.0,1.0);
       opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
       opacVal = (opacVal > 0.90) ? 1 : opacVal;
       
-      if(window.pageYOffset > 5){
+      if(window.pageYOffset > 0){
         this.e('.moonHolder .moon').css({top:(window.pageYOffset*0.20)+'px'});
         this.e('.moonHolder .textHolder').css({bottom:(window.pageYOffset*0.20)+'px'});
       }
@@ -102,5 +105,15 @@ Mnr.onScroll(function(){
 
 
 const waitTest = function(el){
-   Mnr.e(el).css({left: 'calc(100% - 50px)'}).wait(500).css({top: 'calc(100% - 50px)'}).wait(500).css({left:0}).wait(500).css({top:0});
+   Mnr.e(el)
+   .css({
+    left: 'calc(100% - 50px)',
+    'background-color': 'var(--mnr-colorError)',
+   })
+   .wait(500)
+   .css({top: 'calc(100% - 50px)'})
+   .wait(500)
+   .css({left:0})
+   .wait(500)
+   .css({top:0,'background-color': 'var(--mnr-colorOk)'});
 };

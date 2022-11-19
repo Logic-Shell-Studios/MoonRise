@@ -9,14 +9,14 @@ const Mnr = (function(){
   let currentTitle = null;
   let imgList = {dones:0,iter:0,elems:[]};
   let scrollOld = 0;
-  let scrollSensitivity = 5;
+  let scrollSensitivity = 40;
   let timeAddStatus = null;
   let scrollImgOffset = 500;
   let componentsHTML =[];
   let componentsCount =0;
   let classBinds = [];
   let tagBinds = [];
-  let debounceBinds = 50;
+  let debounceBinds = 20;
   let b = {};
   let bCalls = {};
   let initialBinds = {
@@ -31,7 +31,7 @@ const Mnr = (function(){
 
   let scrollRun = [];
 
-  let version = '4.0';
+  let version = '5.0';
 
 
 
@@ -45,7 +45,7 @@ const Mnr = (function(){
     }
     running = true;
     
-    e('html').attr('mnr-page-loading',true);
+    e('html').attr('mnr-loading',true);
 
     // set options
     if(options['debounceBindTime'] != null){
@@ -85,12 +85,12 @@ const Mnr = (function(){
 
 
         b.pageLoading = false;
-        e('html').attr('mnr-page-loading',false);
+        e('html').attr('mnr-loading',false);
       }
   };
   const reload = () => {
       b.pageLoading = true;
-      e('html').attr('mnr-page-loading',true);
+      e('html').attr('mnr-loading',true);
 
       finishLoad();
   };
@@ -143,9 +143,7 @@ const Mnr = (function(){
     return (...args) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        requestAnimationFrame(()=>{
-          cb(...args);
-        });
+        cb(...args);
       }, delay);
     }
   };
@@ -521,6 +519,8 @@ const Mnr = (function(){
         }
       }
 
+
+
       string = string.replaceAll(";","");
       string = string.replaceAll("script","");
       string = string.replaceAll("alert(","");
@@ -643,6 +643,8 @@ const Mnr = (function(){
 
   /////////////////////////////////element handler
   const e = (query, rltv = document) => {
+    
+    
     
     let elem = getQuery(query,rltv);
     
@@ -823,7 +825,8 @@ const Mnr = (function(){
         }
         return this;
       },
-      html: function(html,add = false,sanitize = true){
+      html: function(html,add = false,sanitize = true,location='beforeend'){
+
         if(this.isWaiting(['html',[html,add]])){
            return this;
         }
@@ -839,7 +842,7 @@ const Mnr = (function(){
           if(!add){
             el.innerHTML = '';
           }
-          el.insertAdjacentHTML('beforeend',html);
+          el.insertAdjacentHTML(location,html);
         }
         
         
@@ -895,6 +898,10 @@ const Mnr = (function(){
         }
 
         if(typeof(query) != 'string'){
+          if(query < 0){
+           let tempNum = this.e[0].children.length + query;
+           query = tempNum;
+          }
           this.e = this.singleNode(this.e[0].children[query]);
         }
         else{
@@ -903,19 +910,22 @@ const Mnr = (function(){
         return this;
       },
       el: function(num = 0){
-
+         if(num < 0){
+           let tempNum = this.e.length + num;
+           num = tempNum;
+         }
          return this.e[num];
       },
       elem: function(num = 0){
-         this.e = this.singleNode(this.e[num]);
+         this.e = this.singleNode(this.el(num));
          return this; 
       },
       elems: function(){
          this.e = this.eBack;
          return this;
       },
-      children: function(){
-        this.e = this.e[0].children;
+      children: function(num = 0){
+        this.e = this.e[num].children;
         return this;
       },
       hasElems: function(){
@@ -935,8 +945,7 @@ const Mnr = (function(){
          return u.isAboveViewport(this.e[0],offset);
       },
       loadBinds: function(){
-         bindAll();
-         loadMedia();
+         u.loadBinds();
          return this;
       },
       event: function(events, method){
@@ -946,7 +955,7 @@ const Mnr = (function(){
             events = (typeof(events) === 'string') ? events.split(' ') : [events];
             events = u.removeDuplicate(events);
 
-            for(let event of events){
+            for(event of events){
               if(event == ''){
                 continue;
               }
@@ -971,20 +980,19 @@ const Mnr = (function(){
          this.waitingTotal += time;
           
          setTimeout(()=>{
-            requestAnimationFrame(()=>{
-              this.waiting = false;
-              let tempChain = u.deepCopy(this.chainWait);
-              for (let i = 0; i < tempChain.length; i++) {
-                
-                this.chainWait.splice(0,1);
-                this[tempChain[i][0]](...tempChain[i][1]);
+            this.waiting = false;
+            let tempChain = u.deepCopy(this.chainWait);
+            for (let i = 0; i < tempChain.length; i++) {
+              
+              this.chainWait.splice(0,1);
+              this[tempChain[i][0]](...tempChain[i][1]);
 
-                if(tempChain[i][0] == 'wait'){
-                  break;
-                }
+              if(tempChain[i][0] == 'wait'){
+                break;
               }
-              return this;
-            });
+            }
+            
+            return this;
          },time);
 
          this.waiting = true;
@@ -1307,6 +1315,26 @@ const Mnr = (function(){
           }
           return !!val;   
        },
+       loadBinds: function(){
+         bindAll();
+         loadMedia();
+       },
+       getUUID: function(){
+         let
+           d = new Date().getTime(),
+           d2 = (performance && performance.now && (performance.now() * 1000)) || 0;
+         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+           let r = Math.random() * 16;
+           if (d > 0) {
+             r = (d + r) % 16 | 0;
+             d = Math.floor(d / 16);
+           } else {
+             r = (d2 + r) % 16 | 0;
+             d2 = Math.floor(d2 / 16);
+           }
+           return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
+         });
+       }
     };
   })();
   
