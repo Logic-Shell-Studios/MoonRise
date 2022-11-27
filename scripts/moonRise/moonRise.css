@@ -168,6 +168,10 @@ main{
   position: relative;
   margin: auto;
 }
+div, section, main {
+  width: auto;
+  height: auto;
+}
 
 
 
@@ -185,17 +189,17 @@ main{
 }
 @media only screen and (max-width: 1140px){
    :root {
-     --mnr-padSides: 30;
+     --mnr-padSides: 30px;
    }
 } 
 @media only screen and (max-width: 960px){
    :root {
-     --mnr-padSides: 20;
+     --mnr-padSides: 20px;
    }
 }   
 @media only screen and (max-width: 500px){
    :root {
-     --mnr-padSides: 15;
+     --mnr-padSides: 15px;
    }
 } 
 
@@ -408,8 +412,7 @@ section,
 .content{
   position: relative;
   width: 100%;
-  min-width: var(--mnr-minContentWidth);
-  height: auto;
+  min-width: var(--mnr-contentMinWidth);
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -608,13 +611,14 @@ section{
 
 .flxGrd{
   --mnr-grdWidth: 100%;
+  --mnr-grdMaxWidth: 100%;
   margin-right: calc(-1 * var(--mnr-gutter));
   width: calc(var(--mnr-grdWidth) + var(--mnr-gutter));
-  max-width: calc(var(--mnr-grdWidth) + var(--mnr-gutter));
+  max-width: calc(var(--mnr-grdMaxWidth) + var(--mnr-gutter));
 }
 .content.flxGrd{
   --mnr-gutter: var(--mnr-padSides);
-  --mnr-grdWidth: var(--mnr-contentWidth);
+  --mnr-grdMaxWidth: var(--mnr-contentWidth);
 }
 .flxGrd > *{
   --mnr-grdCellSpace : var(--mnr-cellSpace, 100%);

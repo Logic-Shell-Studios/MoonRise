@@ -42,8 +42,8 @@
 
 <div id="pageLoader" class="flxC ordC trans8" >
     <div class="moon ready flxC ordC trans8">
-      <div class="glare round trans8 expand"></div>
-      <div class="circle round abs posC mAuto " ></div>
+      <div class="glare trans8 expand"></div>
+      <div class="circle" ></div>
     </div>
 </div>
 
@@ -99,7 +99,7 @@
           <p class="text">Declare some bind variables and assign them to an element:</p>
           
           <code>
-            &lt;script&gt; Mnr.onLoad({ inputVariable:'' }); &lt;/script&gt; <br>
+            &lt;script&gt; <br>Mnr.onLoad({ inputVariable:'' }); <br>&lt;/script&gt; <br><br>
             &lt;input mnr-bind="inputVariable" /&gt; <br>
             &lt;p mnr-bind="inputVariable" &gt;&lt;/p&gt;
           </code>
@@ -173,9 +173,11 @@
           <p class="text">The DOM Manipulation method always returns an array of elements and you can use sub methods to chain different actions:</p>
           
           <code>
-            &lt;div class="box trans5" &gt;&lt;/div&gt;
-            &lt;script&gt; <br>
-              Mnr.e('.box').css({height:'100px'}).class('colorGreen');
+            &lt;div class="box trans5" &gt;&lt;/div&gt;<br>
+            &lt;script&gt; <br><br>
+              Mnr.e('.box')
+                 .css({height:'100px'})<br>
+                 .class('colorGreen');<br>
             <br>&lt;/script&gt; <br>
             
           </code>
@@ -184,13 +186,13 @@
           <p class="text">You can use the "wait" sub-method in a chain of actions to set a waiting time before continuing with the rest of the chain:</p>
 
           <code>
-            &lt;div class="box" onClick="waitTest(this)" &gt;&lt;/div&gt;
-            &lt;script&gt; <br>
+            &lt;div class="box" onClick="waitTest(this)" &gt;&lt;/div&gt;<br>
+            &lt;script&gt; <br><br>
               const waitTest = function(el){
                 <br>  Mnr.e(el)<br>   .css({right: 0, background-color: 'red'})<br>  .wait(500)<br>  .css({top: '100%'})
                 <br>  .wait(500)<br>  .css({right:'100%'})<br>  .wait(500)<br>  .css({top: 0, background-color:'green'});
               }
-            <br>&lt;/script&gt; <br>
+            <br><br>&lt;/script&gt; <br>
             
           </code>
           

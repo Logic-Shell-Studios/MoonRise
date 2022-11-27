@@ -65,7 +65,6 @@ Mnr.onScroll(function(){
      this.e('html').class('scrolled',0);
    }
 
-   console.log(window.pageYOffset);
 
    if(this.b.ready === true){
     if(window.pageYOffset <= 50){

@@ -105,14 +105,10 @@ code{
   min-height: 600px;
   overflow-y: visible;
 }
-html[mnr-loading="false"] .moonHolder .content svg{
-  opacity: 0.7;
-}
-
 .moonFixed{
   position: fixed;
+  max-width: var(--mnr-bodyMaxWidth);
 }
-
 .moon{
   width: 800px;
   height: 800px;
@@ -208,6 +204,16 @@ html[mnr-loading="false"] .moonHolder .content svg{
   opacity: 1;
   width: 28%;
   height: 28%;
+  border-radius: 50%;
+}
+#pageLoader .moon .circle{
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 #pageLoader .expand{
