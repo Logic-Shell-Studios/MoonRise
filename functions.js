@@ -71,7 +71,7 @@ Mnr.onScroll(function(){
       this.e('.moonHolder .moon').css({top:0,opacity:1});
       this.e('.moonHolder .circle').css({opacity:1,top:0});
 
-      this.e('.moonHolder .glare').css({opacity:1}).class('noShine',false);
+      // this.e('.moonHolder .glare').css({opacity:1}).class('noShine',false);
       this.e('.moonHolder .textHolder').css({opacity:1,bottom:0});
 
     }
@@ -89,7 +89,7 @@ Mnr.onScroll(function(){
         this.e('.moonHolder .textHolder').css({opacity:0});
       }
       if(window.pageYOffset > 100){
-        this.e('.moonHolder .glare').class('noShine');
+        // this.e('.moonHolder .glare').class('noShine');
       }
       if(window.pageYOffset > 200){
         this.e('.moonHolder .glare').css({opacity:opacVal});
