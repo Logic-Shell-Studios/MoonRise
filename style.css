@@ -95,7 +95,7 @@ code{
   background-color: rgba(250,235,215,0.13);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur( 10px );
-  border: 2px solid rgba(255,255,255,0.1);
+/*  border: 2px solid rgba(255,255,255,0.1);*/
   box-shadow: 0 0 4px rgba(8,7,16,0.6);
   border-radius: 30px;
 }

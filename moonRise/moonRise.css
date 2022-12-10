@@ -677,14 +677,17 @@ section{
 
      
      
-/*media*/
+/*images*/
 img{
   pointer-events: none;
   object-fit: contain;
 }
 img.imgLoading{
-  opacity:0
+  opacity: 0;
 }  
+img.imgLoading.imgLoaded{
+  opacity: 1;
+}
 .backCover{
   background-size: cover;
   background-repeat: no-repeat;

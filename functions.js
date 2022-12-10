@@ -73,24 +73,23 @@ Mnr.onScroll(function(){
 
       // this.e('.moonHolder .glare').css({opacity:1}).class('noShine',false);
       this.e('.moonHolder .textHolder').css({opacity:1,bottom:0});
-
+      
+      this.e('.moonHolder .glare').css({opacity:1});
+      this.e('.moonHolder .circle').css({opacity:1});
     }
     else if(window.pageYOffset > 50){
       let scroll = window.pageYOffset;
-      let opacVal = this.u.mapValue(scroll,0.0,500.0,0.0,1.0);
+      let opacVal = this.u.mapValue(scroll,0,500,0,0.9,true);
       opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
       opacVal = (opacVal > 0.90) ? 1 : opacVal;
       
-      if(window.pageYOffset > 0){
-        this.e('.moonHolder .moon').css({top:(window.pageYOffset*0.20)+'px'});
-        this.e('.moonHolder .textHolder').css({bottom:(window.pageYOffset*0.20)+'px'});
-      }
-      if(window.pageYOffset > 50){
+      
+        let top = window.pageYOffset*0.20;
+        this.e('.moonHolder .moon').css({top:top+'px'});
+        this.e('.moonHolder .textHolder').css({bottom:(window.pageYOffset*0.50)+'px'});
+     
         this.e('.moonHolder .textHolder').css({opacity:0});
-      }
-      if(window.pageYOffset > 100){
-        // this.e('.moonHolder .glare').class('noShine');
-      }
+      
       if(window.pageYOffset > 200){
         this.e('.moonHolder .glare').css({opacity:opacVal});
         this.e('.moonHolder .circle').css({opacity:opacVal});

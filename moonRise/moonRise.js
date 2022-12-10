@@ -1,4 +1,4 @@
-// MoonRise Engine Version 4.0
+// MoonRise Engine Version 5.0
 
 const Mnr = (function(){
   
@@ -825,7 +825,7 @@ const Mnr = (function(){
         }
         return this;
       },
-      html: function(html,add = false,sanitize = true,location='beforeend'){
+      html: function(html,add = false,sanitize = true,location='beforeEnd'){
 
         if(this.isWaiting(['html',[html,add]])){
            return this;
@@ -1155,7 +1155,7 @@ const Mnr = (function(){
        
              return str.replace(new RegExp(find, 'g'), replace);
        },
-       mapValue: function(X,A,B,C,D){
+       mapValue: function(X,A,B,C,D,max = false){
              X = parseFloat(X);
              A = parseFloat(A);
              B = parseFloat(B);
@@ -1163,7 +1163,12 @@ const Mnr = (function(){
              D = parseFloat(D);
              r =  ((X-A)/(B-A));
              y = ( r * (D-C)) + C;
-             return Math.trunc(y * 100) / 100;
+             let res = Math.trunc(y * 100) / 100;
+             if(max){
+               res = (res > D)? D : res;
+               res = (res < C)? C : res;
+             }
+             return res;
        },
        findPosByProp: function(prop,value, arr){
          for (let i = arr.length - 1; i >= 0; i--) {
@@ -1318,22 +1323,6 @@ const Mnr = (function(){
        loadBinds: function(){
          bindAll();
          loadMedia();
-       },
-       getUUID: function(){
-         let
-           d = new Date().getTime(),
-           d2 = (performance && performance.now && (performance.now() * 1000)) || 0;
-         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-           let r = Math.random() * 16;
-           if (d > 0) {
-             r = (d + r) % 16 | 0;
-             d = Math.floor(d / 16);
-           } else {
-             r = (d2 + r) % 16 | 0;
-             d2 = Math.floor(d2 / 16);
-           }
-           return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
-         });
        }
     };
   })();
