@@ -67,7 +67,7 @@ Mnr.onScroll(function(){
 
 
    if(this.b.ready === true){
-    if(window.pageYOffset <= 50){
+    if(window.pageYOffset <= 70){
       this.e('.moonHolder .moon').css({top:0,opacity:1});
       this.e('.moonHolder .circle').css({opacity:1,top:0});
 
@@ -77,7 +77,7 @@ Mnr.onScroll(function(){
       this.e('.moonHolder .glare').css({opacity:1});
       this.e('.moonHolder .circle').css({opacity:1});
     }
-    else if(window.pageYOffset > 50){
+    else if(window.pageYOffset > 70){
       let scroll = window.pageYOffset;
       let opacVal = this.u.mapValue(scroll,0,500,0,0.9,true);
       opacVal = 1.0 - ((opacVal > 1) ? 1 : opacVal);
