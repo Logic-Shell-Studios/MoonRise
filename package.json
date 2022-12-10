@@ -1,5 +1,5 @@
 {  
-  "name": "MoonRise Library",  
+  "name": "moonrise-library",  
   "version": "5.0.0",  
   "description": "Toolset including: handlers for elements, two-way data-binding, lazy image loading, some handy utilities and style rules.",  
   "main": "/moonRise/moonRise.js",  
