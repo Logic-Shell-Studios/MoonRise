@@ -220,7 +220,7 @@ code{
 }
 
 #pageLoader .moon.load3{
-  margin-top: -160vh;
+  translate: 0 calc(-1 * (50vh + 300px ));
 }
 #pageLoader .moon{
   width: 300px;

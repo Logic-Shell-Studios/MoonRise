@@ -1,10 +1,6 @@
 @charset "UTF-8";
 
 
-.mnrHide{
-  display: none!important;
-}
-
 /* Variables */
 :root {
   --mnr-color1: #0d1f2c;
@@ -157,6 +153,10 @@ html[mnr-loading = "false"] body{
   height: auto;
   overflow: initial;
 }
+div, section, main {
+  width: auto;
+  height: auto;
+}
 main{
   max-width: var(--mnr-mainMaxWidth);
   width: 100%;
@@ -168,11 +168,6 @@ main{
   position: relative;
   margin: auto;
 }
-div, section, main {
-  width: auto;
-  height: auto;
-}
-
 
 
     

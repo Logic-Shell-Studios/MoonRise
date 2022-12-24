@@ -18,11 +18,11 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   
   
-  <!-- <script src="./moonRise/moonRise.js" rel="preload" as="script"></script> -->
+  <script src="./moonRise/moonRise.js" rel="preload" as="script"></script>
+  <link rel="stylesheet" href="./moonRise/moonRise.css" >
 
-  <!-- <link rel="stylesheet" href="./moonRise/moonRise.css" > -->
-  <script src="https://unpkg.com/moonrise-library/moonRise/moonRise.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/moonrise-library/moonRise/moonRise.css" >
+ <!--  <script src="https://unpkg.com/moonrise-library/moonRise/moonRise.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/moonrise-library/moonRise/moonRise.css" > -->
 
   <link rel="stylesheet" href="style.css" >
   
@@ -112,19 +112,9 @@
 
           <input class="input" placeholder="type something here..." mnr-bind="inputTest ">
           <input class="input" placeholder="or here..." mnr-bind="inputTest ">
-          <div class="flxC ordC resultsBlock" 
-             mnr-class='{"paintedBlock": "inputTest.length > 0 && inputTest.length < 6", "paintedBlockError":"inputTest.length >= 6"}'>
+          <div class="flxC ordC resultsBlock">
             <p mnr-bind="inputTest"></p>
             
-            <p class="textSmall" 
-               mnr-class='{"hide": "inputTest.length <= 0"}'> 
-               <strong> Length: <mnr> inputTest.length </mnr> </strong>
-            </p>
-
-            <p class="textSmall" 
-               mnr-class='{"hide": "inputTest.length > 0"}'> 
-               <strong>results block</strong>
-            </p>
 
           </div>
 
@@ -136,14 +126,8 @@
               <option value="E">E</option>
               <option value="F">F</option>
           </select>
-          <div class="flxC ordC resultsBlock" 
-               mnr-class='{"paintedBlock": "selectTest.length > 0"}'>
+          <div class="flxC ordC resultsBlock">
               <p mnr-bind="selectTest"></p>
-
-              <p class="textSmall" 
-                 mnr-class='{"hide": "selectTest.length > 0"}'> 
-                 <strong>results block</strong>
-              </p>
           </div>
           <p class="text">The most relevant attribute of the binded element will be updated if not explicited set</p>
           <p class="text">For example if the element is a paragraph or heading it will update the "text" attribute, if it is an input the "value" will be update and if it is an image it will be the "src" attribute</p>
@@ -168,7 +152,7 @@
            &lt;p mnr-bind="id:bindVariable" &gt;&lt;/p&gt;
           </code>
 
-          <p class="text">The binding update process runs through a debounce function to maintain performance, the default value is 100ms but it can be changed by passing the <code> debounceBindTime </code> option when Moonrise initialize.</p>
+          <p class="text">The binding update process runs through a debounce function to maintain performance, the default value is 20ms but it can be changed by passing the <code> debounceBindTime </code> option when MoonRise initialize.</p>
     </div>
     
 
@@ -179,25 +163,45 @@
           <p class="text">The DOM Manipulation method always returns an array of elements and you can use sub methods to chain different actions:</p>
           
           <code>
-            &lt;div class="box trans5" &gt;&lt;/div&gt;<br>
+            &lt;div class="box" &gt;&lt;/div&gt;<br>
             &lt;script&gt; <br><br>
               Mnr.e('.box')
                  .css({height:'100px'})<br>
-                 .class('colorGreen');<br>
+                 .classAdd('colorGreen');<br>
             <br>&lt;/script&gt; <br>
             
           </code>
 
           <h4 class="textSub">Waiting:</h4>
-          <p class="text">You can use the "wait" sub-method in a chain of actions to set a waiting time before continuing with the rest of the chain:</p>
+          <p class="text">You can use the "wait" utility method in chain to set a waiting time between functions</p>
 
           <code>
             &lt;div class="box" onClick="waitTest(this)" &gt;&lt;/div&gt;<br>
             &lt;script&gt; <br><br>
               const waitTest = function(el){
-                <br>  Mnr.e(el)<br>   .css({right: 0, background-color: 'red'})<br>  .wait(500)<br>  .css({top: '100%'})
-                <br>  .wait(500)<br>  .css({right:'100%'})<br>  .wait(500)<br>  .css({top: 0, background-color:'green'});
-              }
+                 let parent = Mnr.e(el).parent().size();<br>
+                 let box = Mnr.e(el).size();<br>
+                 let moveX = `${parent.width - box.width}px`;<br>
+                 let moveY = `${parent.height - box.height}px`;<br>
+                 
+                 let elem = Mnr.e(el);<br>
+              
+                 Mnr.u.wait(()=>{<br>
+                   elem.css({<br>
+                     translate: `${moveX} 0`,<br>
+                     'background-color': 'var(--mnr-colorError)',<br>
+                   })<br>
+                 },0)<br>
+                 .wait(()=>{<br>
+                   elem.css({translate: `${moveX} ${moveY}`})<br>
+                 },500)<br>
+                 .wait(()=>{<br>
+                   elem.css({translate: `0 ${moveY}`})<br>
+                 },500)<br>
+                 .wait(()=>{<br>
+                   elem.css({translate: `0 0`,'background-color': 'var(--mnr-colorOk)'});<br>
+                 },500)<br>
+              };
             <br><br>&lt;/script&gt; <br>
             
           </code>
