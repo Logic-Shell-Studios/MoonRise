@@ -27,13 +27,13 @@ Mnr.onLoad(binds,function(){
               .classAdd('ready')
         },500)
         .wait(()=>{
-          moon.classRemove('anim16')
-              .classAdd('anim5')
+          moon.classRemove('trans16')
+              .classAdd('trans5')
           this.b.ready = true;
         },500)
       }
       
-      this.u.screenToTop(0,'instant');
+      
 
       this.u.wait(()=>{
         loader.child('.glare')
@@ -71,12 +71,11 @@ Mnr.onScroll(function(){
 
      this.e('html').classRemove('scrolled');
    }
-
+   
+   if(Mnr.b.ready || Mnr.b.scrolled){
     if(scroll <= 70){
       this.e('.moonHolder .moon').css({translate:'0 0',opacity:1});
       this.e('.moonHolder .circle').css({opacity:1,translate:'0 0'});
-
-      // this.e('.moonHolder .glare').css({opacity:1}).class('noShine',false);
       this.e('.moonHolder .textHolder').css({opacity:1,translate:'0 0'});
       
       this.e('.moonHolder .glare').css({opacity:1});
@@ -104,7 +103,7 @@ Mnr.onScroll(function(){
       }
       
     }
-    
+  }
 
 });
 
