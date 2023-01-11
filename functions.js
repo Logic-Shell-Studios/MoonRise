@@ -15,20 +15,20 @@ Mnr.onLoad(binds,function(){
 
       let setMoon = ()=>{
         this.u.wait(()=>{
-           moon.classAdd('ready')
+           moon.addClass('ready')
         },0)
         .wait(()=>{
            moon.child('.glare')
-               .classAdd('ready')
+               .addClass('ready')
                .initial()
         },900)
         .wait(()=>{
           moon.child('.textHolder')
-              .classAdd('ready')
+              .addClass('ready')
         },500)
         .wait(()=>{
-          moon.classRemove('trans16')
-              .classAdd('trans5')
+          moon.removeClass('trans16')
+              .addClass('trans5')
           this.b.ready = true;
         },500)
       }
@@ -37,17 +37,17 @@ Mnr.onLoad(binds,function(){
 
       this.u.wait(()=>{
         loader.child('.glare')
-              .classRemove('expand')
-              .classAdd('contract')
+              .removeClass('expand')
+              .addClass('contract')
               .initial()
       },200)
       .wait(()=>{
         loader.child('.moon')
-              .classAdd('load3')
+              .addClass('load3')
               .initial();  
       },400)
       .wait(()=>{
-        loader.classAdd('load')  
+        loader.addClass('load')  
       },300)
       .wait(()=>{
         loader.css('{display:none}')  
@@ -64,12 +64,12 @@ Mnr.onScroll(function(){
    let scroll = window.pageYOffset;
    if(scroll > 0 && this.b.scrolled == false){
      this.b.scrolled = true;
-     this.e('html').classAdd('scrolled');
+     this.e('html').addClass('scrolled');
    }
    else if(scroll <= 30){
      this.b.scrolled = false;
 
-     this.e('html').classRemove('scrolled');
+     this.e('html').removeClass('scrolled');
    }
    
    if(Mnr.b.ready || Mnr.b.scrolled){
