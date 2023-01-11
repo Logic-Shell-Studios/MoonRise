@@ -41,7 +41,7 @@ const Mnr = (function(){
     }
     running = true;
     
-    e('html').attrSet('mnr-loading',true);
+    e('html').setAttr('mnr-loading',true);
 
     // set options
     if(options['debounceBindTime'] != null){
@@ -80,12 +80,12 @@ const Mnr = (function(){
 
 
         b.pageLoading = false;
-        e('html').attrSet('mnr-loading',false);
+        e('html').setAttr('mnr-loading',false);
       }
   };
   const reload = () => {
       b.pageLoading = true;
-      e('html').attrSet('mnr-loading',true);
+      e('html').setAttr('mnr-loading',true);
 
       finishLoad();
   };
@@ -149,7 +149,7 @@ const Mnr = (function(){
     let bindEls = Array.from(e('[mnr-bind]:not([mnr-bind="set"])').e).map(el=>{ 
                    return {
                     el,
-                    list:e(el).attrGet('mnr-bind').replace(/\s/g, ''),
+                    list:e(el).getAttr('mnr-bind').replace(/\s/g, ''),
                     binds:[],
                     event:null,
                     type:null,
@@ -161,7 +161,7 @@ const Mnr = (function(){
        let def = getDefaultBindData(el.el);
        el.event = def.event;
        el.type = def.type;
-       e(el.el).attrSet('mnr-bind','set');
+       e(el.el).setAttr('mnr-bind','set');
        if(list.length == 1 && list[0].split(':').length == 1){
          el.binds.push({
            attr: def.attr,
@@ -239,7 +239,7 @@ const Mnr = (function(){
        case "SELECT":
          attr = 'value';
          event = 'change';
-         if(e(el).attrHas('multiple')){
+         if(e(el).hasAttr('multiple')){
            type = 'multiple';
          }
        break;
@@ -249,8 +249,8 @@ const Mnr = (function(){
          type = null;
        break;
     }
-    attr = e(el).attrGet('mnr-bind-attr') ?? attr;
-    event = e(el).attrGet('mnr-bind-event') ?? event;
+    attr = e(el).getAttr('mnr-bind-attr') ?? attr;
+    event = e(el).getAttr('mnr-bind-event') ?? event;
     return {attr,event,type};
   };
   const pushToBinder = ({el,attrs,event,type,bind}) =>{
@@ -293,7 +293,7 @@ const Mnr = (function(){
             let type = elem.type;
             let event = elem.event;
             //element set default values
-            if(!!(e(el).attrGet('mnr-bind-set'))){
+            if(!!(e(el).getAttr('mnr-bind-set'))){
               
               if(el.nodeName == 'SELECT' && type == 'multiple'){
                 let options = e("option[selected]",el).e;
@@ -352,12 +352,12 @@ const Mnr = (function(){
                   // console.log(elem.el);
                   if(elem.type == 'multiple' && a == 'value'){
                     for(let opt of e("option",elem.el).e){
-                      e(opt).attrRemove('selected');
+                      e(opt).removeAttr('selected');
                     }
                     for(let val of newValue){
                       let opt = e("option[value='"+val+"']",elem.el).e[0];
                       if(opt){
-                       e(opt).attrSet('selected',true);
+                       e(opt).setAttr('selected',true);
                        opt.checked = true;
                       }
                     }
@@ -367,7 +367,7 @@ const Mnr = (function(){
                       elem.el[a] = newValue;
                     }
                     else{
-                      e(elem.el).attrSet(a,newValue);
+                      e(elem.el).setAttr(a,newValue);
                     }
                   }
                 }
@@ -444,8 +444,8 @@ const Mnr = (function(){
     b.windowWidth = width;
     b.windowHeight = height;
 
-    e('body').attrSet('mnr-screen-width', width);
-    e('body').attrSet('mnr-screen-height', height);
+    e('body').setAttr('mnr-screen-width', width);
+    e('body').setAttr('mnr-screen-height', height);
 
     handleScroll();
   };
@@ -466,25 +466,25 @@ const Mnr = (function(){
       el.addEventListener('error',errorLoad);
     }
 
-    e(el).attrSet('mnr-src-loading', src)
-    e(el).attrRemove('mnr-src');
+    e(el).setAttr('mnr-src-loading', src)
+    e(el).removeAttr('mnr-src');
     
 
     u.setViewTrigger(el,
      function(){
        let el = this.e[0];
        if(el.nodeName == 'IMG'){
-         el.src = this.attrGet('mnr-src-loading');
+         el.src = this.getAttr('mnr-src-loading');
        }
        else{
          try{
-          this.css({'background-image': `url(${this.attrGet('mnr-src-loading')})` });
+          this.css({'background-image': `url(${this.getAttr('mnr-src-loading')})` });
          }
          catch{
            console.warn('background image skipped: '+el.src);
          }
        }
-       this.attrRemove('mnr-src-loading');
+       this.removeAttr('mnr-src-loading');
      },null,true);
        
        
@@ -501,22 +501,15 @@ const Mnr = (function(){
     return {
       e: elem,
       eBack: elem,
-      query: [query],
       singleNode: singleNode,
       getQuery: getQuery,
       result: null,
       results: [],
-      q: function(query){   
-        this.e = getQuery(query,this.e[0]);
-        this.query.push(query);
-
-        return this;
-      },  
       initial: function(){
         this.e = this.eBack;
         return this;
       },
-      classAdd: function(names){
+      addClass: function(names){
         let classes = names.trim().split(' ');
         for(let el of this.e){
           for(let clss of classes){
@@ -525,7 +518,7 @@ const Mnr = (function(){
         }
         return this;
       },
-      classRemove: function(names){
+      removeClass: function(names){
         let classes = names.trim().split(' ');
         for(let el of this.e){
           for(let clss of classes){
@@ -534,7 +527,7 @@ const Mnr = (function(){
         }
         return this;
       },
-      classToggle: function(names){
+      toggleClass: function(names){
         let classes = names.trim().split(' ');
         for(let el of this.e){
           for(let clss of classes){
@@ -544,7 +537,7 @@ const Mnr = (function(){
         }
         return this;
       },
-      classHas: function(names, all = true){
+      hasClass: function(names, all = true){
         let classes = names.trim().split(' ');
         let match = 0;
         let compare = 0;
@@ -583,18 +576,18 @@ const Mnr = (function(){
 
         return this;
       },
-      attrGet: function(attr){
+      getAttr: function(attr){
         
         return this.e[0].getAttribute(attr);
       },
-      attrSet: function(attr,val){
+      setAttr: function(attr,val){
         for(let el of this.e){
           el.setAttribute(attr, val);
           
         }
         return this;
       },
-      attrHas: function(names, all = true){
+      hasAttr: function(names, all = true){
         let attr = names.trim().split(' ');
         let match = 0;
         let compare = 0;
@@ -614,7 +607,7 @@ const Mnr = (function(){
         }
         return (match == compare);
       }, 
-      attrRemove: function(names){
+      removeAttr: function(names){
         let attr = names.trim().split(' ');
         for(let el of this.e){
           for(let at of attr){
@@ -623,21 +616,11 @@ const Mnr = (function(){
         }
         return this;
       },
-      htmlGet: function(){
+      getHtml: function(){
         
         return this.e[0].innerHTML;
       },
-      htmlSet: function(html,sanitize = true,location='beforeEnd'){
-        for(let el of this.e){
-          if(sanitize){
-            html = u.sanitizeStr(html);
-          }
-          el.innerHTML = '';
-          el.insertAdjacentHTML(location,html);
-        }
-        return this;
-      },
-      htmlAdd: function(html,sanitize = true,location='beforeEnd'){
+      setHtml: function(html,sanitize = true,location='beforeEnd'){
         for(let el of this.e){
           if(sanitize){
             html = u.sanitizeStr(html);
@@ -646,40 +629,43 @@ const Mnr = (function(){
         }
         return this;
       },
-      textGet: function(text,add = false){
+      getText: function(text,add = false){
         return this.e[0].innerText;
       },
-      textSet: function(text){
+      setText: function(text){
         for(let el of this.e){
           el.innerText = text;
         }
         return this;
       },
-      textAdd: function(text){
-        for(let el of this.e){
-          el.innerText = el.innerText+text;
-        }
-        return this;
-      },
-      valueGet: function(){
+      getVal: function(){
         if(this.e[0].nodeName == "INPUT" || this.e[0].nodeName == "TEXTAREA" || this.e[0].nodeName == "SELECT"){
           return this.e[0].value;
         }
-        return this.textGet();
+        return this.getText();
       },
-      valueSet: function(value){
+      setVal: function(value){
         if(this.e[0].nodeName == "INPUT" || this.e[0].nodeName == "TEXTAREA" || this.e[0].nodeName == "SELECT"){
           el.value = value;
         }
-        this.textSet(value);
+        else{
+          this.setText(value);
+        }
+        
 
         return this;
       },
+      width: function(){
+        return this.e[0].getBoundingClientRect().width;
+      },
+      height: function(){
+        return this.e[0].getBoundingClientRect().height;
+      },
       size: function(){
         return {
-          'width': this.e[0].getBoundingClientRect().width,
-          'height': this.e[0].getBoundingClientRect().height
-        }
+                'width':this.e[0].getBoundingClientRect().width,
+                'height':this.e[0].getBoundingClientRect().height
+               }
       },
       parent: function(){
         this.e = this.singleNode(this.e[0].parentNode);
@@ -688,13 +674,13 @@ const Mnr = (function(){
       child: function(query = 0){
         if(typeof(query) != 'string'){
           if(query < 0){
-           let tempNum = this.e[0].children.length + query;
-           query = tempNum;
+           query = this.e[0].children.length + query;
+           query = (query < 0) ? -1*query : query;
           }
           this.e = this.singleNode(this.e[0].children[query]);
         }
         else{
-          this.q(query);
+          this.e = getQuery(query,this.e[0]);
         }
         return this;
       },
@@ -709,34 +695,23 @@ const Mnr = (function(){
          this.e = this.singleNode(this.el(num));
          return this; 
       },
-      elems: function(){
-         this.e = this.eBack;
-         return this;
-      },
-      children: function(num = 0){
-        this.e = this.e[num].children;
-        return this;
-      },
-      hasElems: function(){
-
+      found: function(){
         return !!(this.e.length);
       },
+      isInView: function(offset = 0){
+         return u.isInViewport(this.e[0],offset);
+      },
+      isAboveView: function(offset = 0){   
+         return u.isAboveViewport(this.e[0],offset);
+      },  
       screenFocus: function(offset = 0){
          u.screenTo(this.e[0],offset);
          return this;
       },
-      inView: function(offset = 0){
-
-         return u.isInViewport(this.e[0],offset);
-      },
-      aboveView: function(offset = 0){
-        
-         return u.isAboveViewport(this.e[0],offset);
-      },
-      run: function(funct){
+      run: function(fn){
         try{
           let _this = this;
-          this.result = funct.call(_this);
+          this.result = fn.call(_this);
         }
         catch(error){
           console.warn('error trying to call function in chain '+error);
@@ -744,10 +719,6 @@ const Mnr = (function(){
 
         this.results.push(this.result);
 
-        return this;
-      },
-      setInScreen: function(offset = 0){
-        u.screenTo(this.e[0],offset);
         return this;
       },
       destroy: function(){
@@ -758,7 +729,6 @@ const Mnr = (function(){
         this.eBack = [];
         return this;
       }
-
     };
   };
 
