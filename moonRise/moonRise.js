@@ -27,7 +27,7 @@ const Mnr = (function(){
 
   let scrollRun = [];
 
-  let version = '5.0';
+  let version = '6.0';
 
 
 
@@ -466,28 +466,25 @@ const Mnr = (function(){
       el.addEventListener('error',errorLoad);
     }
 
-    e(el).setAttr('mnr-src-loading', src)
+    e(el).setAttr('mnr-src-loading', e(el).getAttr('mnr-src'));
     e(el).removeAttr('mnr-src');
     
-
-    u.setViewTrigger(el,
-     function(){
-       let el = this.e[0];
+    u.setViewTrigger(el,function(el){
+    
        if(el.nodeName == 'IMG'){
-         el.src = this.getAttr('mnr-src-loading');
+         el.src = Mnr.e(el).getAttr('mnr-src-loading');
        }
        else{
          try{
-          this.css({'background-image': `url(${this.getAttr('mnr-src-loading')})` });
+          Mnr.e(el).css({'background-image': `url(${Mnr.e(el).getAttr('mnr-src-loading')})` });
          }
          catch{
            console.warn('background image skipped: '+el.src);
          }
        }
-       this.removeAttr('mnr-src-loading');
+       Mnr.e(el).removeAttr('mnr-src-loading');
      },null,true);
-       
-       
+
   }
   
 
@@ -620,8 +617,19 @@ const Mnr = (function(){
         
         return this.e[0].innerHTML;
       },
-      setHtml: function(html,sanitize = true,location='beforeEnd'){
-        for(let el of this.e){
+      setHtml: function(html,sanitize = true){
+        let els = this.e;
+        for(let el of els){
+          if(sanitize){
+            html = u.sanitizeStr(html);
+          }
+          el.innerHTML = html;
+        }
+        return this;
+      },
+      addHtml: function(html,sanitize = true,location='beforeEnd'){
+        let els = this.e;
+        for(let el of els){
           if(sanitize){
             html = u.sanitizeStr(html);
           }
@@ -931,7 +939,7 @@ const Mnr = (function(){
          }
          
          let html = document.createElement('div');
-         e(html).htmlAdd(str);
+         e(html).setHtml(str,false);
 
          // Sanitize it
          removeScripts(html);
@@ -977,14 +985,12 @@ const Mnr = (function(){
                 }
 
                 if(enter != null){
-                  let _this = this;
-                  enter.call(_this);
+                  enter(entry.target);
                 }
               }
               else{
                 if(exit != null){
-                  let _this = this;
-                  exit.call(_this);
+                  exit(entry.target);
                 }
               }
             });

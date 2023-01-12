@@ -38,6 +38,8 @@
   --mnr-txtS4: 16px; /*regular*/
   --mnr-txtS5: 14px;
   --mnr-txtS6: 9px;
+
+  --mnr-gutter: 20px;
 }
 
 /*reset*/
@@ -483,7 +485,8 @@ section{
 
 
 .flxR,
-.flxC{
+.flxC,
+.flxGrd{
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -498,7 +501,8 @@ section{
   -ms-flex-line-pack: start;
   align-content: flex-start;
 }
-.flxR{
+.flxR,
+.flxGrd{
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
@@ -600,6 +604,24 @@ section{
   align-content:space-around;
 }
 
+.flxGrd{
+  --mnr-grdWidth: 100%;
+  --mnr-grdMaxWidth: 100%;
+  margin-right: calc(-1 * var(--mnr-gutter));
+  width: calc(var(--mnr-grdWidth) + var(--mnr-gutter));
+  max-width: calc(var(--mnr-grdMaxWidth) + var(--mnr-gutter));
+}
+.content.flxGrd{
+  --mnr-gutter: var(--mnr-padSides);
+  --mnr-grdMaxWidth: var(--mnr-contentWidth);
+}
+.flxGrd > *{
+  --mnr-grdCellSpace : var(--mnr-cellSpace, 100%);
+  margin-right: var(--mnr-gutter);
+  margin-bottom: var(--mnr-gutter);
+  width: calc(var(--mnr-grdCellSpace)  - (var(--mnr-gutter)));
+  max-width: calc(var(--mnr-grdCellSpace)  - (var(--mnr-gutter)));
+}
 
 
 
@@ -677,4 +699,5 @@ img.imgLoading.imgLoaded{
              
        
  
+
 
